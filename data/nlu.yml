@@ -1,0 +1,1103 @@
+version: "3.1"
+
+nlu:
+- intent: subset_clear
+  examples: |
+    - Abandon filter choices
+    - Abolish current subset
+    - Annul current parameter values
+    - Annul subset filter
+    - Begin again
+    - Cancel current filter set
+    - Clean up filters
+    - Clean up search criteria
+    - Cleanse current filter set
+    - Clear current choices
+    - Clear current filters
+    - Clear current parameters
+    - Clear current selections
+    - clear current subset
+    - Clear existing filters
+    - clear filterset
+    - Clear out current subset
+    - Clear out filters
+    - Clear out subset
+    - Clear selections
+    - clear subset
+    - Deactivate filter set
+    - Delete current filters
+    - Delete current search criteria
+    - Delete current subset
+    - Delete filters
+    - Delete search criteria
+    - Delete subset
+    - Discard current choices
+    - Discard current parameters
+    - Discard current selections
+    - Discard filter set
+    - Discard filters
+    - Discard search criteria
+    - Dismiss current subset
+    - Drop current subset filter
+    - Dump current subset
+    - Eliminate all filters
+    - Eliminate current filter criteria
+    - Eliminate filters
+    - Eliminate search criteria
+    - Eliminate subset criteria
+    - Empty current parameters
+    - Empty filter set
+    - Empty filters
+    - Empty subset
+    - Eradicate current filters
+    - Erase current parameters
+    - Erase current parameters
+    - Erase subset selection
+    - Negate filter parameters
+    - Nuke subset criteria
+    - Nullify current filter set
+    - Nullify filter choices
+    - Nullify subset parameters
+    - Purge current subset.
+    - Purge filter preferences
+    - Purge filters
+    - Purge subset
+    - Purge subset filter
+    - Purify subset filter
+    - Remove current choices
+    - Remove current filters
+    - Remove current parameters
+    - Remove current search
+    - Remove current selections
+    - Remove current subset
+    - Remove filter parameters
+    - Remove filters
+    - Remove search criteria
+    - Remove subset
+    - Remove subset filter
+    - Remove subset selection
+    - Reset current choices
+    - reset current parameters
+    - Reset current selections
+    - Reset filter preferences
+    - reset filters
+    - reset subset
+    - Restart filter selection
+    - Scrub filter list
+    - Unset filter options
+    - Void current filter set
+    - Wipe current filter selection
+    - Wipe currentm subset selections.
+    - Wipe filters
+    - Wipe subset
+
+- intent: create_subset
+  examples: |
+    - create subset
+    - create filter
+    - start new filter
+    - begin new filtering scheme
+    - create new subset
+    - create new filter
+    - define new subset
+    - define new filter
+    - inititate a filter scheme
+    - begin a filtering scheme
+    - make a new subset
+    - create data filter
+    - define data subset
+    - start data subset
+    - Create new filter criteria.
+    - Create data filter rules
+    - Generate new filter
+    - Create new filtering scheme
+    - Initiate new subset
+    - Initiate filter
+    - Initiate new filter
+    - Initiate subset filter
+    - Start new data filter.
+    - Create new subset rules.
+    - Start new data filter.
+    - Set new filter criteria.
+    - Create subset parameters
+    - Define data query parameters.
+    - Launch new subset
+    - Launch new filtering
+    - Begin new data filter
+    - Begin new data subset
+    - Begin new subset
+    - Launch new filtering process.
+    - Define new subset criteria.
+    - Start new data subset.
+    - Define data filter parameters.
+    - Initiate new filtering.
+    - Set new subset criteria
+    - Launch new filtering process.
+    - Define new subset criteria.
+    - Start new data subset.
+    - Define data filter parameters.
+    - Initiate new filtering.
+    - Set new subset criteria
+    - make subset
+    - make new subset
+    - make a new filter
+
+- intent: help
+  examples: |
+    - Assist me
+    - Could you please show me what you can
+    - Great, is there anything else you can do, bot?
+    - Guide me on how to use it.
+    - hello what can you do for me
+    - how can i use you
+    - How can you help me
+    - how can you help me
+    - how can you help me?
+    - how can you help?
+    - how do you function?
+    - How do you work?
+    - how do you work?
+    - how does chembot work?
+    - how does this work?
+    - how does this work?
+    - how the hell do you work?
+    - how to make this tool work
+    - how to make this tool work?
+    - how to make this work?
+    - how to start?
+    - how to use tool
+    - how to use tool?
+    - how u can help me
+    - how you help me
+    - How you help me?
+    - howto use
+    - howto use?
+    - I do not know what to do
+    - I don't know what to do
+    - I'm lost
+    - more info
+    - now what?
+    - options
+    - so now what
+    - so what can you do
+    - so what can you do?
+    - so what can you help me with?
+    - so what next?
+    - Walk me through it.
+    - Walk me through the features.
+    - Walkthru
+    - you can hep me
+
+- intent: help2
+  examples: |
+    - can you aid me?
+    - can you assist me in using this tool?
+    - can you assist me with this problem?
+    - can you assist me?
+    - can you be of assistance?
+    - can you do anything else?
+    - can you explain me in one sentence what you are doing?
+    - can you explain your purpose?
+    - can you give me a quick tutorial?
+    - can you help me
+    - can you help me out here?
+    - can you help me?
+    - can you help me?
+    - can you show me?
+    - could you aid me?
+    - could you assist me in using this tool?
+    - could you assist me with this problem?
+    - could you assist me?
+    - could you be of assistance?
+    - could you do anything else?
+    - could you explain me in one sentence what you are doing?
+    - could you explain your purpose?
+    - could you give me a quick tutorial?
+    - could you help me
+    - could you help me out here?
+    - could you help me?
+    - could you help me?
+    - could you show me?
+
+- intent: help3
+  examples: |
+    - detail functionality.
+    - detail how to utilize.
+    - detail interface.
+    - detail the functionality.
+    - detail the usage.
+    - detail tool
+    - detail your capabilities.
+    - detail your capabilities?
+    - detail your functionality.
+    - detail your purpose.
+    - explain functionality.
+    - explain how to utilize.
+    - explain interface.
+    - explain the functionality.
+    - explain the process.
+    - explain the usage.
+    - explain tool
+    - explain your capabilities.
+    - explain your capabilities?
+    - explain your functionality.
+    - explain your purpose.
+    - Give a tutorial.
+    - give assistance.
+    - give guidance
+    - Give me an overview of your software.
+    - illustrate functionality.
+    - illustrate how to utilize.
+    - illustrate interface.
+    - illustrate the functionality.
+    - illustrate the process.
+    - illustrate the usage.
+    - illustrate tool
+    - illustrate your capabilities.
+    - illustrate your capabilities?
+    - illustrate your functionality.
+    - illustrate your purpose.
+    - outline functionality.
+    - outline how to utilize.
+    - outline interface.
+    - outline the functionality.
+    - Outline the instructions.
+    - outline the process.
+    - outline the usage.
+    - outline tool
+    - outline your capabilities.
+    - outline your capabilities?
+    - outline your functionality.
+    - outline your purpose.
+    - Provide a guide on usage.
+    - Provide a summary of your features.
+    - Provide a tutorial.
+    - Provide a walk-through.
+    - Provide an overview of yourself.
+    - show functionality.
+    - Show how it is used.
+    - Show how it works.
+    - show how to do this
+    - Show how to use.
+    - show how to utilize.
+    - show interface.
+    - show me the menu
+    - show me what's possible
+    - show the functionality.
+    - show the process.
+    - show the usage.
+    - show tool
+    - show what to do
+    - show your capabilities.
+    - show your capabilities?
+    - show your functionality.
+    - show your purpose.
+    - tell me about your features?
+    - tell me about yourself?
+    - Tell me how to use your?
+    - tell me how your work?
+    - tell me more about yourself?
+    - tell me something you can do
+    - tell me what you do?
+    - tell me what's your skill
+
+- intent: help4
+  examples: |
+    - what  am I missing?
+    - what  am i supposed to do?
+    - what  are all the things you understand?
+    - what  are my options
+    - what  are the options?
+    - what  are you able to do?
+    - what  are you ding
+    - what  are you doing
+    - what  are you good at?
+    - what  are your abilities?
+    - what  are your features ?
+    - what  can I ask ?
+    - what  can I ask you?
+    - what  can I do here
+    - what  can i do now
+    - what  can I do with this bot
+    - what  can I do?
+    - what  can we talk about?
+    - what  can you answer
+    - what  can you assist with?
+    - what  can you demo
+    - what  can you do
+    - what  can you do for me?
+    - what  can you do?
+    - what  can you offer me?
+    - what  can you teache me?
+    - what  can you tell me
+    - what  can you tell me?
+    - what  can you?
+    - what  cn u do for me ?
+    - what  could you assist with?
+    - what  do I do next?
+    - what  do you do?
+    - what  do you know except this?
+    - what  does chembot do?
+    - what  does this do
+    - what  does this site do?
+    - what  else can i do
+    - what  else can I do here?
+    - what  else can i do?
+    - what  else can you do?
+    - what  else can you help with?
+    - what  i have to do
+    - what  is this bot for
+    - what  is your area of expertise?
+    - what  is your function?
+    - what  is your job?
+    - what  is your purpose?
+    - what  is your role?
+    - what  the hell am I supposed to do?
+    - what  to do?
+    - what  u can do?
+    - what  you can
+    - what  you can do
+    - what  you can do for me?
+    - what  you can do?
+    - what  you do
+    - what  you doing?
+
+- intent: help5
+  examples: |
+    - help
+    - help
+    - help getting started.
+    - help me
+    - help me
+    - help please
+    - help pls
+    - i need help
+    - I need some help
+    - provide help
+    - howto
+
+- intent: help_filter_by_target
+  examples: |
+    - assist with filter by protein target
+    - Assistance with target filter
+    - Assist with target filter
+    - Assistance with using target filter
+    - Explain how to limit target selection
+    - Explain how to remove targets
+    - Explain target filtering
+    - Explain target filter
+    - Explain target selection limit expressions
+    - Explain target sub-setting
+    - Explain target sub-setting expressions
+    - Explanation of target filter options
+    - exploain target filter
+    - Help filter my targets
+    - help filter targets
+    - Help filtering by target families
+    - Help limit my target selection
+    - Help remove targets
+    - Help subset  targets
+    - help target filter
+    - help target filtering
+    - Help with  target filtering
+    - Help with  target ontology filtering
+    - Help with  target sub-setting
+    - Help with creating target family filter queries
+    - Help with filtering targets
+    - Help with remove molecular targets
+    - help with removing targets
+    - Help with setting target filters
+    - Help with target filter combinations
+    - help with target filtering
+    - Help with target subset
+    - help with target selection limits
+    - help with target sub-setting
+    - How to apply multiple target filters
+    - How to enable target filtering
+    - How to exclude results based on molecular target
+    - how to filter by target
+    - How to filter by molecular target
+    - How to limit targets by criteria?
+    - How to narrow down results by molecular target
+    - How to perform target sub-setting?
+    - How to remove targets?
+    - How to reset remove target?
+    - How to reset target filter?
+    - How to reset target selection limits?
+    - How to reset target sub-setting?
+    - How to search by molecular target value
+    - How to search using target filter
+    - How to select target filter criteria
+    - How to set protein target filters
+    - How to subset targets?
+    - How to use target filter
+    - How to use target selection limits?
+    - How to use target sub-setting?
+    - molecular target filter examples
+    - molecular target filter help
+    - Need help with molecular target filtering
+    - protein target filter instructions
+    - Show how to exclude targets from filter
+    - Show how to exclude targets from remove targets
+    - Show how to exclude targets from selection limits
+    - Show how to exclude targets from sub-setting
+    - Show how to remove targets
+    - Show how to set target filter
+    - Show how to set target selection limits
+    - Show how to set target sub-setting
+    - Show remove target examples
+    - Show target family filter options
+    - Show target filtering examples
+    - Show target selection limit examples
+    - Show target sub-setting examples
+    - target family filter assistance
+    - target family filter query building
+    - target filter best practices
+    - target filter guidance
+    - target filter results interpretation
+    - target filter support
+    - target-based filtering guidance
+    - targets filter feature explanation
+    - targets filter syntax explanation
+    - targets filter use guidelines
+    - Tips for target filtering
+    - where do you filter by target
+    - where is the filter control
+
+- intent: help_filter_by_virus
+  examples: |
+    - Assist viral family filter
+    - Assist virus filter
+    - Assistance with  virus filtering
+    - Explain filter by virus.
+    - Explain viral family filtering
+    - Explain virus selection
+    - Explain virus sub-setting
+    - Explain virus sub-setting expressions
+    - Explanation of virus filter options
+    - Help  limit  virus selection
+    - Help  remove viruses
+    - Help  subset  viruses
+    - Help filter by viral ontology
+    - help filtering  data by virus
+    - Help filtering by viral families
+    - help virus sub-setting
+    - Help with  virus filtering
+    - Help with  virus filtering
+    - Help with  virus sub-setting
+    - help with removing viruses
+    - Help with setting virus filters
+    - Help with viral family filtering
+    - help with virus selection limits
+    - How can I filter by virus?
+    - how do i filter by virus
+    - how do i subset by viral ontology
+    - How to exclude results based on viral family
+    - how to filter by virus
+    - How to filter by virus ontology
+    - How to filter viruses by criteria?
+    - How to limit viruses by criteria?
+    - How to narrow down results by virus
+    - How to perform viral sub-setting?
+    - How to refine results with virus filter
+    - How to remove virus filters
+    - How to remove viruses by criteria?
+    - How to remove viruses?
+    - How to reset remove virus?
+    - How to reset virus filter?
+    - How to reset virus selection limits?
+    - How to reset virus sub-setting?
+    - How to search by viral family value
+    - How to search using virus filter
+    - How to select viral family filter criteria
+    - How to set viral family filters
+    - How to set virus selection limits?
+    - How to subset molecules by virus
+    - How to subset viruses by criteria?
+    - How to use viral ontology filter
+    - How to use virus selection limits?
+    - How to use virus sub-setting?
+    - show  how to subset by viral ontology?
+    - Show available remove virus options
+    - Show available virus filter options
+    - Show available virus selection limit options
+    - Show available virus sub-setting options
+    - Show how to exclude viruses from filter
+    - Show how to exclude viruses from remove viruses
+    - Show how to exclude viruses from selection limits
+    - Show how to exclude viruses from sub-setting
+    - Show how to remove viruses
+    - Show how to set virus selection limits
+    - Show how to set virus sub-setting
+    - Show remove virus examples
+    - Show virus filter options
+    - Show virus selection limit examples
+    - Show virus sub-setting examples
+    - Tips for viral ontology filtering
+    - trouble finding the virus family filter
+    - walk  through filter viral ontology?
+    - Where is the filter for virus?
+    - where is the virus family filter
+
+- intent: help_filter_by_property
+  examples: |
+    - assist  in creating  property filters?
+    - Assist filtering by property.
+    - assist with filtering by property?
+    - explain how to filter by properties?
+    - explain how to use property filters?
+    - explain physico-chemical property filtering?
+    - Explain property filtering
+    - Explanation of property filter options
+    - guide  on filtering by custom properties?
+    - help  apply property filters to  results?
+    - help  filter by experintal chemical properties?
+    - help  filter by properties using Boolean operators?
+    - Help  filter by specific properties.
+    - help  narrow down  results using property filters?
+    - Help  with property filtering.
+    - help filtering by physico-chemical property.
+    - help to filter  results based on specific physico-chemical properties.
+    - help to filter by multiple properties.
+    - help to filter by properties.
+    - help to filter by virus physico-chemical properties.
+    - Help with  property filtering
+    - Help with applying property filters.
+    - Help with creating properties filter queries
+    - Help with property filtering
+    - Help with setting chemical property filters
+    - How can I filter by specific physico-chemical properties?
+    - How can I refine  search using physico-chemical property filters?
+    - How can I use properties to sort  results?
+    - How do I access the property filters?
+    - How do I apply property filtering?
+    - How do I create a custom property filter?
+    - How do I exclude results based on certain properties?
+    - How do I filter by annotation properties?
+    - How do I filter by property?
+    - How do I filter by protein chemical properties?
+    - How do I filter using properties?
+    - How do I refine  search using multiple property filters?
+    - How do I remove property filters from  search?
+    - How do I save  property filters for future searches?
+    - How do I select properties to filter  results?
+    - How do I set up a property filter for  search?
+    - How do I set up physico-chemical property filters?
+    - how do I show the properties filter
+    - How do I use physico-chemical properties to filter  results?
+    - How to apply multiple physico-chemical property filters
+    - How to customize physico-chemical property filters
+    - How to enable property filtering
+    - How to exclude results based on chemical property
+    - how to filter by chemical properties
+    - How to filter by chemical property
+    - how to filter by property
+    - How to narrow down results by property
+    - How to refine results with property filter
+    - How to remove physico-chemical property filters
+    - How to search by property value
+    - How to search using property filter
+    - How to select properties filter criteria
+    - How to set property filters
+    - How to use property filter
+    - I require guidance on filtering by property.
+    - Need help with chemical property filtering
+    - physico-chemical property filter examples
+    - physico-chemical property filter nu guide
+    - physico-chemical property filter overview
+    - Please help with filtering by property.
+    - properties filter common issues
+    - properties filter use case examples
+    - properties filter use guidelines
+    - Property filter benefits overview
+    - Property filter best practices
+    - Property filter feature explanation
+    - Property filter guidance
+    - Property filter query building
+    - Property filter results interpretation
+    - Property filter settings help
+    - Property filter support
+    - Property filter walk-through
+    - show  how to apply multiple property filters?
+    - show  how to filter by organism properties?
+    - show  how to filter by property?
+    - Show chemical property filter options
+    - Tips for property filtering
+    - trouble filtering by property.
+    - walk  through property filtering?
+    - What are the available physico-chemical property filters?
+    - What are the best practices for filtering by physico-chemical property?
+    - What are the options for filtering by property?
+    - what calculated propertes available
+    - What is the process for property filtering?
+    - what properties are avaiable to subset
+    - what property can be filtered on.
+    - where are physicochemical properties
+    - where is the property filter
+
+- intent: who_r_u
+  examples: |
+    - hi what is your name?
+    - tell me who you are
+    - tell me your name
+    - what are you?
+    - what I can call you
+    - what is ur name
+    - what is your name
+    - what is your name?
+    - who are u
+    - who are you?
+    - who is this
+    - who r u
+    - who the hell are you?
+    - your name?
+    - Ar you a bot ?
+    - Are you a bot
+    - are you a BOT
+    - are you a bot
+    - are you a bot ?
+    - are you a bot?
+    - are you a bot?
+    - Are you a chat bot?
+    - are you a chatbot
+    - Are you a human or a machine?
+    - Are you a human or a robot?
+    - Are you a machine?
+    - Are you a program?
+    - are you a real bot?
+    - Are you a real person?
+    - are you a robot
+    - are you a Skynet ?
+    - are you ai
+    - are you artificial
+    - are you artificial intelligence
+    - Are you automated?
+    - are you bot
+    - are you bot?
+    - are you real
+    - are you robot
+    - are you sure that you're a bot?
+    - Are you the bot?
+    - bot?
+    - cuz you are a bot
+    - give me your name?
+    - Hi there, are you the bot?
+    - i guess you are a chatbot
+    - introduce yourself?
+    - May I know your identity?
+    - name?
+    - oh are you chatbot?
+    - real bot then?
+    - tell me, are you a bot?
+    - what are you, a bot?
+    - what are you?
+    - What do I call you?
+    - What do you do?
+    - What is your identity?
+    - what is your name?
+    - What kind of entity are you?
+    - What should I call you?
+    - who are you
+    - who are you?
+    - Who or what am I speaking with?
+    - you are a robot
+    - you are ai
+    - you are chatbot
+    - you robo
+    - you're a bot
+
+- intent: who_creator
+  examples: |
+    - what being made you?
+    - what company designed you?
+    - What company developed you?
+    - what company made you?
+    - What consortium developed you?
+    - What corporation built you?
+    - what created you?
+    - What developed you?
+    - What entity made you?
+    - What generated you?
+    - What group designed you?
+    - What is your builder?
+    - What is your developer?
+    - What is your inventor?
+    - what made you?
+    - What organization made you?
+    - What produced you?
+    - what software company made you?
+    - What spawned you?
+    - What studio crafted you?
+    - What team created you?
+    - which company made you?
+    - Who authored your software code?
+    - Who authored your software framework?
+    - Who built you?
+    - Who constructed you?
+    - Who constructed your software architecture?
+    - Who constructed your software development environment?
+    - Who constructed your software?
+    - Who created this website?
+    - Who created you?
+    - Who created you?
+    - Who created you?
+    - Who created your code?
+    - Who created your computational structure framework?
+    - Who designed and developed you?
+    - Who designed you?
+    - Who developed you?
+    - Who developed your algorithm?
+    - Who developed your computational abilities?
+    - Who developed your software infrastructure?
+    - Who devised this program?
+    - Who do you represent?
+    - Who engineered your computational framework?
+    - Who engineered your software system architecture?
+    - Who engineered your system?
+    - Who established you?
+    - Who invented you?
+    - Who invented your computational system?
+    - Who is the architect of you?
+    - Who is the author of you?
+    - Who is the creator of you?
+    - Who is the creator of your algorithm?
+    - Who is the creator of your software?
+    - Who is the designer of you?
+    - Who is the developer of you?
+    - Who is the engineer of you?
+    - Who is the inventor of you?
+    - Who is the maker of you?
+    - Who is the manufacturer of you?
+    - Who is your creator?
+    - who is your manufacturer?
+    - who is your master?
+    - Who made this program?
+    - Who made you?
+    - Who made you?
+    - Who manufactured you?
+    - Who manufactured your software?
+    - Who produced you?
+    - Who produced your codebase?
+    - Who produced your software framework architecture?
+    - Who produced your virtual existence?
+    - Who programmed you?
+    - Who programmed your personality?
+    - Who put together your computational architecture?
+    - Who put you together?
+
+- intent: what_language
+  examples: |
+    - What languages can you converse in?
+    - What languages can you use?
+    - What languages do you know how to use?
+    - What languages do you know?
+    - What languages do you speak?
+    - Which languages are you familiar with?
+    - Which languages do you speak?
+    - are you bilingual?
+    - are you multilingual?
+    - can you speak Spanish language?
+    - can you speak in italian language?
+    - do you know chinese language
+    - do you speak dutch language?
+    - do you speak german language?
+    - do you speak any other languages?
+    - how many languages are you fluent in?
+    - how many languages do you know?
+    - tell me some languages you know?
+    - what else do you know besides English language?
+    - what foreign languages are you fluent in?
+    - what foreign languages do you know?
+    - what language do you use
+    - what languages are you comfortable speaking at?
+    - what languages are you familiar with?
+    - what languages are you good at speaking?
+    - what languages do you know?
+    - what languages do you speak
+    - what languages you are well versed ?
+    - what languages you can be comfortable speaking?
+    - what languages you can handle well?
+    - what languages you can speak ?
+    - what languages you know?
+    - what languages you prefer more speaking at?
+    - which languages do you understand?
+    - you know French language
+    - you speak french language ?
+    - I want to speak binary with you
+    - ARE YOU SPANISH language
+    - we cant converse in french language?
+    - can we converse in french language?
+    - Do you speak italian language?
+
+- intent: tell_tech_details
+  examples: |
+    - what are the components of rasa
+    - What components does Rasa have?
+    - What are the components that make up
+    - want to build a chatbot
+    - what are the components?
+    - tell me about the components
+    - parts of rasa
+    - more info on components
+    - more info on components of rasa pls
+    - more information on components in rasa
+    - rasa components
+    - can give tell me about components of Rosa
+
+- intent: sqlite_count_molsbylibrary
+  examples: |
+    - count molecules by vendor.
+    - molecule count by vendor.
+    - molecules count group by vendor.
+    - count molecules and group by vendor.
+    - count molecules by library.
+    - molecule count by library.
+    - molecules count group by library.
+    - count molecules and group by library.
+    - how many mols per vendor.
+    - how many molecules per vendor.
+    - how many rows per vendor.
+    - how many molecules per vendor.
+    - how many mols per library.
+    - how many molecules per library.
+    - how many rows per library.
+    - how many molecules per library.
+
+- intent: sqlite_molecule_count
+  examples: |
+    - how many molecules exist in db
+    - how many molecules do you have
+    - molecule count
+    - count molecules
+    - how many molecules
+    - total number of molecules
+    - how many molecules are available
+
+- intent: display_virus_filter
+  examples: |
+    - Access viral class filter
+    - Access viral classification interface
+    - Access viral family panel
+    - Access viral genus panel
+    - Access viral ontology UI
+    - Access viral order filter
+    - Access viral subfamily filter
+    - Access viral suborder filter
+    - Access viral taxonomy filter
+    - Access viral taxonomy subset panel
+    - Access virus categorization filter
+    - Access virus category panel
+    - Access virus family filter
+    - Access virus family interface
+    - Access virus grouping filter
+    - Access virus grouping UI
+    - Access virus groupings panel
+    - Access virus hierarchy filter
+    - Access virus ontology interface
+    - Access virus order filter
+    - Access virus phylum panel
+    - Access virus subtype panel
+    - Browse viral classification panel
+    - Browse viral classification UI
+    - Browse virus categorization UI
+    - Browse virus family interface
+    - Browse virus ontology UI
+    - Display viral classification ontology
+    - Display viral classification system
+    - Display viral family classification.
+    - Display viral family hierarchy
+    - Display viral family ontology
+    - Display viral groupings ontology
+    - Display viral taxonomy hierarchy
+    - Display viral taxonomy interface
+    - Display viral taxonomy ontology
+    - Display viral taxonomy panel
+    - Display viral taxonomy UI
+    - Display virus categorization panel
+    - Display virus categorization UI
+    - Display virus category ontology
+    - Display virus clade ontology
+    - Display virus classification filter
+    - Display virus classification interface
+    - Display virus classification ontology
+    - Display virus classification taxonomy
+    - Display virus classification tree
+    - Display virus family hierarchy
+    - Display virus family interface
+    - Display virus family taxonomy
+    - Display virus group ontology
+    - Display virus grouping UI
+    - Display virus hierarchy filter
+    - Display virus hierarchy interface
+    - Display virus hierarchy UI
+    - Display virus lineage hierarchy
+    - Display virus lineage ontology
+    - Display virus ontology hierarchy
+    - Display virus ontology panel
+    - display virus ontology UI
+    - Display virus taxonomy classification
+    - Display virus taxonomy interface
+    - Display virus taxonomy panel
+    - Display virus taxonomy tree
+    - Display virus taxonomy view
+    - exclude certain viruses
+    - filter by virus
+    - filter by virus
+    - include only specific viruses
+    - keep only certain viruses
+    - limit by viral ontology
+    - limit to only specific viruses
+    - Open viral category hierarchy
+    - Open viral classification hierarchy
+    - Open viral classification panel
+    - Open viral classification panel
+    - Open viral classification UI
+    - Open viral family classification
+    - Open viral family filter
+    - Open viral family hierarchy
+    - Open viral hierarchy panel
+    - Open viral ontology panel
+    - Open viral taxonomy dialog
+    - Open viral taxonomy interface
+    - Open viral taxonomy panel
+    - Open viral taxonomy tree
+    - Open viral taxonomy UI
+    - Open virus categorization UI
+    - Open virus clade hierarchy
+    - Open virus classification dialog
+    - Open virus classification filter
+    - Open virus classification panel
+    - Open virus classification system
+    - Open virus classification tree
+    - Open virus classification view
+    - Open virus family filter
+    - Open virus family ontology
+    - open virus filter panel
+    - Open virus grouping filter
+    - Open virus grouping hierarchy
+    - Open virus hierarchy filter
+    - Open virus hierarchy interface
+    - Open virus hierarchy view
+    - Open virus lineage interface
+    - Open virus ontology filter
+    - Open virus ontology hierarchy
+    - Open virus ontology panel
+    - Open virus ontology UI
+    - Open virus taxonomy interface
+    - Open virus taxonomy ontology
+    - Open virus taxonomy panel
+    - restrict by viral ontology
+    - Reveal viral family filter
+    - Reveal viral taxonomy panel
+    - Reveal virus categorization panel
+    - Reveal virus categorization UI
+    - Reveal virus classification interface
+    - Reveal virus hierarchy UI
+    - Reveal virus ontology filter
+    - Show viral classification interface
+    - Show viral classification ontology
+    - Show viral classification view
+    - Show viral family classification
+    - Show viral family filter panel
+    - show viral family interface
+    - Show viral family panel
+    - Show viral family UI
+    - Show viral hierarchy interface
+    - Show viral species filter
+    - Show viral taxonomy dialog
+    - Show viral taxonomy hierarchy
+    - Show viral taxonomy interface
+    - Show viral taxonomy panel
+    - Show virus clade filter
+    - Show virus clade selection panel
+    - Show virus classification hierarchy
+    - Show virus classification panel
+    - Show virus classification system
+    - Show virus classification taxonomy
+    - Show virus classification UI
+    - Show virus family interface
+    - Show virus family UI
+    - Show virus group panel
+    - Show virus grouping panel
+    - Show virus hierarchy filter UI
+    - Show virus hierarchy interface
+    - Show virus hierarchy panel
+    - Show virus ontology classification
+    - Show virus ontology filter
+    - Show virus ontology subset UI
+    - Show virus ontology taxonomy
+    - Show virus ontology UI
+    - Show virus order filter
+    - Show virus subfamily panel
+    - subset by viral family
+    - Virus family classification system
+    - Virus family ontology classification
+    - Virus family taxonomy filter
+    - virus filter panel
+    - virus filter UI
+    - Virus ontology classification
+    - Virus ontology family filter
+    - Virus taxonomy filter
+
+- intent: display_target_filter
+  examples: |
+    - open target filter
+    - filter by target
+    - target filter
+    - select for targets
+
+- intent: display_property_filter
+  examples: |
+    - open property filter
+    - property filter
+    - select for properties
+
+- intent: filter_by_pains
+  examples: |
+    - filter by PAINS motifs
+    - apply PAINS filter
+    - filter molecules by PAINS
+    - remove molecules that violate PAINS
+    - ignore PAINS molecules
+
+- intent: filter_by_ugly_motifs
+  examples: |
+    - filter by reactive motifs
+    - apply reactive filter
+    - filter reactive molecules out
+    - remove reactive molecules
+    - ignore reactive molecules
+    - filter out reactive mols
+    - filter out ugly molecles
+    - remove ugly molecules
+    - remove reactive mols
+
+- intent: perfrom_diversity_analysis
+  examples: |
+    - perform diversity analysis
+    - perform scaffold analysis
+    - select molecules by diversit
+    - prioritize molecules by diversity
+    - apply Altoris scaffold diversity prioritization
+    - apply diversity prioritization scheme
+    - perform diversity prioritization
+
+- intent: filter_by_vendor
+  examples: |
+    - vendor filter
+    - filter by vendor
+    - open vendor filter
+    - subset vendors
+    - library filter
+    - open library filter
+    - filter by library
+
+- intent: test_sql
+  examples: |
+    - testsql
+    - test sql
+    - sqltest
+    - sql test
+    - test sqlite
+
+

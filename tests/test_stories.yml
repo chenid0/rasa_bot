@@ -1,0 +1,33 @@
+stories:
+
+- story: test story 1
+  steps:
+  - user: |
+     create new subset
+    intent: create_subset
+  - action: utter_create_subset
+  - user: |
+     who are you?
+    intent: who_r_u
+  - action: utter_who_r_u
+  - user: |
+     what do you do?
+    intent: help
+  - action: utter_help
+  - user: |
+     virus filtering help
+    intent: help_filter_by_virus
+  - action: utter_help_filter_by_virus
+  - user: |
+     how to filter by molecular target
+    intent: help_filter_by_target
+  - action: utter_help_filter_by_target
+  - user: |
+     who created you
+    intent: who_creator
+  - action: utter_who_creator
+  - user: |
+     clear subset
+    intent: subset_clear
+  - action: utter_subset_clear
+

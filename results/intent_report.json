@@ -1,0 +1,156 @@
+{
+  "filter_by_pains": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 5,
+    "confused_with": {}
+  },
+  "who_r_u": {
+    "precision": 1.0,
+    "recall": 0.984375,
+    "f1-score": 0.9921259842519685,
+    "support": 64,
+    "confused_with": {
+      "help": 1
+    }
+  },
+  "help": {
+    "precision": 0.9946524064171123,
+    "recall": 1.0,
+    "f1-score": 0.9973190348525469,
+    "support": 186,
+    "confused_with": {}
+  },
+  "create_subset": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 41,
+    "confused_with": {}
+  },
+  "filter_by_ugly_motifs": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 9,
+    "confused_with": {}
+  },
+  "display_target_filter": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 4,
+    "confused_with": {}
+  },
+  "filter_by_vendor": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 7,
+    "confused_with": {}
+  },
+  "perfrom_diversity_analysis": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 7,
+    "confused_with": {}
+  },
+  "help_filter_by_virus": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 71,
+    "confused_with": {}
+  },
+  "what_language": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 41,
+    "confused_with": {}
+  },
+  "display_property_filter": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 3,
+    "confused_with": {}
+  },
+  "display_virus_filter": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 161,
+    "confused_with": {}
+  },
+  "who_creator": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 73,
+    "confused_with": {}
+  },
+  "help_filter_by_target": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 85,
+    "confused_with": {}
+  },
+  "help_filter_by_property": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 93,
+    "confused_with": {}
+  },
+  "sqlite_count_molsbylibrary": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 14,
+    "confused_with": {}
+  },
+  "tell_tech_details": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 12,
+    "confused_with": {}
+  },
+  "subset_clear": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 86,
+    "confused_with": {}
+  },
+  "sqlite_molecule_count": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 7,
+    "confused_with": {}
+  },
+  "accuracy": 0.9989680082559339,
+  "macro avg": {
+    "precision": 0.9997185477061636,
+    "recall": 0.9991776315789473,
+    "f1-score": 0.9994444746897113,
+    "support": 969
+  },
+  "weighted avg": {
+    "precision": 0.998973526928362,
+    "recall": 0.9989680082559339,
+    "f1-score": 0.9989653286632608,
+    "support": 969
+  },
+  "micro avg": {
+    "precision": 0.9989680082559339,
+    "recall": 0.9989680082559339,
+    "f1-score": 0.9989680082559339,
+    "support": 969
+  }
+}

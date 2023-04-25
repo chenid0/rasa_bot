@@ -1,0 +1,132 @@
+version: "3.1"
+
+rules:
+
+- rule: Fallback
+  steps:
+  - intent: nlu_fallback
+  - action: utter_default
+
+- rule: rule_clear
+  steps:
+  - intent: subset_clear
+  - action: utter_subset_clear
+
+- rule: create_subset
+  steps:
+  - intent: create_subset
+  - action: utter_create_subset
+
+- rule: rule_help
+  steps:
+  - intent: help
+  - action: utter_help
+
+- rule: rule_help2
+  steps:
+  - intent: help2
+  - action: utter_help
+
+- rule: rule_help3
+  steps:
+  - intent: help3
+  - action: utter_help
+
+- rule: rule_help4
+  steps:
+  - intent: help4
+  - action: utter_help
+
+- rule: rule_help5
+  steps:
+  - intent: help5
+  - action: utter_help
+
+- rule: rule_help_filter_by_target
+  steps:
+  - intent: help_filter_by_target
+  - action: utter_help_filter_by_target
+
+- rule: rule_help_filter_by_virus
+  steps:
+  - intent: help_filter_by_virus
+  - action: utter_help_filter_by_virus
+
+- rule: rule_help_filter_by_property
+  steps:
+  - intent: help_filter_by_property
+  - action: utter_help_filter_by_property
+
+- rule: rule_who_r_u
+  steps:
+  - intent: who_r_u
+  - action: utter_who_r_u
+
+- rule: rule_who_creator
+  steps:
+  - intent: who_creator
+  - action: utter_who_creator
+
+- rule: language
+  steps:
+  - intent: what_language
+  - action: utter_what_language
+
+- rule: technicals
+  steps:
+  - intent: tell_tech_details
+  - action: utter_tell_tech_details
+
+- rule: action_rule_count_mols_by_vendor
+  steps:
+  - intent: sqlite_count_molsbylibrary
+  - action: action_sqlite_count_molsbylibrary
+  - action: action_sqlite_count_vendor_rows
+  - action: action_sqlite_count_unique_molecules
+
+- rule: action_sqlite_count_molecules
+  steps:
+  - intent: sqlite_molecule_count
+  - action: action_sqlite_count_vendor_rows
+  - action: action_sqlite_count_unique_molecules
+
+- rule: action_popup_virus_filter
+  steps:
+  - intent: display_virus_filter
+  - action: action_display_virus_filter
+
+- rule: action_popup_target_filter
+  steps:
+  - intent: display_target_filter
+  - action: action_display_target_filter
+
+- rule: action_popup_property_filter
+  steps:
+  - intent: display_property_filter
+  - action: action_display_property_filter
+
+- rule: action_filter_by_pains
+  steps:
+  - intent: filter_by_pains
+  - action: action_filter_by_pains
+
+- rule: action_filter_by_ugly_motifs
+  steps:
+  - intent: filter_by_ugly_motifs
+  - action: action_filter_by_ugly_motifs
+
+- rule: action_perfrom_diversity_analysis
+  steps:
+  - intent: perfrom_diversity_analysis
+  - action: action_perfrom_diversity_analysis
+
+- rule: action_popup_vender_filter
+  steps:
+  - intent: filter_by_vendor
+  - action: action_popup_vendor_filter
+
+- rule: action_test_sql
+  steps:
+  - intent: test_sql
+  - action: action_test_sql
+

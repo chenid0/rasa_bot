@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ChatGPT</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .User {
+            background-color: #e6e6e6;
+            align-self: flex-start;
+        }
+        .Bot {
+            background-color: #1e90ff;
+            color: #fff;
+            align-self: flex-end;
+        }
+        .user {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .text {
+            word-wrap: break-word;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            margin-left: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #1e90ff;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat_history"></div>
+    <form id="chat_form">
+        <input type="text" name="user_input" placeholder="Type your message here...">
+        <button type="submit">Send</button>
+    </form>
+    <script>
+        $(document).ready(function() {
+            $('#chat_form').submit(function(event) {
+                event.preventDefault();
+                var user_input = $('input[name="user_input"]').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/',
+                    data: {user_input: user_input},
+                    success: function(response) {
+                        var chat_history = response.chat_history;
+                        $('#chat_history').empty();
+                        for (var i = 0; i < chat_history.length; i++) {
+                            var message = chat_history[i];
+                            var message_html = '<div class="message ' + message[0] + '">' +
+                                                '<span class="user">' + message[0] + ':</span>' +
+                                                '<span class="text">' + message[1] + '</span>' +
+                                            '</div>';
+                            $('#chat_history').append(message_html);
+                        }
+                        $('input[name="user_input"]').val('');
+                    },
+                    error: function() {
+                        alert('Error sending message');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+

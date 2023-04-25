@@ -1,0 +1,10 @@
+[
+  {
+    "text": "What do you do?",
+    "intent": "who_r_u",
+    "intent_prediction": {
+      "name": "help",
+      "confidence": 0.9369597434997559
+    }
+  }
+]

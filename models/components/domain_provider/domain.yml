@@ -1,0 +1,87 @@
+version: '3.1'
+intents:
+- create_subset
+- display_property_filter
+- display_target_filter
+- display_virus_filter
+- filter_by_pains
+- filter_by_ugly_motifs
+- filter_by_vendor
+- help
+- help2
+- help3
+- help4
+- help5
+- help_filter_by_property
+- help_filter_by_target
+- help_filter_by_virus
+- nlu_fallback
+- perfrom_diversity_analysis
+- sqlite_count_molsbylibrary
+- sqlite_molecule_count
+- subset_clear
+- tell_tech_details
+- test_sql
+- what_language
+- who_creator
+- who_r_u
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+responses:
+  utter_subset_clear:
+  - text: Filter subset is clear.
+  utter_create_subset:
+  - text: 'Old subset is cleared. New subset is initiated. Type: filter virus, filter target and/or filter properties to populate this subset.'
+  utter_help:
+  - text: |-
+      This site contains a list of available molecules that can be purchased. To find molecules that are interest to you type: create subset and then add filters to subset the molecules. Finally, if desired, you can perform diversity analysis to create a diverse library. 
+      To learn more type: 
+      	help filter target 
+      	help filter virus
+      	help filter property 
+      	help  diversity analysis
+  - text: |-
+      This site offers a list of purchasable molecules. Use "create subset" and add filters to narrow your search. Optionally, perform diversity analysis to generate a diverse library.  
+      Try: 
+      	help filter target 
+      	help filter virus
+      	help filter property 
+      	help  diversity analysis
+  - text: |-
+      This site offers a list of purchasable molecules. Use "create subset" to select molecules of interest and add filters. You can also perform diversity analysis to create a varied library.  
+      Try: 
+      	help filter target 
+      	help filter virus
+      	help filter property 
+      	help  diversity analysis
+  utter_help_filter_by_target:
+  - text: 'To select specific viral targets to add to the filter, type: filter by target. Once viral targets have been selected, this subset can be used to search for similar molecules that are commercially available.'
+  utter_help_filter_by_virus:
+  - text: 'To select specific viruses to add to the filter, type: filter by virus. Once viruses and/or viral families have been selected, this subset can be used to search for similar molecules that are commercially available.'
+  utter_help_filter_by_property:
+  - text: 'You can filter molecules by chemical properties, spcifically: logP, TPSA, SASA, HBA, HBD and fractionCSP3. Type: filter by properties to open a UI to set ranges.'
+  utter_who_r_u:
+  - text: I am ChemBot, a chemistry assistant. I understand simple commands such as 'help'.
+  utter_who_creator:
+  - text: I was created by smart guys at **Altoris, inc**. See ***www.Altoris.com*** and ***www.ChemApps.com***.
+  utter_what_language:
+  - text: I am currently only trained to speak English.
+  utter_tell_tech_details:
+  - text: As an ai-bot, I can help create a molecule library. I contain over 5mil molecules that can be searched, filtered, and analyzed for diversity.
+  utter_default:
+  - text: Sorry, I don’t understand.
+actions:
+- action_sqlite_count_molsbylibrary
+- action_sqlite_count_vendor_rows
+- action_sqlite_count_unique_molecules
+- action_display_virus_filter
+- action_display_target_filter
+- action_display_property_filter
+- action_filter_by_pains
+- action_filter_by_ugly_motifs
+- action_perfrom_diversity_analysis
+- action_popup_vendor_filter
+- action_test_sql
+entities:
+- sqlstatement

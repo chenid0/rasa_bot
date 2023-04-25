@@ -1,0 +1,11 @@
+version: "3.1"
+
+stories:
+
+- story: story 1
+  steps:
+  - intent: subset_clear
+  - action: utter_subset_clear
+  - intent: create_subset
+  - action: utter_create_subset
+
