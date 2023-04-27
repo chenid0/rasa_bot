@@ -56,7 +56,7 @@ class TestSQL(Action):
             cursor.execute('SELECT * FROM MOLECULES LIMIT 1;')
             rows = cursor.fetchall()
             conn.close()
-            dispatcher.utter_message(text = rows)
+            dispatcher.utter_message(text = str(rows))
         #except sqlite3.Error as e:
             #dispatcher.utter_message(text = e);
         except Exception as e1:

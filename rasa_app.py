@@ -25,7 +25,8 @@ def chat():
             traceback.print_exc()
             return jsonify({'response': error_message})
 
-        response_data = json.loads(response.content.decode('utf-8'))
+        #response_data = json.loads(response.content.decode('utf-8'))
+        response_data = response.json()
         # Return the response from the chatbot to the user
         chat_history.append(('Bot', response_data))
         return jsonify({'response': response_data})
