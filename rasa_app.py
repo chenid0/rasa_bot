@@ -13,7 +13,7 @@ def chat():
         # TODO: Process user input here and generate a response
         # For now, let's just return the user's message
         chat_history.append(('User', user_input))
-        chat_history.append(('Bot', user_input))
+        
         # Pass the user input to the Rasa chatbot
         try:
             response = requests.post('http://localhost:5005/webhooks/rest/webhook', json={"message": user_input})
@@ -27,6 +27,7 @@ def chat():
 
         response_data = json.loads(response.content.decode('utf-8'))
         # Return the response from the chatbot to the user
+        chat_history.append(('Bot', response_data))
         return jsonify({'response': response_data})
         
     else:
