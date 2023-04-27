@@ -5,35 +5,40 @@ import traceback
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
+
+@app.route("/", methods=["GET", "POST"])
 def chat():
     chat_history = []
-    if request.method == 'POST':
-        user_input = request.form['user_input']
+    if request.method == "POST":
+        user_input = request.form["user_input"]
         # TODO: Process user input here and generate a response
         # For now, let's just return the user's message
-        chat_history.append(('User', user_input))
-        
+        chat_history.append(("User", user_input))
+
         # Pass the user input to the Rasa chatbot
         try:
-            response = requests.post('http://localhost:5005/webhooks/rest/webhook', json={"message": user_input})
+            response = requests.post(
+                "http://localhost:5005/webhooks/rest/webhook",
+                json={"message": user_input},
+            )
             print(response)
             response.raise_for_status()
         except Exception as e:
-            error_message = f"Sorry, rasa is having issues. Error message: {traceback.format_exc()}."            
+            error_message = f"Sorry, rasa is having issues. Error message: {traceback.format_exc()}."
             app.logger.error(error_message)
             traceback.print_exc()
-            return jsonify({'response': error_message})
+            return jsonify({"response": error_message})
 
-        #response_data = json.loads(response.content.decode('utf-8'))
+        # response_data = json.loads(response.content.decode('utf-8'))
         response_data = response.json()
         # Return the response from the chatbot to the user
-        chat_history.append(('Bot', response_data))
-        return jsonify({'response': response_data})
-        
+        chat_history.append(("Bot", response_data))
+        response_data["chat_history"] = chat_history
+        return jsonify({"response": response_data})
+
     else:
-        return render_template('index.html')
+        return render_template("index.html")
+
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')
-
+    app.run(debug=True, host="0.0.0.0")

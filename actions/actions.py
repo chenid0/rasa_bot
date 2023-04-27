@@ -34,90 +34,111 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 
 
-db_path_name = '/home/mark/chatbot/db/Molecules.db'
-#db_virus_knowledgebase = '/home/mark/chatbot/db/Viruses.db'
+db_path_name = "/home/mark/chatbot/db/Molecules.db"
+# db_virus_knowledgebase = '/home/mark/chatbot/db/Viruses.db'
 
 
-#_______________________________________________________________________________________________________________
-# trigger this with 'sqltest' or 'testsql'  
+# _______________________________________________________________________________________________________________
+# trigger this with 'sqltest' or 'testsql'
 # !!Note this works without error
 class TestSQL(Action):
     def name(self) -> Text:
         return "action_test_sql"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:   
-        dispatcher.utter_message(text = "running: action_test_sql")
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(text="running: action_test_sql")
         try:
-            if os.path.exists(db_path_name)==False:
-                dispatcher.utter_message(text = "path to db does not exist")
+            if os.path.exists(db_path_name) == False:
+                dispatcher.utter_message(text="path to db does not exist")
                 return []
             conn = sqlite3.connect(db_path_name)
-            cursor = conn.cursor();   
-            cursor.execute('SELECT * FROM MOLECULES LIMIT 1;')
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM MOLECULES LIMIT 1;")
             rows = cursor.fetchall()
             for row in rows:
                 print(row)
             row_text = str(rows)
             print(row_text)
             conn.close()
-            dispatcher.utter_message(text = row_text)
-        #except sqlite3.Error as e:
-            #dispatcher.utter_message(text = e);
+            dispatcher.utter_message(text=row_text)
+        # except sqlite3.Error as e:
+        # dispatcher.utter_message(text = e);
         except Exception as e1:
-            dispatcher.utter_message(text = "error while executing: " + traceback.format_exc());
+            dispatcher.utter_message(
+                text="error while executing: " + traceback.format_exc()
+            )
 
         return []
-#__________________________________________________________________________________________________
+
+
+# __________________________________________________________________________________________________
 
 
 # Count all molecules in MOLECULES table (unique set)____________________________________________________________
 # trigger this with count molecules
 # !!Note this one fails .. seems simple enough
-class ActionSQLiteCountMolecules(Action): 
-    
+class ActionSQLiteCountMolecules(Action):
     def name(self) -> Text:
-        return "action_sqlite_count_unique_molecules";
+        return "action_sqlite_count_unique_molecules"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        #sql = 'SELECT COUNT(ID) AS Count FROM MOLECULES;';
-        sql = 'SELECT MAX(_ROWID_) FROM Molecules LIMIT 1;'
-        dispatcher.utter_message(text=sql);
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        # sql = 'SELECT COUNT(ID) AS Count FROM MOLECULES;';
+        sql = "SELECT MAX(_ROWID_) FROM Molecules LIMIT 1;"
+        dispatcher.utter_message(text=sql)
 
-        try:          
-            conn = sqlite3.connect(db_path_name);
-            cursor = conn.cursor();
-            cursor.execute(sql);
-            results = cursor.fetchall();
+        try:
+            conn = sqlite3.connect(db_path_name)
+            cursor = conn.cursor()
+            cursor.execute(sql)
+            results = cursor.fetchall()
 
             for row in results:
-                count = row[0];
-                message = "unique molecules: " + f"{count}";
-                dispatcher.utter_message(text=message);
+                count = row[0]
+                message = "unique molecules: " + f"{count}"
+                dispatcher.utter_message(text=message)
 
-            conn.close();
+            conn.close()
 
         except Exception as e:
             # handle the error gracefully
             error_message = "I'm sorry, there was a problem processing your request."
             dispatcher.utter_message(text=error_message)
 
-        return [];
-#_______________________________________________________________________________________________________________
+        return []
 
-#Count Moldata rows and group by library____________________________________________________________
-class ActionSQLiteCountMolsByLibrary(Action): 
-    
+
+# _______________________________________________________________________________________________________________
+
+
+# Count Moldata rows and group by library____________________________________________________________
+class ActionSQLiteCountMolsByLibrary(Action):
     def name(self) -> Text:
-        return "action_sqlite_count_molsbylibrary";
+        return "action_sqlite_count_molsbylibrary"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        dispatcher.utter_message(text="Perform: SELECT Library, COUNT(ID) AS Count FROM MOLDATA GROUP BY Library ORDER BY Library;");
-        return [];
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(
+            text="Perform: SELECT Library, COUNT(ID) AS Count FROM MOLDATA GROUP BY Library ORDER BY Library;"
+        )
+        return []
 
         # conn = sqlite3.connect(db_path_name);
         # cursor = conn.cursor();
-        
+
         # cursor.execute('SELECT Library, COUNT(*) AS Count FROM MOLDATA GROUP BY Library ORDER BY Library;');
         # results = cursor.fetchall();
 
@@ -130,22 +151,30 @@ class ActionSQLiteCountMolsByLibrary(Action):
         # conn.close();
 
         # return [];
-#_______________________________________________________________________________________________________________
+
+
+# _______________________________________________________________________________________________________________
+
 
 # Count all rows in MOLDATA____________________________________________________________
-class ActionSQLiteCountVendorRows(Action): 
-    
+class ActionSQLiteCountVendorRows(Action):
     def name(self) -> Text:
-        return "action_sqlite_count_vendor_rows";
+        return "action_sqlite_count_vendor_rows"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        dispatcher.utter_message(text="Perform: SELECT COUNT(ID) AS Count FROM MOLDATA;");
-        return [];
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(
+            text="Perform: SELECT COUNT(ID) AS Count FROM MOLDATA;"
+        )
+        return []
 
         # conn = sqlite3.connect(db_path_name);
         # cursor = conn.cursor();
-        
+
         # cursor.execute('SELECT COUNT(ID) AS Count FROM MOLDATA;');
         # results = cursor.fetchall();
 
@@ -157,49 +186,72 @@ class ActionSQLiteCountVendorRows(Action):
         # conn.close();
 
         # return [];
-#_______________________________________________________________________________________________________________
+
+
+# _______________________________________________________________________________________________________________
 
 
 # Popup a javascript virus filter panel like in spotfire example_________________________________________________
-class ActionPopupVirusFilter(Action): 
-    
+class ActionPopupVirusFilter(Action):
     def name(self) -> Text:
-        return "action_popup_virus_filter";
+        return "action_popup_virus_filter"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(
+            text="Popup a javascript virus filter panel like in spotfire example(actions.py)"
+        )
+        return []
 
-        dispatcher.utter_message(text="Popup a javascript virus filter panel like in spotfire example(actions.py)");
-        return [];
-#_______________________________________________________________________________________________________________
+
+# _______________________________________________________________________________________________________________
+
 
 # Popup a javascript target filter panel like in spotfire example_______________________________________________
-class ActionPopupTargetFilter(Action): 
-    
+class ActionPopupTargetFilter(Action):
     def name(self) -> Text:
-        return "action_popup_target_filter";
+        return "action_popup_target_filter"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(
+            text="Popup a javascript target filter panel like in spotfire example(actions.py)"
+        )
+        return []
 
-        dispatcher.utter_message(text="Popup a javascript target filter panel like in spotfire example(actions.py)");
-        return [];
-#_______________________________________________________________________________________________________________
+
+# _______________________________________________________________________________________________________________
+
 
 # Popup a javascript Property Filter panel like in ChemVendor website___________________________________________
-class ActionPopupPropertyFilter(Action): 
-    
+class ActionPopupPropertyFilter(Action):
     def name(self) -> Text:
-        return "action_popup_property_filter";
+        return "action_popup_property_filter"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        dispatcher.utter_message(text="Popup a javascript Property Filter panel like in ChemVendor website(actions.py)");
-        return [];
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(
+            text="Popup a javascript Property Filter panel like in ChemVendor website(actions.py)"
+        )
+        return []
 
         # formulate sql for MOLDATA table
 
         # conn = sqlite3.connect(db_path_name);
         # cursor = conn.cursor();
-        
+
         # cursor.execute('SELECT * FROM TARGET_TABLE ;');
         # results = cursor.fetchall();
 
@@ -212,23 +264,30 @@ class ActionPopupPropertyFilter(Action):
         # conn.close();
 
         # return [];
-        
-#_______________________________________________________________________________________________________________
+
+
+# _______________________________________________________________________________________________________________
+
 
 # Set Optoions to filter by vendor__________________________________________
-class ActionPopupVendorFilter(Action): 
-    
+class ActionPopupVendorFilter(Action):
     def name(self) -> Text:
-        return "action_popup_vendor_filter";
+        return "action_popup_vendor_filter"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        dispatcher.utter_message(text="Perform: SELECT COUNT(DISTINCT m.MOLID) as Count from MOLECULES m, MOLPROPS mp where m.MOLID == mp.MOLID AND mp.Library IN SET {VENDORS LIST};");
-        return [];
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(
+            text="Perform: SELECT COUNT(DISTINCT m.MOLID) as Count from MOLECULES m, MOLPROPS mp where m.MOLID == mp.MOLID AND mp.Library IN SET {VENDORS LIST};"
+        )
+        return []
 
         # conn = sqlite3.connect(db_path_name);
         # cursor = conn.cursor();
-        
+
         # cursor.execute('SELECT COUNT(DISTINCT m.MOLID) as Count from MOLECULES m, MOLPROPS mp where m.MOLID == mp.MOLID AND mp.Library IN SET {VENDORS LIST};');
         # results = cursor.fetchall();
 
@@ -240,25 +299,32 @@ class ActionPopupVendorFilter(Action):
         # conn.close();
 
         # return [];
-#_______________________________________________________________________________________________________________
+
+
+# _______________________________________________________________________________________________________________
 
 
 # Set Optons to filter PAINS molecules: return count ___________________________________________________________
-class ActionFilterByPainsMotifs(Action): 
-    
+class ActionFilterByPainsMotifs(Action):
     def name(self) -> Text:
-        return "action_filter_by_pains";
+        return "action_filter_by_pains"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        dispatcher.utter_message(text="Perform: SELECT COUNT(MOLID) as Count from MOLECULES m, MOLPROPS mp where m.MOLID == mp.MOLID AND mp.PAINS ISNULL;");
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(
+            text="Perform: SELECT COUNT(MOLID) as Count from MOLECULES m, MOLPROPS mp where m.MOLID == mp.MOLID AND mp.PAINS ISNULL;"
+        )
         return []
 
         # note: i need to build this table yet
 
         # conn = sqlite3.connect(db_path_name);
         # cursor = conn.cursor();
-        
+
         # cursor.execute('SELECT COUNT(MOLID) as Count from MOLECULES m, MOLPROPS mp where m.MOLID == mp.MOLID AND mp.PAINS ISNULL;');
         # results = cursor.fetchall();
 
@@ -270,22 +336,30 @@ class ActionFilterByPainsMotifs(Action):
         # conn.close();
 
         # return [];
-#_______________________________________________________________________________________________________________
+
+
+# _______________________________________________________________________________________________________________
+
 
 # Set Optons to filter existing molecules: return count ___________________________________________________________
-class ActionFilterByPainsMotifs2(Action): 
-    
+class ActionFilterByPainsMotifs2(Action):
     def name(self) -> Text:
-        return "action_filter_by_pains";
+        return "action_filter_by_pains"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        dispatcher.utter_message(text="Perform: SELECT COUNT(MOLID) as Count from MOLECULES m, MARKING mk where mk.MOLID == m.MOLID AND mk.PAINS ISNULL;");
-        return [];
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(
+            text="Perform: SELECT COUNT(MOLID) as Count from MOLECULES m, MARKING mk where mk.MOLID == m.MOLID AND mk.PAINS ISNULL;"
+        )
+        return []
 
         # conn = sqlite3.connect(db_path_name);
         # cursor = conn.cursor();
-        
+
         # cursor.execute('SELECT COUNT(MOLID) as Count from MOLECULES m, MARKING mk where mk.MOLID == m.MOLID AND mk.PAINS ISNULL');
         # results = cursor.fetchall();
 
@@ -297,23 +371,30 @@ class ActionFilterByPainsMotifs2(Action):
         # conn.close();
 
         # return [];
-#_______________________________________________________________________________________________________________
+
+
+# _______________________________________________________________________________________________________________
 
 
 # Set Optoions to filter by ugly molecules___________________________________________
-class ActionFilterByUnstableMotifs(Action): 
-    
+class ActionFilterByUnstableMotifs(Action):
     def name(self) -> Text:
-        return "action_filter_by_ugly_motifs";
+        return "action_filter_by_ugly_motifs"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        dispatcher.utter_message(text="Perform: SELECT COUNT(MOLID) as Count from MOLECULES m, MOLPROPS mp where m.MOLID == mp.MOLID AND mp.UGLY == FALSE;");
-        return [];
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(
+            text="Perform: SELECT COUNT(MOLID) as Count from MOLECULES m, MOLPROPS mp where m.MOLID == mp.MOLID AND mp.UGLY == FALSE;"
+        )
+        return []
 
         # conn = sqlite3.connect(db_path_name);
         # cursor = conn.cursor();
-        
+
         # cursor.execute('SELECT COUNT(MOLID) as Count from MOLECULES m, MOLPROPS mp where m.MOLID == mp.MOLID AND mp.UGLY == FALSE;');
         # results = cursor.fetchall();
 
@@ -325,18 +406,23 @@ class ActionFilterByUnstableMotifs(Action):
         # conn.close();
 
         # return [];
-#_______________________________________________________________________________________________________________
+
+
+# _______________________________________________________________________________________________________________
+
 
 # Set Optoions to filter by ugly molecules___________________________________________
-class ActionPerformDiversityAnalysis(Action): 
-    
+class ActionPerformDiversityAnalysis(Action):
     def name(self) -> Text:
-        return "action_perfrom_diversity_analysis";
+        return "action_perfrom_diversity_analysis"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        dispatcher.utter_message(text="Perform cluster analysis on the filtered set of molecules and add a numeric column (sequential) to the MOLPROPS;");
-        return [];
-
-
-
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(
+            text="Perform cluster analysis on the filtered set of molecules and add a numeric column (sequential) to the MOLPROPS;"
+        )
+        return []
