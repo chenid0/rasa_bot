@@ -27,7 +27,7 @@ def chat():
 
         response_data = json.loads(response.content.decode('utf-8'))
         # Return the response from the chatbot to the user
-        return jsonify({'response': response_data[0]['text']})
+        return jsonify({'response': response_data})
         
     else:
         return render_template('index.html')
