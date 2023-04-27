@@ -34,8 +34,8 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 
 
-db_path_name = '/home/mark/chatbot/db/Molecules.db';
-db_virus_knowledgebase = '/home/mark/chatbot/db/Viruses.db';
+db_path_name = '../Molecules.db';
+db_virus_knowledgebase = '../Viruses.db';
 
 
 #_______________________________________________________________________________________________________________

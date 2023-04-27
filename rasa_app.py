@@ -16,7 +16,8 @@ def chat():
         chat_history.append(('Bot', user_input))
         # Pass the user input to the Rasa chatbot
         try:
-            response = requests.post('http://127.0.0.1:5005/webhooks/rest/webhook', json={"message": user_input})
+            response = requests.post('http://localhost:5005/webhooks/rest/webhook', json={"message": user_input})
+            print(response)
             response.raise_for_status()
         except Exception as e:
             error_message = f"Sorry, rasa is having issues. Error message: {e}."
@@ -26,7 +27,7 @@ def chat():
 
         response_data = json.loads(response.content.decode('utf-8'))
         # Return the response from the chatbot to the user
-        return jsonify({'response': response_text})
+        return jsonify({'response': response_data[0]['text']})
         
     else:
         return render_template('index.html')
