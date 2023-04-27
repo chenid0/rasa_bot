@@ -34,8 +34,8 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 
 
-db_path_name = '../Molecules.db';
-db_virus_knowledgebase = '../Viruses.db';
+db_path_name = '/home/mark/chatbot/db/Molecules.db'
+#db_virus_knowledgebase = '/home/mark/chatbot/db/Viruses.db'
 
 
 #_______________________________________________________________________________________________________________
@@ -46,20 +46,20 @@ class TestSQL(Action):
         return "action_test_sql"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:   
-        dispatcher.utter_message(text = "running: action_test_sql");
+        dispatcher.utter_message(text = "running: action_test_sql")
         try:
             if os.path.exists(db_path_name)==False:
-                dispatcher.utter_message(text = "lost connection to molecule db");     
+                dispatcher.utter_message(text = "path to db does not exist")
                 return []
-            conn = sqlite3.connect(db_path_name);
+            conn = sqlite3.connect(db_path_name)
             cursor = conn.cursor();   
-            cursor.execute('SELECT * FROM MOLECULES LIMIT 1;');
-            conn.close();
-            dispatcher.utter_message(text = "test is ok");
+            cursor.execute('SELECT * FROM MOLECULES LIMIT 1;')
+            conn.close()
+            dispatcher.utter_message(text = "test is ok")
         #except sqlite3.Error as e:
             #dispatcher.utter_message(text = e);
         except Exception as e1:
-            dispatcher.utter_message(text = "error while executing: "+traceback.format_exec());
+            dispatcher.utter_message(text = "error while executing: " + traceback.format_exc());
 
         return []
 #__________________________________________________________________________________________________
@@ -247,7 +247,7 @@ class ActionFilterByPainsMotifs(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         dispatcher.utter_message(text="Perform: SELECT COUNT(MOLID) as Count from MOLECULES m, MOLPROPS mp where m.MOLID == mp.MOLID AND mp.PAINS ISNULL;");
-        return [];
+        return []
 
         # note: i need to build this table yet
 
@@ -268,7 +268,7 @@ class ActionFilterByPainsMotifs(Action):
 #_______________________________________________________________________________________________________________
 
 # Set Optons to filter existing molecules: return count ___________________________________________________________
-class ActionFilterByPainsMotifs(Action): 
+class ActionFilterByPainsMotifs2(Action): 
     
     def name(self) -> Text:
         return "action_filter_by_pains";

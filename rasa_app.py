@@ -20,7 +20,7 @@ def chat():
             print(response)
             response.raise_for_status()
         except Exception as e:
-            error_message = f"Sorry, rasa is having issues. Error message: {e}."
+            error_message = f"Sorry, rasa is having issues. Error message: {traceback.format_exc()}."            
             app.logger.error(error_message)
             traceback.print_exc()
             return jsonify({'response': error_message})
