@@ -54,8 +54,9 @@ def async_run_query(query: str, dispatcher: CollectingDispatcher) -> Tuple[List[
     results = []
     for row in rows:
         result = {}
-        for i in range(len(column_names)):
-            result[column_names[i]] = row[i]
+        #for i in range(len(column_names)):
+        #    result[column_names[i]] = row[i]
+        result[column_names[1]] = row[1]
         results.append(result)
     return results, ""
 
