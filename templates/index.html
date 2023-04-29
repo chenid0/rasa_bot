@@ -74,10 +74,16 @@
                         //                    '</div>';
                         //    $('#chat_history').append(message_html);
                         //}
-                        var message_html = '<div class="message> result:' +response.text + '</div>';
-                        $('#chat_text').append(message_html);
+                        $.each(response, function(index, item) {
+                        const recipientId = item.recipient_id;
+                        const text = item.text;
                         $('#chat_text').append("adding<br>");
-                        $('#chat_text').append(response.text());
+                        $('#chat_text').append('Recipient ID:'+ recipientId);
+                        $('#chat_text').append("Text:" + text);
+                        });
+                        var message_html = '<div class="message> result:' +response.text + '</div>';
+                        //$('#chat_text').append(message_html);
+                        $('#chat_text').append("adding<br>");                        
                         $('input[name="user_input"]').val('');
                         alert(response.text);
                     },
