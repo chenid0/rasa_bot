@@ -79,7 +79,7 @@
                         $('#chat_text').append("adding<br>");
                         $('#chat_text').append(response.text);
                         $('input[name="user_input"]').val('');
-                        //alert(response);
+                        alert(response.text);
                     },
                     error: function() {
                         alert('Error sending message');
