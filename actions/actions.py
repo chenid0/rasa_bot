@@ -98,7 +98,7 @@ class TestSQL(Action):
             rows, errors = async_run_query(query, dispatcher)
             if errors != None:
                 dispatcher.utter_message(text=errors)
-            dispatcher.utter_message(text=rows)
+            dispatcher.utter_message(text="success")
         # except sqlite3.Error as e:
         # dispatcher.utter_message(text = e);
         except Exception as e1:
