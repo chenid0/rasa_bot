@@ -75,7 +75,7 @@
                         //    $('#chat_history').append(message_html);
                         //}
                         var message_html = '<div class="message> result:' +response.text + '</div>';
-                        $('#chat_text').text(message_html);
+                        $('#chat_text').append(message_html);
                         $('input[name="user_input"]').val('');
                         //alert(response);
                     },
