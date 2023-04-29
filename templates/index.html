@@ -49,7 +49,7 @@
     </style>
 </head>
 <body>
-    <div id="chat_history"></div>
+    <div id="chat_history"><span id="chat_text"></span></div>
     <form id="chat_form">
         <input type="text" name="user_input" placeholder="Type your message here...">
         <button type="submit">Send</button>
@@ -75,7 +75,7 @@
                         //    $('#chat_history').append(message_html);
                         //}
                         var message_html = '<div class="message> result:' +response.text + '</div>';
-                        $('#chat_history').append(message_html);
+                        $('#chat_text').text(message_html);
                         $('input[name="user_input"]').val('');
                         //alert(response);
                     },
