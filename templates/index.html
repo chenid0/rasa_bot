@@ -77,7 +77,7 @@
                         var message_html = '<div class="message> result:' +response.text + '</div>';
                         $('#chat_text').append(message_html);
                         $('#chat_text').append("adding<br>");
-                        $('#chat_text').append(response.text);
+                        $('#chat_text').append(response.text());
                         $('input[name="user_input"]').val('');
                         alert(response.text);
                     },
