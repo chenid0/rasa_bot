@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ChatGPT</title>
+    <title>Query Chat</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         .message {
@@ -74,6 +74,8 @@
                         //                    '</div>';
                         //    $('#chat_history').append(message_html);
                         //}
+                        var message_html = '<div class="message ' + "message1" + '">' + '<span class="user">' + "user" + ':</span>' + '<span class="text">' + "text" + '</span>' + '</div>';
+                        $('#chat_history').append(message_html);
                         $('input[name="user_input"]').val('');
                         alert(response);
                     },

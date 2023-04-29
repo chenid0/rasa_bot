@@ -29,14 +29,53 @@ import sqlite3
 import os
 import traceback
 import logging
-from typing import Any, Text, Dict, List
+from typing import Any, Text, Dict, List, Tuple, Optional
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-
+import asyncio
 
 db_path_name = "/home/mark/chatbot/db/Molecules.db"
 # db_virus_knowledgebase = '/home/mark/chatbot/db/Viruses.db'
 
+running_queries: Dict[int, asyncio.Task] = {}
+
+
+def async_run_query(query: str, dispatcher: CollectingDispatcher) -> Tuple[List[Dict[str, str]], str]:
+    if os.path.exists(db_path_name) == False:        
+        return [], "path to db does not exist"
+    conn = sqlite3.connect(db_path_name)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    column_names = [desc[0] for desc in cursor.description]
+    conn.close()
+    results = []
+    for row in rows:
+        result = {}
+        for i in range(len(column_names)):
+            result[column_names[i]] = row[i]
+        results.append(result)
+    return results, ""
+
+
+async def wait_on_query(query: str, dispatcher: CollectingDispatcher) -> Tuple[List[Dict[str, str]], str]:   
+    task: asyncio.Task = asyncio.create_task(async_run_query(query, dispatcher))
+    running_queries[id(task)] = task
+    try:
+        results: List[Dict[str, str]] = await asyncio.wait_for(task, timeout=10)
+    except asyncio.TimeoutError:        
+        return [],"query still running. check back later"
+    except Exception as e:
+        return [],f"query error: {traceback.format_exc()}"
+    finally:
+        running_queries.pop(id(task))
+    return results, ""
+
+def get_running_queries() -> dict:
+    query_ids: List[int] = list(running_queries.keys())
+    return {'query_ids': query_ids}
 
 # _______________________________________________________________________________________________________________
 # trigger this with 'sqltest' or 'testsql'
@@ -52,20 +91,13 @@ class TestSQL(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="running: action_test_sql")
-        try:
-            if os.path.exists(db_path_name) == False:
-                dispatcher.utter_message(text="path to db does not exist")
-                return []
-            conn = sqlite3.connect(db_path_name)
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM MOLECULES LIMIT 1;")
-            rows = cursor.fetchall()
-            for row in rows:
-                print(row)
-            row_text = str(rows)
-            print(row_text)
-            conn.close()
-            dispatcher.utter_message(text=row_text)
+        try:            
+            query = "SELECT * FROM MOLECULES LIMIT 1;"
+            
+            rows, errors = async_run_query(query, dispatcher)
+            if errors != None:
+                dispatcher.utter_message(text=errors)
+            dispatcher.utter_message(text=rows)
         # except sqlite3.Error as e:
         # dispatcher.utter_message(text = e);
         except Exception as e1:
