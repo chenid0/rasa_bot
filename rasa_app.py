@@ -21,8 +21,12 @@ def chat():
                 "http://localhost:5005/webhooks/rest/webhook",
                 json={"message": user_input},
             )
-            print(response)
             response.raise_for_status()
+            response_str = ""
+            for d in response:
+                for k,v, in d:
+                    response_str +=  (k +":" + v)
+            return jsonify({"response": response_str})
         except Exception as e:
             error_message = f"Sorry, rasa is having issues. Error message: {traceback.format_exc()}."
             app.logger.error(error_message)
