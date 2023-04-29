@@ -65,7 +65,7 @@ async def wait_on_query(query: str, dispatcher: CollectingDispatcher) -> Tuple[L
     task: asyncio.Task = asyncio.create_task(async_run_query(query, dispatcher))
     running_queries[id(task)] = task
     try:
-        results: List[Dict[str, str]] = await asyncio.wait_for(task, timeout=10)
+        results: List[Dict[str, str]] = await asyncio.wait_for(task, timeout=2)
     except asyncio.TimeoutError:        
         return [],"query still running. check back later"
     except Exception as e:
