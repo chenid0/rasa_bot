@@ -96,9 +96,12 @@ class TestSQL(Action):
             query = "SELECT * FROM MOLECULES LIMIT 1;"
             
             rows, errors = async_run_query(query, dispatcher)
+            results = ""
+            for row in rows:
+                results += f"{row}\n"
             if errors != None:
                 dispatcher.utter_message(text=errors)
-            dispatcher.utter_message(text="success")
+            dispatcher.utter_message(text=results)
         # except sqlite3.Error as e:
         # dispatcher.utter_message(text = e);
         except Exception as e1:
