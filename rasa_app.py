@@ -30,10 +30,11 @@ def chat():
             return jsonify({"response": error_message})
 
         # response_data = json.loads(response.content.decode('utf-8'))
-        response_data = response.json()
+        
         # Return the response from the chatbot to the user
         chat_history.append(("Bot", response_data))
-        response_data["chat_history"] = chat_history
+        response["chat_history"] = chat_history
+        response_data = response.json()
         return jsonify({"response": response_data})
 
     else:
