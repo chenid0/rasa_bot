@@ -33,6 +33,7 @@ from typing import Any, Text, Dict, List, Tuple, Optional
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 import asyncio
+import time
 
 db_path_name = "/home/mark/chatbot/db/Molecules.db"
 # db_virus_knowledgebase = '/home/mark/chatbot/db/Viruses.db'
@@ -58,6 +59,7 @@ def async_run_query(query: str, dispatcher: CollectingDispatcher) -> Tuple[List[
         #    result[column_names[i]] = row[i]
         result[column_names[1]] = row[1]
         results.append(result)
+    time.sleep(10)
     return results, ""
 
 
