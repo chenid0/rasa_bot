@@ -16,7 +16,11 @@ def send_message():
         'message': message
     }
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
-    response = {'message': rasa_response[0]['text']}
+    message_txt = ""
+    for obj in rasa_response:
+        message_txt += obj['text']
+        message_txt += "\n<br>"
+    response = {'message': message_txt}
     return jsonify(response)
 
 if __name__ == "__main__":
