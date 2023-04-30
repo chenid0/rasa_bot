@@ -15,5 +15,7 @@ def send_message():
     response = {'message': rasa_response[0]['text']}
     return jsonify(response)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0")
+
