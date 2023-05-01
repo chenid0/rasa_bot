@@ -59,6 +59,7 @@ def execute_query(query: str) -> None:
     conn = sqlite3.connect(db_path_name)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
+    global_results[query] = None
     cur.execute(query)
     rows = [dict(row) for row in cur.fetchall()]
     cur.close()
@@ -66,22 +67,21 @@ def execute_query(query: str) -> None:
     global_results[query] = rows
 
 
-def db_query(query: str) -> Tuple[list, str]:
+def db_query(query: str, dispatcher: CollectingDispatcher) -> Tuple[list, str]:
     timeout_secs = 5
     run_query(query, timeout=timeout_secs)
     start_time = time.time()
     while(time.time() - start_time < timeout_secs):
         if query in global_results:
-            return global_results[query], ""
+            result = global_results[query]
+            if result:
+                return result, ""
+            else:
+                dispatcher.utter_message(text="query found but not completed yet. Query still running")
         time.sleep(1)
-    return [], "query not completed yet. Query still running"
+    return [], f"query not completed yet. {len(global_results.keys())} Queries still running"
 
 
-def results(query: str) -> Tuple[list, str]:
-    if query in global_results:
-        return global_results[query], ""
-    else:
-        return [], f"Results not available yet. num queries running {len(global_results.keys())}"
 
 
 # _______________________________________________________________________________________________________________
@@ -100,7 +100,7 @@ class TestSQL(Action):
         dispatcher.utter_message(text="running: action_test_sql")
         try:
             query = "SELECT * FROM MOLECULES LIMIT 1;"
-            rows, errors = rows, errors = db_query(query)
+            rows, errors = rows, errors = db_query(query, dispatcher)
             results = "results: \n"
             for row in rows:
                 results += f"{row}\n"
