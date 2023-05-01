@@ -81,7 +81,7 @@ def results(query: str) -> Tuple[list, str]:
     if query in global_results:
         return global_results[query], ""
     else:
-        return [], "Results not available yet."
+        return [], f"Results not available yet. num queries running {len(global_results.keys)}"
 
 
 # _______________________________________________________________________________________________________________
