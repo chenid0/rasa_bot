@@ -51,26 +51,9 @@ global_results: Dict[str, List[Dict[str, Union[int, str, float]]]] = {}
 
 
 @lru_cache(maxsize=128)
-def run_query(query: str, timeout: int) -> Tuple[list, str]:
-    conn = sqlite3.connect(db_path_name)
-    conn.row_factory = sqlite3.Row
-    cur = conn.cursor()
-    try:
-        with ThreadPoolExecutor(max_workers=1) as executor:
-            future = executor.submit(cur.execute, query)
-            result = future.result(timeout=timeout)
-    except TimeoutError:
-        cur.close()
-        conn.close()
-        p = Process(target=execute_query, args=(query,))
-        p.start()
-        return [], "Query timed out and is running in the background."
-    rows = [dict(row) for row in cur.fetchall()]
-    cur.close()
-    conn.close()
-    global_results[query] = rows
-    return rows, ""
-
+def run_query(query: str, timeout: int):        
+    p = Process(target=execute_query, args=(query,))
+    p.start()        
 
 def execute_query(query: str) -> None:
     conn = sqlite3.connect(db_path_name)
@@ -84,11 +67,14 @@ def execute_query(query: str) -> None:
 
 
 def db_query(query: str) -> Tuple[list, str]:
-    if query in global_results:
-        return global_results[query], ""
-    else:
-        result, errors = run_query(query, timeout=5)
-        return result, errors
+    timeout_secs = 5
+    run_query(query, timeout=timeout_secs)
+    start_time = time.time()
+    while(time.time() - start_time < timeout_secs):
+        if query in global_results:
+            return global_results[query], ""
+        time.sleep(1)
+    return [], "query not completed yet. Query still running"
 
 
 def results(query: str) -> Tuple[list, str]:
