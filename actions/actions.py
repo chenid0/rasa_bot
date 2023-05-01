@@ -59,7 +59,8 @@ def execute_query(query: str) -> None:
     conn = sqlite3.connect(db_path_name)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
-    global_results[query] = None
+    if query not in global_results:
+        global_results[query] = None
     cur.execute(query)
     rows = [dict(row) for row in cur.fetchall()]
     cur.close()
