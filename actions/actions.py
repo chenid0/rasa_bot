@@ -32,53 +32,71 @@ import logging
 from typing import Any, Text, Dict, List, Tuple, Optional
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-import asyncio
 import time
+import os
+import time
+import sqlite3
+from flask import Flask, jsonify
+from multiprocessing import Process, Queue
+from threading import Thread
+from concurrent.futures import ThreadPoolExecutor, TimeoutError
+from functools import lru_cache
+from typing import Dict, Union, List
 
 db_path_name = "/home/mark/chatbot/db/Molecules.db"
 # db_virus_knowledgebase = '/home/mark/chatbot/db/Viruses.db'
 
-running_queries: Dict[int, asyncio.Task] = {}
+
+global_results: Dict[str, List[Dict[str, Union[int, str, float]]]] = {}
 
 
-def async_run_query(query: str, dispatcher: CollectingDispatcher) -> Tuple[List[Dict[str, str]], str]:
-    if os.path.exists(db_path_name) == False:        
-        return [], "path to db does not exist"
+@lru_cache(maxsize=128)
+def run_query(query: str, timeout: int) -> Tuple[list, str]:
     conn = sqlite3.connect(db_path_name)
-    cursor = conn.cursor()
-    cursor.execute(query)
-    rows = cursor.fetchall()
-    cursor.execute(query)
-    rows = cursor.fetchall()
-    column_names = [desc[0] for desc in cursor.description]
-    conn.close()
-    results = []
-    for row in rows:
-        result = {}
-        #for i in range(len(column_names)):
-        #    result[column_names[i]] = row[i]
-        result[column_names[1]] = row[1]
-        results.append(result)
-    time.sleep(10)
-    return results, ""
-
-
-async def wait_on_query(query: str, dispatcher: CollectingDispatcher) -> Tuple[List[Dict[str, str]], str]:   
-    task: asyncio.Task = asyncio.create_task(async_run_query(query, dispatcher))
-    running_queries[id(task)] = task
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
     try:
-        results: List[Dict[str, str]] = await asyncio.wait_for(task, timeout=2)
-    except asyncio.TimeoutError:        
-        return [],"query still running. check back later"
-    except Exception as e:
-        return [],f"query error: {traceback.format_exc()}"
-    finally:
-        running_queries.pop(id(task))
-    return results, ""
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(cur.execute, query)
+            result = future.result(timeout=timeout)
+    except TimeoutError:
+        cur.close()
+        conn.close()
+        p = Process(target=execute_query, args=(query,))
+        p.start()
+        return [], "Query timed out and is running in the background."
+    rows = [dict(row) for row in cur.fetchall()]
+    cur.close()
+    conn.close()
+    global_results[query] = rows
+    return rows, ""
 
-def get_running_queries() -> dict:
-    query_ids: List[int] = list(running_queries.keys())
-    return {'query_ids': query_ids}
+
+def execute_query(query: str) -> None:
+    conn = sqlite3.connect(db_path_name)
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+    cur.execute(query)
+    rows = [dict(row) for row in cur.fetchall()]
+    cur.close()
+    conn.close()
+    global_results[query] = rows
+
+
+def db_query(query: str) -> Tuple[list, str]:
+    if query in global_results:
+        return global_results[query], ""
+    else:
+        result, errors = run_query(query, timeout=5)
+        return result, errors
+
+
+def results(query: str) -> Tuple[list, str]:
+    if query in global_results:
+        return global_results[query], ""
+    else:
+        return [], "Results not available yet."
+
 
 # _______________________________________________________________________________________________________________
 # trigger this with 'sqltest' or 'testsql'
@@ -94,10 +112,9 @@ class TestSQL(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="running: action_test_sql")
-        try:            
+        try:
             query = "SELECT * FROM MOLECULES LIMIT 1;"
-            
-            rows, errors = async_run_query(query, dispatcher)
+            rows, errors = rows, errors = db_query(query)
             results = "results: \n"
             for row in rows:
                 results += f"{row}\n"
