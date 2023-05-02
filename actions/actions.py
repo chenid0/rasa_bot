@@ -42,6 +42,7 @@ from threading import Thread
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
 from functools import lru_cache
 from typing import Dict, Union, List
+import threading
 
 db_path_name = "/home/mark/chatbot/db/Molecules.db"
 # db_virus_knowledgebase = '/home/mark/chatbot/db/Viruses.db'
@@ -50,40 +51,15 @@ db_path_name = "/home/mark/chatbot/db/Molecules.db"
 global_results: Dict[str, List[Dict[str, Union[int, str, float]]]] = {}
 
 
-@lru_cache(maxsize=128)
-def run_query(query: str, timeout: int):        
-    p = Process(target=execute_query, args=(query,))
-    p.start()        
 
-def execute_query(query: str) -> None:
+def run_query(query, dispatcher):
     conn = sqlite3.connect(db_path_name)
-    conn.row_factory = sqlite3.Row
     cur = conn.cursor()
-    if query not in global_results:
-        global_results[query] = None
     cur.execute(query)
-    rows = [dict(row) for row in cur.fetchall()]
-    cur.close()
+    rows = cur.fetchall()
+    for row in rows:
+        dispatcher(row)
     conn.close()
-    global_results[query] = rows
-
-
-def db_query(query: str, dispatcher: CollectingDispatcher) -> Tuple[list, str]:
-    timeout_secs = 5
-    run_query(query, timeout=timeout_secs)
-    start_time = time.time()
-    while(time.time() - start_time < timeout_secs):
-        if query in global_results:
-            result = global_results[query]
-            if result:
-                return result, ""
-            else:
-                dispatcher.utter_message(text="query found but not completed yet. Query still running")
-        time.sleep(1)
-    return [], f"query not completed yet. {len(global_results.keys())} Queries still running"
-
-
-
 
 # _______________________________________________________________________________________________________________
 # trigger this with 'sqltest' or 'testsql'
@@ -101,12 +77,23 @@ class TestSQL(Action):
         dispatcher.utter_message(text="running: action_test_sql")
         try:
             query = "SELECT * FROM MOLECULES LIMIT 1;"
-            rows, errors = rows, errors = db_query(query, dispatcher)
+            query_thread = threading.Thread(target=run_query, args=(query, dispatcher))
+            # Start the thread
+            query_thread.start()
+
+            # Poll the thread periodically from the main thread to check if it's still running
+            while query_thread.is_alive():
+                print("Query is running in the background...")
+                time.sleep(1)
+
+            # The database query has finished, so join the thread to the main thread
+            query_thread.join()
+
             results = "results: \n"
-            for row in rows:
-                results += f"{row}\n"
-            if errors != "":
-                dispatcher.utter_message(text=errors)
+            #for row in rows:
+            #    results += f"{row}\n"
+            #if errors != "":
+            #    dispatcher.utter_message(text=errors)
             dispatcher.utter_message(text=results)
         # except sqlite3.Error as e:
         # dispatcher.utter_message(text = e);
