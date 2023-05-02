@@ -60,7 +60,7 @@ def run_query(query, dispatcher):
     column_names = [description[0] for description in cur.description]
     # Print out the rows with column names
     for row in rows:
-        for i in range(len(column_names)) and i < 3:
+        for i in range(len(column_names)) and i < 2:
             results += (column_names[i] + ": " + str(row[i]))        
     conn.close()
     dispatcher.utter_message(text=results)
@@ -82,7 +82,7 @@ class TestSQL(Action):
     ) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="running: action_test_sql")
         try:
-            query = "SELECT ID FROM MOLECULES LIMIT 1;"
+            query = "SELECT * FROM MOLECULES LIMIT 1;"
             query_thread = threading.Thread(target=run_query, args=(query, dispatcher))
             # Start the thread
             query_thread.start()
