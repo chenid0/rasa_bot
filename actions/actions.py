@@ -60,7 +60,7 @@ def run_query(query, dispatcher):
     column_names = [description[0] for description in cur.description]
     # Print out the rows with column names
     for row in rows:
-        for i in range(len(column_names)):
+        for i in range(len(column_names)) and i < 3:
             results += (column_names[i] + ": " + str(row[i]))        
     conn.close()
     dispatcher.utter_message(text=results)
