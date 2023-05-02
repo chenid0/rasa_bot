@@ -94,7 +94,7 @@ class TestSQL(Action):
 
             # Poll the thread periodically from the main thread to check if it's still running
             while query_thread.is_alive():
-                print("Query is running in the background...")
+                print("test is running in the background...")
                 time.sleep(1)
 
             # The database query has finished, so join the thread to the main thread
