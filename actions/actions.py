@@ -50,16 +50,17 @@ db_path_name = "/home/mark/chatbot/db/Molecules.db"
 
 global_results: Dict[str, List[Dict[str, Union[int, str, float]]]] = {}
 
-
-
 def run_query(query, dispatcher):
     conn = sqlite3.connect(db_path_name)
     cur = conn.cursor()
     cur.execute(query)
     rows = cur.fetchall()
-    for row in rows:
-        dispatcher(row)
+    results = ""
+    for row in rows:        
+        results += f"{row}\n"
     conn.close()
+    dispatcher.utter_message(text=results)
+    global_results[query] = rows
 
 # _______________________________________________________________________________________________________________
 # trigger this with 'sqltest' or 'testsql'
@@ -90,6 +91,7 @@ class TestSQL(Action):
             query_thread.join()
 
             results = "results: \n"
+            print(global_results[query])
             #for row in rows:
             #    results += f"{row}\n"
             #if errors != "":
