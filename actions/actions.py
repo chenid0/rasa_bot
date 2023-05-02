@@ -83,7 +83,7 @@ class TestSQL(Action):
         dispatcher.utter_message(text="running: action_test_sql")
         try:
             query = "SELECT * FROM MOLECULES LIMIT 1;"
-            query_thread = threading.Thread(target=run_query, args=(query, dispatcher))
+            query_thread = threading.Thread(target=run_query, args=(query,))
             # Start the thread
             query_thread.start()
             thread_set.add(query_thread)
