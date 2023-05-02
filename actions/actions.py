@@ -51,7 +51,7 @@ thread_set = set()
 
 global_results: Dict[str, List[Dict[str, Union[int, str, float]]]] = {}
 
-def run_query(query, dispatcher):
+def run_query(query):
     conn = sqlite3.connect(db_path_name)
     cur = conn.cursor()
     cur.execute(query)
@@ -63,8 +63,7 @@ def run_query(query, dispatcher):
     for row in rows:
         for i in range(len(column_names)):            
             results += str(column_names[i] + ": " + str(row[i]))        
-    conn.close()
-    dispatcher.utter_message(text=results)
+    conn.close()    
     global_results[query] = rows
     time.sleep(15)
 
