@@ -65,6 +65,7 @@ def run_query(query, dispatcher):
     conn.close()
     dispatcher.utter_message(text=results)
     global_results[query] = rows
+    time.sleep(15)
 
 # _______________________________________________________________________________________________________________
 # trigger this with 'sqltest' or 'testsql'
