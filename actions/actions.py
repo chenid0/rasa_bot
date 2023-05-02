@@ -55,9 +55,13 @@ def run_query(query, dispatcher):
     cur = conn.cursor()
     cur.execute(query)
     rows = cur.fetchall()
-    results = ""
-    for row in rows:        
-        results += f"{row}\n"
+    results = ""    
+    
+    column_names = [description[0] for description in cur.description]
+    # Print out the rows with column names
+    for row in rows:
+        for i in range(len(column_names)):
+            results += (column_names[i] + ": " + str(row[i]))        
     conn.close()
     dispatcher.utter_message(text=results)
     global_results[query] = rows
@@ -83,20 +87,27 @@ class TestSQL(Action):
             query_thread.start()
 
             # Poll the thread periodically from the main thread to check if it's still running
-            while query_thread.is_alive():
+            start_time = time.time()
+            while (time.time() - start_time) < 10 and query_thread.is_alive():                
                 print("Query is running in the background...")
                 time.sleep(1)
+            
+            if query_thread.is_alive():
+                dispatcher.utter_message(text="query still running...")
 
-            # The database query has finished, so join the thread to the main thread
-            query_thread.join()
+            if not query_thread.is_alive():
+                # The database query has finished, so join the thread to the main thread        
+                query_thread.join()
+                results = "results: \n"
+                results += str(global_results[query])
+                dispatcher.utter_message(text=results)
 
-            results = "results: \n"
-            print(global_results[query])
+            
             #for row in rows:
             #    results += f"{row}\n"
             #if errors != "":
             #    dispatcher.utter_message(text=errors)
-            dispatcher.utter_message(text=results)
+            
         # except sqlite3.Error as e:
         # dispatcher.utter_message(text = e);
         except Exception as e1:
