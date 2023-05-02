@@ -46,6 +46,7 @@ import threading
 
 db_path_name = "/home/mark/chatbot/db/Molecules.db"
 # db_virus_knowledgebase = '/home/mark/chatbot/db/Viruses.db'
+thread_set = set()
 
 
 global_results: Dict[str, List[Dict[str, Union[int, str, float]]]] = {}
@@ -61,7 +62,7 @@ def run_query(query, dispatcher):
     # Print out the rows with column names
     for row in rows:
         for i in range(len(column_names)) and i < 2:
-            results += (column_names[i] + ": " + str(row[i]))        
+            results += str(column_names[i] + ": " + str(row[i]))        
     conn.close()
     dispatcher.utter_message(text=results)
     global_results[query] = rows
@@ -86,6 +87,7 @@ class TestSQL(Action):
             query_thread = threading.Thread(target=run_query, args=(query, dispatcher))
             # Start the thread
             query_thread.start()
+            thread_set.add(query_thread)
 
             # Poll the thread periodically from the main thread to check if it's still running
             start_time = time.time()
@@ -99,6 +101,7 @@ class TestSQL(Action):
             if not query_thread.is_alive():
                 # The database query has finished, so join the thread to the main thread        
                 query_thread.join()
+                thread_set.remove(query_thread)
                 results = "results: \n"
                 results += str(global_results[query])
                 dispatcher.utter_message(text=results)
