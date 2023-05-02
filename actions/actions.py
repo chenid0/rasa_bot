@@ -82,6 +82,20 @@ class TestSQL(Action):
     ) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="running: action_test_sql")
         try:
+            if thread_set.__len__() > 0:
+                dispatcher.utter_message(text="query already running")
+            
+            for thread in thread_set:
+                if thread.is_alive():
+                    dispatcher.utter_message(text="thread already running")                
+                else:
+                    thread_set.remove(thread)
+                    dispatcher.utter_message(text="thread finished. removing from set")
+            
+            
+            for k,v in global_results.items():
+                dispatcher.utter_message(text=f"global_results not empty {k} {v}")
+
             query = "SELECT * FROM MOLECULES LIMIT 1;"
             query_thread = threading.Thread(target=run_query, args=(query,))
             # Start the thread
