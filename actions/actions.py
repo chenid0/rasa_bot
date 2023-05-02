@@ -83,7 +83,7 @@ class TestSQL(Action):
     ) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="running: action_test_sql")
         try:
-            query = "SELECT * FROM MOLECULES LIMIT 1;"
+            query = "SELECT ID FROM MOLECULES LIMIT 1;"
             query_thread = threading.Thread(target=run_query, args=(query, dispatcher))
             # Start the thread
             query_thread.start()
@@ -91,12 +91,12 @@ class TestSQL(Action):
 
             # Poll the thread periodically from the main thread to check if it's still running
             start_time = time.time()
-            while (time.time() - start_time) < 10 and query_thread.is_alive():                
+            while (time.time() - start_time) < 5 and query_thread.is_alive():                
                 print("Query is running in the background...")
                 time.sleep(1)
             
             if query_thread.is_alive():
-                dispatcher.utter_message(text="query still running...")
+                dispatcher.utter_message(text="query still running...exiting")
 
             if not query_thread.is_alive():
                 # The database query has finished, so join the thread to the main thread        
