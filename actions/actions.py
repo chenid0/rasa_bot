@@ -51,6 +51,32 @@ thread_set = set()
 
 global_results: Dict[str, List[Dict[str, Union[int, str, float]]]] = {}
 
+# lock to ensure thread safety
+lock = threading.Lock()
+
+# function to add an item to the global dictionary
+def add_query_result(key, value):
+    global lock, global_results
+    with lock:
+        global_results[key] = value
+
+# function to remove an item from the global dictionary
+def remove_query(key):
+    global lock, global_results
+    with lock:
+        del global_results[key]
+
+# function to retrieve an item from the global dictionary
+def get_query_result(key):
+    global lock, global_results
+    with lock:
+        return global_results.get(key)
+    
+def get_all_query_results():
+    global lock, global_results
+    with lock:
+        return global_results.items()
+
 def run_query(query):
     conn = sqlite3.connect(db_path_name)
     cur = conn.cursor()
@@ -63,8 +89,8 @@ def run_query(query):
     for row in rows:
         for i in range(len(column_names)):            
             results += str(column_names[i] + ": " + str(row[i]))        
-    conn.close()    
-    global_results[query] = rows
+    conn.close()
+    add_query_result(query, rows)    
     time.sleep(15)
 
 # _______________________________________________________________________________________________________________
@@ -82,8 +108,9 @@ class TestSQL(Action):
     ) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="running: action_test_sql")
         try:
-            if thread_set.__len__() > 0:
-                dispatcher.utter_message(text="query already running")
+            num_queries = thread_set.__len__()
+            if num_queries > 0:
+                dispatcher.utter_message(text=f"{num_queries} queries already running")
             
             for thread in thread_set:
                 if thread.is_alive():
@@ -93,7 +120,7 @@ class TestSQL(Action):
                     dispatcher.utter_message(text="thread finished. removing from set")
             
             
-            for k,v in global_results.items():
+            for k,v in get_all_query_results():
                 dispatcher.utter_message(text=f"global_results not empty {k} {v}")
 
             query = "SELECT * FROM MOLECULES LIMIT 1;"
@@ -116,7 +143,7 @@ class TestSQL(Action):
                 query_thread.join()
                 thread_set.remove(query_thread)
                 results = "results: \n"
-                results += str(global_results[query])
+                results += str(get_query_result(query))
                 dispatcher.utter_message(text=results)
 
             
