@@ -112,7 +112,7 @@ class TestSQL(Action):
             if num_queries > 0:
                 dispatcher.utter_message(text=f"{num_queries} queries already running")
             
-            for thread in thread_set:
+            for thread in set(thread_set):
                 if thread.is_alive():
                     dispatcher.utter_message(text="thread already running")                
                 else:
