@@ -124,7 +124,7 @@ class CheckPending(Action):
                     dispatcher.utter_message(text="thread finished. removing from set")
             
             
-            for k,v in dict(get_all_query_results()):
+            for k,v in dict(get_all_query_results()).items():
                 dispatcher.utter_message(text=f"query results: {k} : {v}")      
         except Exception as e1:
             dispatcher.utter_message(
