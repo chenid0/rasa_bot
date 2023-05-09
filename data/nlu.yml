@@ -1100,7 +1100,6 @@ nlu:
     - sql test
     - test sqlite
 
-
 - intent: check_pending
   examples: |
     - check pending

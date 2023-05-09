@@ -130,3 +130,7 @@ rules:
   - intent: test_sql
   - action: action_test_sql
 
+- rule: action_check_pending
+  steps:
+  - intent: check_pending
+  - action: action_check_pending
