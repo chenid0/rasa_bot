@@ -41,7 +41,7 @@ def query_status():
     }
 
     # Send a POST request to the Rasa action server
-    response = requests.post(rasa_action_endpoint, json=data)
+    response = requests.post(rasa_action_endpoint, json=data).json()
 
     # Print the response from the Rasa action server
     print(response)
