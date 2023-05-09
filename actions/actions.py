@@ -125,7 +125,8 @@ class CheckPending(Action):
             
             
             for k,v in dict(get_all_query_results()).items():
-                dispatcher.utter_message(text=f"query results: {k} : {v}")      
+                dispatcher.utter_message(text=f"query results: {k} : {v}")
+            return get_all_query_results()
         except Exception as e1:
             dispatcher.utter_message(
                 text="error while executing: " + traceback.format_exc()
@@ -159,10 +160,7 @@ class TestSQL(Action):
                 else:
                     thread_set.remove(thread)
                     dispatcher.utter_message(text="thread finished. removing from set")
-            
-            
-            for k,v in get_all_query_results():
-                dispatcher.utter_message(text=f"global_results not empty {k} {v}")
+                                 
 
             query = "SELECT * FROM MOLECULES LIMIT 1;"
             query_thread = threading.Thread(target=run_query, args=(query,))
