@@ -44,8 +44,8 @@ def query_status():
     response = requests.post(rasa_action_endpoint, json=data)
 
     # Print the response from the Rasa action server
-    print(response.text)
-    jsonify(response)
+    print(response)
+    return response
 
 
 if __name__ == "__main__":
