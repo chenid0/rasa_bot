@@ -1101,3 +1101,11 @@ nlu:
     - test sqlite
 
 
+- intent: check_pending
+  examples: |
+    - check pending
+    - pending
+    - check pending queries
+    - check background queries
+    - list pending queries
+

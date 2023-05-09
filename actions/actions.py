@@ -93,6 +93,41 @@ def run_query(query):
     add_query_result(query, rows)    
     time.sleep(15)
 
+
+class CheckPending(Action):
+    def name(self) -> Text:
+            return "action_check_pending"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(text="running: action_check_pending")
+        try:
+            num_queries = thread_set.__len__()
+            if num_queries > 0:
+                dispatcher.utter_message(text=f"{num_queries} queries already running")
+            
+            for thread in set(thread_set):
+                if thread.is_alive():
+                    dispatcher.utter_message(text="thread already running")                
+                else:
+                    thread_set.remove(thread)
+                    dispatcher.utter_message(text="thread finished. removing from set")
+            
+            
+            for k,v in dict(get_all_query_results()):
+                dispatcher.utter_message(text=f"query results: {k} : {v}")      
+        except Exception as e1:
+            dispatcher.utter_message(
+                text="error while executing: " + traceback.format_exc()
+            )
+
+        return []
+
+
 # _______________________________________________________________________________________________________________
 # trigger this with 'sqltest' or 'testsql'
 # !!Note this works without error
