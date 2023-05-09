@@ -30,22 +30,18 @@ def send_message():
     return jsonify(response)
 
 @app.route('/api/query_status', methods=['GET'])
-def query_status():
-    # Define the action to execute on the Rasa action server
-    action = "action_check_pending"    
-
-    # Define the data to send in the POST request
-    data = {
-        "next_action": action,
-        "sender": "flask_app",
+def query_status():    
+    rasa_payload = {
+        'sender': 'user',
+        'message': "check pending"
     }
-
-    # Send a POST request to the Rasa action server
-    response = requests.post(rasa_action_endpoint, json=data).json()
-
-    # Print the response from the Rasa action server
-    print(response)
-    return response
+    rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
+    message_txt = ""
+    for obj in rasa_response:
+        message_txt += obj['text']
+        message_txt += "\n<br>"
+    response = {'message': message_txt}
+    return jsonify(response)
 
 
 if __name__ == "__main__":
