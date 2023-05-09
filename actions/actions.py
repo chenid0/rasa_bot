@@ -106,6 +106,8 @@ class CheckPending(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
+        if not dispatcher:
+            dispatcher = CollectingDispatcher()
         dispatcher.utter_message(text="running: action_check_pending")
         try:
             num_queries = thread_set.__len__()
