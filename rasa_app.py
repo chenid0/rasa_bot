@@ -32,7 +32,7 @@ def send_message():
 @app.route('/api/query_status', methods=['GET'])
 def query_status():
     # Define the action to execute on the Rasa action server
-    action = "check_pending"    
+    action = "action_check_pending"    
 
     # Define the data to send in the POST request
     data = {
