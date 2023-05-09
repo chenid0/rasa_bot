@@ -4,6 +4,12 @@ from flask import Flask, request, jsonify, render_template
 app = Flask(__name__)
 rasa_endpoint = 'http://localhost:5005/webhooks/rest/webhook'  # replace with your Rasa endpoint
 
+# Define the URL of the Rasa action server
+rasa_action_endpoint = "http://localhost:5055/webhook"
+
+
+
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -23,21 +29,23 @@ def send_message():
     response = {'message': message_txt}
     return jsonify(response)
 
-@app.route('/api/query_status', methods=['POST'])
+@app.route('/api/query_status', methods=['GET'])
 def query_status():
-    message = request.json['message']
-    rasa_payload = {
-        'sender': 'user',
-        'message': 'check pending'
-    }
-    rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
-    message_txt = ""
-    for obj in rasa_response:
-        message_txt += obj['text']
-        message_txt += "\n<br>"
-    response = {'message': message_txt}
-    return jsonify(response)
+    # Define the action to execute on the Rasa action server
+    action = "check_pending"    
 
+    # Define the data to send in the POST request
+    data = {
+        "next_action": action,
+        "sender": "flask_app",
+    }
+
+    # Send a POST request to the Rasa action server
+    response = requests.post(rasa_action_endpoint, json=data)
+
+    # Print the response from the Rasa action server
+    print(response.text)
+    jsonify(response)
 
 
 if __name__ == "__main__":
