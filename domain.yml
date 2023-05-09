@@ -26,6 +26,8 @@ intents:
   - perfrom_diversity_analysis
   - filter_by_vendor
   - test_sql
+  - check_pending
+
 
 session_config:
   session_expiration_time: 60
@@ -81,6 +83,8 @@ actions:
   - action_perfrom_diversity_analysis
   - action_popup_vendor_filter
   - action_test_sql
+  - action_check_pending
+
 
 entities:
   - sqlstatement
