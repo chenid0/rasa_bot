@@ -1102,8 +1102,7 @@ nlu:
 
 - intent: check_pending
   examples: |
-    - check pending
-    - pending
+    - check pending    
     - check pending queries
     - check background queries
     - list pending queries

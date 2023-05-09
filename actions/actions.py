@@ -93,7 +93,9 @@ def run_query(query):
     add_query_result(query, rows)    
     time.sleep(15)
 
-
+# _______________________________________________________________________________________________________________
+# trigger this with 'check pending'
+# !!Note this works without error
 class CheckPending(Action):
     def name(self) -> Text:
             return "action_check_pending"
@@ -180,15 +182,7 @@ class TestSQL(Action):
                 results = "results: \n"
                 results += str(get_query_result(query))
                 dispatcher.utter_message(text=results)
-
-            
-            #for row in rows:
-            #    results += f"{row}\n"
-            #if errors != "":
-            #    dispatcher.utter_message(text=errors)
-            
-        # except sqlite3.Error as e:
-        # dispatcher.utter_message(text = e);
+                   
         except Exception as e1:
             dispatcher.utter_message(
                 text="error while executing: " + traceback.format_exc()
