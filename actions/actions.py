@@ -125,7 +125,11 @@ class CheckPending(Action):
             
             
             for k,v in dict(get_all_query_results()).items():
-                dispatcher.utter_message(text=f"query results: {k} : {v}")
+                if v:
+                    dispatcher.utter_message(text=f"query results finished: {k} : {v}")
+                    remove_query(k)
+                else:
+                    dispatcher.utter_message(text=f"query still pending: {k} ")
             return get_all_query_results()
         except Exception as e1:
             dispatcher.utter_message(
