@@ -46,13 +46,38 @@ import threading
 
 db_path_name = "/home/mark/chatbot/db/Molecules.db"
 # db_virus_knowledgebase = '/home/mark/chatbot/db/Viruses.db'
-thread_set = set()
+thread_query_dict = dict()
 
 
 global_results: Dict[str, List[Dict[str, Union[int, str, float]]]] = {}
 
 # lock to ensure thread safety
 lock = threading.Lock()
+
+
+# function to add an item to the global dictionary
+def add_pending_thread(key, value):
+    global lock, thread_query_dict
+    with lock:
+        global_results[key] = value
+
+# function to remove an item from the global dictionary
+def remove_thread(key):
+    global lock, thread_query_dict
+    with lock:
+        del global_results[key]
+
+# function to retrieve an item from the global dictionary
+def get_pending_query(key):
+    global lock, thread_query_dict
+    with lock:
+        return global_results.get(key)
+    
+def get_all_pending_queries():
+    global lock, thread_query_dict
+    with lock:
+        return global_results.items()
+
 
 # function to add an item to the global dictionary
 def add_query_result(key, value):
@@ -77,7 +102,7 @@ def get_all_query_results():
     with lock:
         return global_results.items()
 
-def run_query(query):
+def run_query(query):    
     try:
         conn = sqlite3.connect(db_path_name)
         cur = conn.cursor()
@@ -101,7 +126,7 @@ def async_run_query(query: str, dispatcher: CollectingDispatcher):
         query_thread = threading.Thread(target=run_query, args=(query,))
         # Start the thread
         query_thread.start()
-        thread_set.add(query_thread)
+        add_pending_thread(query_thread, query)        
 
         # Poll the thread periodically from the main thread to check if it's still running
         start_time = time.time()
@@ -115,7 +140,7 @@ def async_run_query(query: str, dispatcher: CollectingDispatcher):
         if not query_thread.is_alive():
             # The database query has finished, so join the thread to the main thread        
             query_thread.join()
-            thread_set.remove(query_thread)
+            remove_thread(query_thread)            
             results = "results: \n"
             results += str(get_query_result(query))
             dispatcher.utter_message(text=results)
@@ -142,25 +167,22 @@ class CheckPending(Action):
             tracker = Tracker()
         dispatcher.utter_message(text="running: action_check_pending")
         try:
-            num_queries = thread_set.__len__()
+            num_queries = get_all_pending_queries().__len__()
             if num_queries > 0:
                 dispatcher.utter_message(text=f"{num_queries} queries already running")
             
-            for thread in set(thread_set):
+            for thread, query in dict(get_all_pending_queries()):
                 if thread.is_alive():
                     dispatcher.utter_message(text="thread already running")                
                 else:
-                    thread_set.remove(thread)
+                    remove_thread(thread)                    
                     dispatcher.utter_message(text="thread finished. removing from set")
             
             
             for k,v in dict(get_all_query_results()).items():
-                if v:
-                    dispatcher.utter_message(text=f"query results finished: {k} : {v}")
-                    remove_query(k)
-                else:
-                    dispatcher.utter_message(text=f"query still pending: {k} ")
-            return get_all_query_results()
+                dispatcher.utter_message(text=f"query results finished: {k} : {v}")
+                remove_query(k)                
+            return [get_all_query_results(),]
         except Exception as e1:
             dispatcher.utter_message(
                 text="error while executing: " + traceback.format_exc()
