@@ -38,7 +38,9 @@ def query_status():
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
     message_txt = ""
     for obj in rasa_response:
+        print(obj)
         message_txt += obj['text']
+        print(message_txt)
         message_txt += "\n<br>"
     response = {'message': message_txt}
     return jsonify(response)
