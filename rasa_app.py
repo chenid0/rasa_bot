@@ -39,8 +39,10 @@ def query_status():
     message_txt = ""
     for obj in rasa_response:
         print(obj)
+        print(obj['text'])
+        print()
         message_txt += obj['text']
-        print(message_txt)
+        
         message_txt += "\n<br>"
     response = {'message': message_txt}
     return jsonify(response)
