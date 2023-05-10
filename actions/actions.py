@@ -209,8 +209,8 @@ class ActionSQLiteCountMolecules(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        # sql = 'SELECT COUNT(ID) AS Count FROM MOLECULES;';
-        sql = "SELECT MAX(_ROWID_) FROM Molecules LIMIT 1;"
+        sql = 'SELECT COUNT(ID) AS Count FROM MOLECULES;';
+        #sql = "SELECT MAX(_ROWID_) FROM Molecules LIMIT 1;"
         dispatcher.utter_message(text=sql)
 
         try:
