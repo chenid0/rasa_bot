@@ -59,27 +59,27 @@ lock = threading.Lock()
 def add_pending_thread(key, value):
     global lock, thread_query_dict
     with lock:
-        global_results[key] = value
+        thread_query_dict[key] = value
 
 
 # function to remove an item from the global dictionary
 def remove_thread(key):
     global lock, thread_query_dict
     with lock:
-        del global_results[key]
+        del thread_query_dict[key]
 
 
 # function to retrieve an item from the global dictionary
 def get_pending_query(key):
     global lock, thread_query_dict
     with lock:
-        return global_results.get(key)
+        return thread_query_dict.get(key)
 
 
 def get_all_pending_queries():
     global lock, thread_query_dict
     with lock:
-        return global_results.items()
+        return thread_query_dict.items()
 
 
 # function to add an item to the global dictionary
@@ -179,7 +179,7 @@ class CheckPending(Action):
             if num_queries > 0:
                 dispatcher.utter_message(text=f"{num_queries} queries already running")
 
-            for thread, query in dict(get_all_pending_queries()):
+            for thread, query in dict(get_all_pending_queries()).items():
                 if thread.is_alive():
                     dispatcher.utter_message(text="thread already running")
                     dispatcher.utter_message(text=f"query: {query} : still pending")
@@ -187,7 +187,7 @@ class CheckPending(Action):
                     remove_thread(thread)
                     dispatcher.utter_message(text="thread finished. removing from set")
 
-            for k, v in dict(get_all_query_results()):
+            for k, v in dict(get_all_query_results()).items():
                 dispatcher.utter_message(text=f"query results finished: {k} : {v}")
                 remove_query(k)
             return [get_all_query_results(), get_all_pending_queries()]
