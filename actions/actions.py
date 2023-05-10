@@ -78,20 +78,50 @@ def get_all_query_results():
         return global_results.items()
 
 def run_query(query):
-    conn = sqlite3.connect(db_path_name)
-    cur = conn.cursor()
-    cur.execute(query)
-    rows = cur.fetchall()
-    results = ""    
-    
-    column_names = [description[0] for description in cur.description]
-    # Print out the rows with column names
-    for row in rows:
-        for i in range(len(column_names)):            
-            results += str(column_names[i] + ": " + str(row[i]))        
-    conn.close()
-    add_query_result(query, rows)    
-    time.sleep(15)
+    try:
+        conn = sqlite3.connect(db_path_name)
+        cur = conn.cursor()
+        cur.execute(query)
+        rows = cur.fetchall()
+        results = ""    
+        
+        column_names = [description[0] for description in cur.description]
+        # Print out the rows with column names
+        for row in rows:
+            for i in range(len(column_names)):            
+                results += str(column_names[i] + ": " + str(row[i]))        
+        conn.close()
+        add_query_result(query, rows)    
+        time.sleep(15)
+    except Exception as e:
+        add_query_result(query, traceback.format_exc())    
+
+def async_run_query(query: str, dispatcher: CollectingDispatcher):
+    try:
+        query_thread = threading.Thread(target=run_query, args=(query,))
+        # Start the thread
+        query_thread.start()
+        thread_set.add(query_thread)
+
+        # Poll the thread periodically from the main thread to check if it's still running
+        start_time = time.time()
+        while (time.time() - start_time) < 5 and query_thread.is_alive():                
+            print("Query is running in the background...")
+            time.sleep(1)
+        
+        if query_thread.is_alive():
+            dispatcher.utter_message(text="query still running...exiting")
+
+        if not query_thread.is_alive():
+            # The database query has finished, so join the thread to the main thread        
+            query_thread.join()
+            thread_set.remove(query_thread)
+            results = "results: \n"
+            results += str(get_query_result(query))
+            dispatcher.utter_message(text=results)
+    except Exception as e:
+        dispatcher.utter_message(text=traceback.format_exc())
+
 
 # _______________________________________________________________________________________________________________
 # trigger this with 'check pending'
@@ -153,42 +183,9 @@ class TestSQL(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="running: action_test_sql")
-        try:
-            num_queries = thread_set.__len__()
-            if num_queries > 0:
-                dispatcher.utter_message(text=f"{num_queries} queries already running")
-            
-            for thread in set(thread_set):
-                if thread.is_alive():
-                    dispatcher.utter_message(text="thread already running")                
-                else:
-                    thread_set.remove(thread)
-                    dispatcher.utter_message(text="thread finished. removing from set")
-                                 
-
+        try:                                             
             query = "SELECT * FROM MOLECULES LIMIT 1;"
-            query_thread = threading.Thread(target=run_query, args=(query,))
-            # Start the thread
-            query_thread.start()
-            thread_set.add(query_thread)
-
-            # Poll the thread periodically from the main thread to check if it's still running
-            start_time = time.time()
-            while (time.time() - start_time) < 5 and query_thread.is_alive():                
-                print("Query is running in the background...")
-                time.sleep(1)
-            
-            if query_thread.is_alive():
-                dispatcher.utter_message(text="query still running...exiting")
-
-            if not query_thread.is_alive():
-                # The database query has finished, so join the thread to the main thread        
-                query_thread.join()
-                thread_set.remove(query_thread)
-                results = "results: \n"
-                results += str(get_query_result(query))
-                dispatcher.utter_message(text=results)
-                   
+            async_run_query(query, dispatcher)
         except Exception as e1:
             dispatcher.utter_message(
                 text="error while executing: " + traceback.format_exc()
@@ -213,28 +210,9 @@ class ActionSQLiteCountMolecules(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        sql = 'SELECT COUNT(ID) AS Count FROM MOLECULES;';
-        #sql = "SELECT MAX(_ROWID_) FROM Molecules LIMIT 1;"
-        dispatcher.utter_message(text=sql)
-
-        try:
-            conn = sqlite3.connect(db_path_name)
-            cursor = conn.cursor()
-            cursor.execute(sql)
-            results = cursor.fetchall()
-
-            for row in results:
-                count = row[0]
-                message = "unique molecules: " + f"{count}"
-                dispatcher.utter_message(text=message)
-
-            conn.close()
-
-        except Exception as e:
-            # handle the error gracefully
-            error_message = "I'm sorry, there was a problem processing your request."
-            dispatcher.utter_message(text=error_message)
-
+        query = 'SELECT COUNT(ID) AS Count FROM MOLECULES;';
+        #query = "SELECT MAX(_ROWID_) FROM Molecules LIMIT 1;"
+        async_run_query(query, dispatcher)        
         return []
 
 
