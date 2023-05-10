@@ -173,15 +173,16 @@ class CheckPending(Action):
             
             for thread, query in dict(get_all_pending_queries()):
                 if thread.is_alive():
-                    dispatcher.utter_message(text="thread already running")                
+                    dispatcher.utter_message(text="thread already running")
+                    dispatcher.utter_message(text=f"query: {query} : still pending")                
                 else:
                     remove_thread(thread)                    
                     dispatcher.utter_message(text="thread finished. removing from set")
-            
-            
-            for k,v in dict(get_all_query_results()).items():
+                        
+
+            for k,v in dict(get_all_query_results()):
                 dispatcher.utter_message(text=f"query results finished: {k} : {v}")
-                remove_query(k)                
+                remove_query(k)             
             return [get_all_query_results(),]
         except Exception as e1:
             dispatcher.utter_message(
