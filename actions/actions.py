@@ -180,9 +180,8 @@ class CheckPending(Action):
                 dispatcher.utter_message(text=f"{num_queries} queries already running")
 
             for thread, query in dict(get_all_pending_queries()).items():
-                if thread.is_alive():
-                    dispatcher.utter_message(text="thread already running")
-                    dispatcher.utter_message(text=f"query: {query} : still pending")
+                if thread.is_alive():                    
+                    dispatcher.utter_message(text=f"pending query: {query}")
                 else:
                     remove_thread(thread)
                     dispatcher.utter_message(text="thread finished. removing from set")

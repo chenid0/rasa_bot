@@ -34,6 +34,7 @@ def query_status():
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
     print("query status: rasa responded")
     print(rasa_response)
+    print("end response")
     message_txt = ""
     for obj in rasa_response:
         print()
