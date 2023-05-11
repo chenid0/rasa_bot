@@ -187,7 +187,7 @@ class CheckPending(Action):
                     dispatcher.utter_message(text="thread finished. removing from set")
 
             for k, v in dict(get_all_query_results()).items():
-                dispatcher.utter_message(text=f"query results finished: {k} : result goes here")
+                dispatcher.utter_message(text=f"completed query: {k} : {v}")
                 remove_query(k)
             return [get_all_query_results(), get_all_pending_queries()]
         except Exception as e1:
