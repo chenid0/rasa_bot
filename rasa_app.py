@@ -35,16 +35,26 @@ def query_status():
     print("query status: rasa responded")
     print(rasa_response)
     print("end response")
+    #[{'recipient_id': 'user', 'text': 'running: action_check_pending'}, {'recipient_id': 'user', 'text': '1 queries already running'}, {'recipient_id': 'user', 'text': 'thread finished. removing from set'}]
+        
     message_txt = ""
+    pending_queries = []
+    finished_queries = dict()
     for obj in rasa_response:
         print()
         print(obj)
-        print(obj["text"])
-        print()
-        message_txt += obj["text"]
+        text = obj["text"]
+        if "pending query" in text:
+            text = text.replace("pending query:", "").strip()
+            pending_queries.append(text)
+        if "finished query" in text:
+            text = text.replace("completed query:", "").strip()
+            parts = text.split(":")
+            finished_queries[parts[0]] = parts[1]            
+        message_txt += text
 
         message_txt += "\n<br>"
-    response = {"message": message_txt}
+    response = {"message": message_txt, "pending": pending_queries,"completed": finished_queries}
     return jsonify(response)
 
 
