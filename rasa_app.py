@@ -47,7 +47,7 @@ def query_status():
         if "pending query" in text:
             text = text.replace("pending query:", "").strip()
             pending_queries.append(text)
-        if "finished query" in text:
+        if "completed query" in text:
             text = text.replace("completed query:", "").strip()
             parts = text.split(":")
             finished_queries[parts[0]] = parts[1]            
