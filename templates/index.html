@@ -4,18 +4,49 @@
     <meta charset="UTF-8">
     <title>Chatbot</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      .icon-container {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .query-icon {
+        margin: 10px;
+        padding: 10px;
+        border-radius: 50%;
+        background: #f8f8f8;
+        border: 2px solid #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 50px;
+        min-height: 50px;
+        cursor: pointer;
+      }
+      .query-icon.completed {
+        border-color: green;
+      }
+      .query-icon.pending {
+        border-color: orange;
+      }
+    </style>
   </head>
   <body>
     <div id="chat-area"></div>
     <form id="chat-form">
       <input type="text" name="message" id="chat-input">
       <button type="submit">Send</button>
-    </form>    
+    </form>
+    <div id="icon-container" class="icon-container"></div> <!-- Icon Container -->
     <script>
       $(function() {
         const $chatArea = $('#chat-area');
         const $chatForm = $('#chat-form');
         const $chatInput = $('#chat-input');        
+        const $iconContainer = $('#icon-container'); // Icon Container
 
         $chatForm.submit(function(event) {
           event.preventDefault();
@@ -29,6 +60,12 @@
             success: function(response) {
               $chatArea.append(`<p>You: ${message}</p>`);
               $chatArea.append(`<p id="${response.id}">Bot: ${response.message}${response.message.includes('persistent') ? ' <span class="status">Checking status...</span>' : ''}</p>`);  // Add a span element with a class for persistent messages
+              
+              if(response.message.includes('persistent')) {
+                // Add an icon for the query
+                const icon = `<div id="icon-${response.id}" class="query-icon pending">${response.id}</div>`;
+                $iconContainer.append(icon);
+              }
             },
             error: function(error) {
               console.log(error);
@@ -47,6 +84,12 @@
                 let $botResponse = $(`#${query.hashCode()}`);  // Find the bot response by ID
                 if ($botResponse.length) {
                   $botResponse.find('.status').text(`Completed. Result: ${result}`);
+
+                  // Update the icon
+                  let $icon = $(`#icon-${query.hashCode()}`);
+                  if ($icon.length) {
+                    $icon.removeClass('pending').addClass('completed').text(result);
+                  }
                 }
               }
             },
@@ -55,18 +98,19 @@
             }
           });
         }, 5000);  // Check every 5 seconds
-      });
 
-      // String hash function for creating unique IDs
-      String.prototype.hashCode = function() {
-        var hash = 0, i, chr;
-        for (i = 0; i < this.length; i++) {
-          chr   = this.charCodeAt(i);
-          hash  = ((hash << 5) - hash) + chr;
-          hash |= 0; // Convert to 32bit integer
-        }
-        return hash;
-      };
+        // String hash function for creating
+        // String hash function for creating unique IDs
+        String.prototype.hashCode = function() {
+          var hash = 0, i, chr;
+          for (i = 0; i < this.length; i++) {
+            chr   = this.charCodeAt(i);
+            hash  = ((hash << 5) - hash) + chr;
+            hash |= 0; // Convert to 32bit integer
+          }
+          return hash;
+        };
+      });
     </script>
   </body>
 </html>
