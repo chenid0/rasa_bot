@@ -1,63 +1,54 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Chatbot</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  </head>
-  <body>
-    <div id="chat-area"></div>
-    <form id="chat-form">
-      <input type="text" name="message" id="chat-input">
-      <button type="submit">Send</button>
-    </form>
-    <div id="persistent-messages"></div>  <!-- Add a div for persistent messages -->
-    <script>
-      $(function() {
-        const $chatArea = $('#chat-area');
-        const $chatForm = $('#chat-form');
-        const $chatInput = $('#chat-input');
-        const $persistentMessages = $('#persistent-messages');  // Add a reference to the persistent messages div
+$(function() {
+  const $chatArea = $('#chat-area');
+  const $chatForm = $('#chat-form');
+  const $chatInput = $('#chat-input');
+  const $persistentMessages = $('#persistent-messages');  // Add a reference to the persistent messages div
 
-        $chatForm.submit(function(event) {
-          event.preventDefault();
-          const message = $chatInput.val();
-          $chatInput.val('');
-          $.ajax({
-            type: 'POST',
-            url: '/api/messages',
-            contentType: 'application/json',
-            data: JSON.stringify({ message }),
-            success: function(response) {
-              $chatArea.append(`<p>You: ${message}</p>`);
-              //$chatArea.append(`<p>Bot: ${response.message}</p>`);
-              $chatArea.append(`<p>Bot: ${response.message}${response.message.includes('persistent') ? ` <span id="${response.id}">Click to check status</span>` : ''}</p>`);  // Add a span element with a unique ID for persistent messages
-            },
-            error: function(error) {
-              console.log(error);
-            }
-          });
-        });
+  $chatForm.submit(function(event) {
+    event.preventDefault();
+    const message = $chatInput.val();
+    $chatInput.val('');
+    $.ajax({
+      type: 'POST',
+      url: '/api/messages',
+      contentType: 'application/json',
+      data: JSON.stringify({ message }),
+      success: function(response) {
+        $chatArea.append(`<p>You: ${message}</p>`);
+        //$chatArea.append(`<p>Bot: ${response.message}</p>`);
+        $chatArea.append(`<p>Bot: ${response.message}${response.message.includes('persistent') ? ` <span id="${response.id}">Click to check status</span>` : ''}</p>`);  // Add a span element with a unique ID for persistent messages
 
-        // Periodically check the endpoint for completed queries
-        setInterval(function() {
-          $.ajax({
-            type: 'GET',
-            url: '/api/query_status',
-            success: function(response) {
-              // Add the message to the chat area if the query is completed
-              if (response.status === 'completed') {
-                const $persistentMessage = $(`#${response.id}`);  // Get the span element with the matching ID
-                const message = response.message;
-                $persistentMessage.replaceWith(`<p>Bot: ${message}</p>`);  // Replace the span element with the message
-              }
-            },
-            error: function(error) {
-              console.log(error);
-            }
-          });
-        }, 5000);  // Check every 5 seconds
-      });
-    </script>
-  </body>
-</html>
+        // Create a new icon for each pending item
+        if (response.message.includes('persistent')) {
+          const $icon = $('<i class="fa fa-spinner fa-spin"></i>');
+          $icon.appendTo($persistentMessage);
+        }
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  });
+
+  // Periodically check the endpoint for completed queries
+  setInterval(function() {
+    $.ajax({
+      type: 'GET',
+      url: '/api/query_status',
+      success: function(response) {
+        // Add the message to the chat area if the query is completed
+        if (response.status === 'completed') {
+          const $persistentMessage = $(`#${response.id}`);  // Get the span element with the matching ID
+          const message = response.message;
+          $persistentMessage.replaceWith(`<p>Bot: ${message}</p>`);  // Replace the span element with the message
+
+          // Remove the icon from the completed message
+          $persistentMessage.find('.fa-spinner').remove();
+        }
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }, 5000);  // Check every 5 seconds
+});
