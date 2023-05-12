@@ -83,16 +83,11 @@
         $.ajax({
           type: 'GET',
           url: '/api/query_status',
-          success: function (response) {
-            
-            for (let query in response.pending) {
-              //alert("pending:"+response.pending)
-              //alert(query)
+          success: function (response) {            
+            for (let query in response.pending) {             
               createIcon()
-            }
-            alert("pending:"+response.completed)
-            for (let query in response.completed) {
-              alert(query)
+            }            
+            for (let query in response.completed) {              
               let result = response.completed[query];
               let $botResponse = $(`#${query.hashCode()}`);  // Find the bot response by ID
               if ($botResponse.length) {
@@ -133,12 +128,7 @@
       // Add a new button
       const removeIconButton = document.createElement('button');
       removeIconButton.textContent = 'Remove Icons';
-      removeIconButton.addEventListener('click', function () {
-        // Remove all icons from the icon container
-        while (document.getElementById('icon-container').firstChild) {
-          document.getElementById('icon-container').removeChild(document.getElementById('icon-container').firstChild);
-        }
-      });
+      removeIconButton.addEventListener('click', removeAllIcons);
 
       // Add the buttons to the chat area
       document.getElementById('chat-area').appendChild(addIconButton);
@@ -153,6 +143,19 @@
       // Add the icon to the icon container
       document.getElementById('icon-container').appendChild(icon);
     }
+
+    removeIcon() {
+      // Remove the icon from the icon container
+      document.getElementById('icon-container').removeChild(document.getElementById('icon-container').lastChild);
+    }
+
+    removeAllIcons(){
+      // Remove all icons from the icon container
+      while (document.getElementById('icon-container').firstChild) {
+          document.getElementById('icon-container').removeChild(document.getElementById('icon-container').firstChild);
+        }
+    }
+
 
     // Call the function after the DOM has loaded
     window.addEventListener('DOMContentLoaded', addIcons);
