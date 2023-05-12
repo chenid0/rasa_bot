@@ -189,7 +189,21 @@ class CheckPending(Action):
             for k, v in dict(get_all_query_results()).items():
                 dispatcher.utter_message(text=f"completed query: {k} : {v}")
                 remove_query(k)
-            return [get_all_query_results(), get_all_pending_queries()]
+            # Set the status of the action to "ok".
+            response = {
+                "status": "ok"
+            }
+
+            # Set the data returned by the action.
+            response["data"] = "This is the data returned by the action."
+
+            # Set the metadata about the action.
+            response["metadata"] = {
+                "action_name": "my_action",
+                "timestamp": "2023-05-11T12:00:00Z"
+            }
+
+            return response
         except Exception as e1:
             dispatcher.utter_message(
                 text="error while executing: " + traceback.format_exc()
