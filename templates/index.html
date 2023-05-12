@@ -111,6 +111,36 @@
           return hash;
         };
       });
+      function addIcons() {
+  // Add a new button
+  const addIconButton = document.createElement('button');
+  addIconButton.textContent = 'Add Icon';
+  addIconButton.addEventListener('click', function() {
+    // Create a new icon
+    const icon = document.createElement('div');
+    icon.className = 'query-icon pending';
+    icon.textContent = '+';
+    // Add the icon to the icon container
+    document.getElementById('icon-container').appendChild(icon);
+  });
+
+  // Add a new button
+  const removeIconButton = document.createElement('button');
+  removeIconButton.textContent = 'Remove Icons';
+  removeIconButton.addEventListener('click', function() {
+    // Remove all icons from the icon container
+    while (document.getElementById('icon-container').firstChild) {
+      document.getElementById('icon-container').removeChild(document.getElementById('icon-container').firstChild);
+    }
+  });
+
+  // Add the buttons to the chat area
+  document.getElementById('chat-area').appendChild(addIconButton);
+  document.getElementById('chat-area').appendChild(removeIconButton);
+}
+
+// Call the function after the DOM has loaded
+window.addEventListener('DOMContentLoaded', addIcons);
     </script>
   </body>
 </html>
