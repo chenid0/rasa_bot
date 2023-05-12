@@ -85,7 +85,7 @@
           url: '/api/query_status',
           success: function (response) {            
             for (let query in response.pending) {             
-              createIcon()
+              createIcon(query)
             }            
             for (let query in response.completed) {              
               let result = response.completed[query];
@@ -123,7 +123,7 @@
       // Add a new button
       const addIconButton = document.createElement('button');
       addIconButton.textContent = 'Add Icon';
-      addIconButton.addEventListener('click', createIcon);
+      //addIconButton.addEventListener('click', createIcon);
 
       // Add a new button
       const removeIconButton = document.createElement('button');
@@ -135,11 +135,11 @@
       document.getElementById('chat-area').appendChild(removeIconButton);
     }
 
-    function createIcon() {
+    function createIcon(query) {
       // Create a new icon
       const icon = document.createElement('div');
       icon.className = 'query-icon pending';
-      icon.textContent = '+';
+      icon.textContent = query;
       // Add the icon to the icon container
       document.getElementById('icon-container').appendChild(icon);
     }
