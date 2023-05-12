@@ -83,22 +83,12 @@
         $.ajax({
           type: 'GET',
           url: '/api/query_status',
-          success: function (response) {            
-            for (let i in response.pending) {             
+          success: function (response) {
+            for (let i in response.pending) {
               createIcon(response.pending[i])
-            }            
-            for (let query in response.completed) {              
-              let result = response.completed[query];
-              let $botResponse = $(`#${query.hashCode()}`);  // Find the bot response by ID
-              if ($botResponse.length) {
-                $botResponse.find('.status').text(`Completed. Result: ${result}`);
-
-                // Update the icon
-                let $icon = $(`#icon-${query.hashCode()}`);
-                if ($icon.length) {
-                  $icon.removeClass('pending').addClass('completed').text(result);
-                }
-              }
+            }
+            for (let query in response.completed) {
+              //
             }
           },
           error: function (error) {
@@ -107,17 +97,7 @@
         });
       }, 10000);  // Check every 10 seconds
 
-      // String hash function for creating
-      // String hash function for creating unique IDs
-      String.prototype.hashCode = function () {
-        var hash = 0, i, chr;
-        for (i = 0; i < this.length; i++) {
-          chr = this.charCodeAt(i);
-          hash = ((hash << 5) - hash) + chr;
-          hash |= 0; // Convert to 32bit integer
-        }
-        return hash;
-      };
+
     });
     function addIcons() {
       // Add a new button
@@ -136,7 +116,14 @@
     }
 
     function createIcon(query) {
-      // Create a new icon
+      // Check if the icon already exists
+      const existingIcon = document.getElementById(`icon-${query}`);
+      if (existingIcon) {
+        // The icon already exists, do nothing
+        return;
+      }
+
+      // The icon does not exist, create it
       const icon = document.createElement('div');
       icon.className = 'query-icon pending';
       icon.textContent = query;
@@ -149,11 +136,11 @@
       document.getElementById('icon-container').removeChild(document.getElementById('icon-container').lastChild);
     }
 
-    function removeAllIcons(){
+    function removeAllIcons() {
       // Remove all icons from the icon container
       while (document.getElementById('icon-container').firstChild) {
-          document.getElementById('icon-container').removeChild(document.getElementById('icon-container').firstChild);
-        }
+        document.getElementById('icon-container').removeChild(document.getElementById('icon-container').firstChild);
+      }
     }
 
 
