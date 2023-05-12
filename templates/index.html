@@ -84,8 +84,8 @@
           type: 'GET',
           url: '/api/query_status',
           success: function (response) {            
-            for (let query in response.pending) {             
-              createIcon(query)
+            for (let i in response.pending) {             
+              createIcon(response.pending[i])
             }            
             for (let query in response.completed) {              
               let result = response.completed[query];
