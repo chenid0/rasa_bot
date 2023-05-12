@@ -84,8 +84,8 @@
           type: 'GET',
           url: '/api/query_status',
           success: function (response) {
-            alert(response.pending)
-            alert(response.completed)
+            alert("pending:"+response.pending)
+            alert("pending:"+response.completed)
             for (let query in response.completed) {
               alert(query)
               let result = response.completed[query];
