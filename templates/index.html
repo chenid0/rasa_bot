@@ -127,6 +127,7 @@
       const icon = document.createElement('div');
       icon.className = 'query-icon pending';
       icon.textContent = query;
+      icon.id = `icon-${query}`;
       // Add the icon to the icon container
       document.getElementById('icon-container').appendChild(icon);
     }
