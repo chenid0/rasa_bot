@@ -84,7 +84,12 @@
           type: 'GET',
           url: '/api/query_status',
           success: function (response) {
-            alert("pending:"+response.pending)
+            
+            for (let query in response.pending) {
+              alert("pending:"+response.pending)
+              alert(query)
+              addIcons()
+            }
             alert("pending:"+response.completed)
             for (let query in response.completed) {
               alert(query)
