@@ -2,32 +2,40 @@ version: "3.1"
 
 intents:
   - nlu_fallback
-  - subset_clear
-  - create_subset
+  - clear_data
   - help
   - help2
   - help3
   - help4
   - help5
-  - help_filter_by_target
-  - help_filter_by_virus
-  - help_filter_by_property
   - who_r_u
   - who_creator
   - what_language
   - tell_tech_details
-  - sqlite_count_molsbylibrary
-  - sqlite_molecule_count
-  - display_virus_filter
-  - display_target_filter
-  - display_property_filter
-  - filter_by_pains
-  - filter_by_ugly_motifs
-  - perfrom_diversity_analysis
-  - filter_by_vendor
-  - test_sql
-  - check_pending
-
+  - load_sdf_file
+  - load_cddvault
+  - load_postgres
+  - select_model_column
+  - heatmap_column
+  - molecule_count
+  - perform_r_analysis
+  - reload_data
+  - show_scaffold
+  - show_most_active
+  - show_least_active
+  - load_scaffold
+  - draw_scaffold
+  - paste_scaffold
+  - help_properties
+  - calc_properties
+  - calc_explicit_properties
+  - show_most_potent_rgroup
+  - show_least_potent_rgroup
+  - recommend_rgroups
+  - recommend_biosteres
+  - help_recommend_rgroups
+  - test_svg
+  - test_CSV
 
 session_config:
   session_expiration_time: 60
@@ -35,56 +43,49 @@ session_config:
 
 
 responses:
-  utter_subset_clear:
-  - text: "Filter subset is clear."
-
-  utter_create_subset:
-  - text: "Old subset is cleared. New subset is initiated. Type: filter virus, filter target and/or filter properties to populate this subset."
-
-  utter_help:
-  - text: "This site contains a list of available molecules that can be purchased. To find molecules that are interest to you type: create subset and then add filters to subset the molecules. Finally, if desired, you can perform diversity analysis to create a diverse library. \nTo learn more type: \n\thelp filter target \n\thelp filter virus\n\thelp filter property \n\thelp  diversity analysis"
-  - text: "This site offers a list of purchasable molecules. Use \"create subset\" and add filters to narrow your search. Optionally, perform diversity analysis to generate a diverse library.  \nTry: \n\thelp filter target \n\thelp filter virus\n\thelp filter property \n\thelp  diversity analysis"
-  - text: "This site offers a list of purchasable molecules. Use \"create subset\" to select molecules of interest and add filters. You can also perform diversity analysis to create a varied library.  \nTry: \n\thelp filter target \n\thelp filter virus\n\thelp filter property \n\thelp  diversity analysis"
-
-  utter_help_filter_by_target:
-  - text: "To select specific viral targets to add to the filter, type: filter by target. Once viral targets have been selected, this subset can be used to search for similar molecules that are commercially available."
-
-  utter_help_filter_by_virus:
-  - text: "To select specific viruses to add to the filter, type: filter by virus. Once viruses and/or viral families have been selected, this subset can be used to search for similar molecules that are commercially available."
-
-  utter_help_filter_by_property:
-  - text: "You can filter molecules by chemical properties, spcifically: logP, TPSA, SASA, HBA, HBD and fractionCSP3. Type: filter by properties to open a UI to set ranges."
-
   utter_who_r_u:
-  - text: "I am ChemBot, a chemistry assistant. I understand simple commands such as 'help'."
+  - text: "I am SARbot, a Structrure Activity Analysis tool."
 
   utter_who_creator:
-  - text: "I was created by smart guys at **Altoris, inc**. See ***www.Altoris.com*** and ***www.ChemApps.com***."
+  - text: "I was created by smart guys at Altoris, Inc. For more info: www.ChemApps.com"
 
   utter_what_language:
-  - text: "I am currently only trained to speak English."
+  - text: "Currently I recognize only English."
 
   utter_tell_tech_details:
-  - text: "As an ai-bot, I can help create a molecule library. I contain over 5mil molecules that can be searched, filtered, and analyzed for diversity."
+  - text: "SAR analayis is performed using Chemoinformatics tools from www.ChemApps.com."
 
   utter_default:
-  - text: "Sorry, I don’t understand."
+  - text: "try again. I do not understand intent."
 
 
 actions:
-  - action_sqlite_count_molsbylibrary
-  - action_sqlite_count_vendor_rows
-  - action_sqlite_count_unique_molecules
-  - action_display_virus_filter
-  - action_display_target_filter
-  - action_display_property_filter
-  - action_filter_by_pains
-  - action_filter_by_ugly_motifs
-  - action_perfrom_diversity_analysis
-  - action_popup_vendor_filter
-  - action_test_sql
-  - action_check_pending
-
+  - action_help
+  - action_clear_data
+  - action_load_mols_sdf
+  - action_load_mols_cddvault
+  - action_load_mols_postgres
+  - action_set_model_column
+  - action_heat_map_column
+  - action_count_mols
+  - action_r_analysis
+  - action_reload_data
+  - action_show_scaffold
+  - action_most_active
+  - action_least_active
+  - action_load_scaffold
+  - action_draw_scaffold
+  - action_paste_scaffold
+  - action_help_properties
+  - action_calc_properties
+  - action_explicit_property
+  - action_least_potent_rgroup
+  - action_most_potent_rgroup
+  - action_recommend_rgroups
+  - action_recommend_bioisosteres
+  - action_help_recommend_rgroups
+  - action_test_svg
+  - action_test_csv
 
 entities:
   - sqlstatement

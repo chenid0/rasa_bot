@@ -4,8 +4,20 @@ stories:
 
 - story: story 1
   steps:
-  - intent: subset_clear
-  - action: utter_subset_clear
-  - intent: create_subset
-  - action: utter_create_subset
+  - intent: clear_data
+  - action: action_clear_data
+  - intent: load_sdf_file
+  - action: action_load_mols_sdf
+  - intent: select_model_column
+  - action: action_set_model_column
+  - intent: show_most_active
+  - action: action_most_active
+  - intent: show_least_active
+  - action: action_least_active
+  - intent: load_scaffold
+  - action: action_load_scaffold
+  - intent: show_scaffold
+  - action: action_show_scaffold
+  - intent: heatmap_column
+  - action: action_heat_map_column
 

@@ -7,55 +7,35 @@ rules:
   - intent: nlu_fallback
   - action: utter_default
 
-- rule: rule_clear
+- rule: clear_data
   steps:
-  - intent: subset_clear
-  - action: utter_subset_clear
-
-- rule: create_subset
-  steps:
-  - intent: create_subset
-  - action: utter_create_subset
+  - intent: clear_data
+  - action: action_clear_data
 
 - rule: rule_help
   steps:
   - intent: help
-  - action: utter_help
+  - action: action_help
 
 - rule: rule_help2
   steps:
   - intent: help2
-  - action: utter_help
+  - action: action_help
 
 - rule: rule_help3
   steps:
   - intent: help3
-  - action: utter_help
+  - action: action_help
 
 - rule: rule_help4
   steps:
   - intent: help4
-  - action: utter_help
+  - action: action_help
 
 - rule: rule_help5
   steps:
   - intent: help5
-  - action: utter_help
-
-- rule: rule_help_filter_by_target
-  steps:
-  - intent: help_filter_by_target
-  - action: utter_help_filter_by_target
-
-- rule: rule_help_filter_by_virus
-  steps:
-  - intent: help_filter_by_virus
-  - action: utter_help_filter_by_virus
-
-- rule: rule_help_filter_by_property
-  steps:
-  - intent: help_filter_by_property
-  - action: utter_help_filter_by_property
+  - action: action_help
 
 - rule: rule_who_r_u
   steps:
@@ -77,62 +57,123 @@ rules:
   - intent: tell_tech_details
   - action: utter_tell_tech_details
 
-- rule: action_rule_count_mols_by_vendor
+- rule: load_sdf
   steps:
-  - intent: sqlite_count_molsbylibrary
-  - action: action_sqlite_count_molsbylibrary
-  - action: action_sqlite_count_vendor_rows
-  - action: action_sqlite_count_unique_molecules
+  - intent: load_sdf_file
+  - action: action_load_mols_sdf
 
-- rule: action_sqlite_count_molecules
+- rule: load_cddvault
   steps:
-  - intent: sqlite_molecule_count
-  - action: action_sqlite_count_vendor_rows
-  - action: action_sqlite_count_unique_molecules
+  - intent: load_cddvault
+  - action: action_load_mols_cddvault
 
-- rule: action_popup_virus_filter
+- rule: load_postgres
   steps:
-  - intent: display_virus_filter
-  - action: action_display_virus_filter
+  - intent: load_postgres
+  - action: action_load_mols_postgres
 
-- rule: action_popup_target_filter
+- rule: set_model_column
   steps:
-  - intent: display_target_filter
-  - action: action_display_target_filter
+  - intent: select_model_column
+  - action: action_set_model_column
 
-- rule: action_popup_property_filter
+- rule: heatmap_column
   steps:
-  - intent: display_property_filter
-  - action: action_display_property_filter
+  - intent: heatmap_column
+  - action: action_heat_map_column
 
-- rule: action_filter_by_pains
+- rule: count_mols
   steps:
-  - intent: filter_by_pains
-  - action: action_filter_by_pains
+  - intent: molecule_count
+  - action: action_count_mols
 
-- rule: action_filter_by_ugly_motifs
+- rule: perform_r_analysis
   steps:
-  - intent: filter_by_ugly_motifs
-  - action: action_filter_by_ugly_motifs
+  - intent: perform_r_analysis
+  - action: action_r_analysis
 
-- rule: action_perfrom_diversity_analysis
+- rule: reload_data
   steps:
-  - intent: perfrom_diversity_analysis
-  - action: action_perfrom_diversity_analysis
+  - intent: reload_data
+  - action: action_reload_data
 
-- rule: action_popup_vender_filter
+- rule: show_scaffold
   steps:
-  - intent: filter_by_vendor
-  - action: action_popup_vendor_filter
+  - intent: show_scaffold
+  - action: action_show_scaffold
 
-- rule: action_test_sql
+- rule: show_most_active
   steps:
-  - intent: test_sql
-  - action: action_test_sql
+  - intent: show_most_active
+  - action: action_most_active
 
-- rule: action_check_pending
+- rule: show_least_active
   steps:
-  - intent: check_pending
-  - action: action_check_pending
+  - intent: show_least_active
+  - action: action_least_active
 
-  
+- rule: load_scaffold
+  steps:
+  - intent: load_scaffold
+  - action: action_load_scaffold
+
+- rule: draw_scaffold
+  steps:
+  - intent: draw_scaffold
+  - action: action_draw_scaffold
+
+- rule: paste_scaffold
+  steps:
+  - intent: paste_scaffold
+  - action: action_paste_scaffold
+
+- rule: help_properties
+  steps:
+  - intent: help_properties
+  - action: action_help_properties
+
+- rule: calc_properties
+  steps:
+  - intent: calc_properties
+  - action: action_calc_properties
+
+- rule: calc_explicit_property
+  steps:
+  - intent: calc_explicit_properties
+  - action: action_explicit_property
+
+- rule: show_least_potent_rgroup
+  steps:
+  - intent: show_least_potent_rgroup
+  - action: action_least_potent_rgroup
+
+- rule: show_most_potent_rgroup
+  steps:
+  - intent: show_most_potent_rgroup
+  - action: action_most_potent_rgroup
+
+- rule: recommend_rgroups
+  steps:
+  - intent: recommend_rgroups
+  - action: action_recommend_rgroups
+
+- rule: recommend_bioisosteres
+  steps:
+  - intent: recommend_biosteres
+  - action: action_recommend_bioisosteres
+
+- rule: help_recommend_rgroups
+  steps:
+  - intent: help_recommend_rgroups
+  - action: action_help_recommend_rgroups
+
+- rule: test_svg
+  steps:
+  - intent: test_svg
+  - action: action_test_svg
+
+- rule: test_csv
+  steps:
+  - intent: test_CSV
+  - action: action_test_csv
+

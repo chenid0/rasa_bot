@@ -3,31 +3,51 @@ stories:
 - story: test story 1
   steps:
   - user: |
-     create new subset
-    intent: create_subset
-  - action: utter_create_subset
+     text:
+    intent: load_sdf_file
+  - action: action_load_mols_sdf
   - user: |
      who are you?
     intent: who_r_u
   - action: utter_who_r_u
   - user: |
      what do you do?
-    intent: help
-  - action: utter_help
-  - user: |
-     virus filtering help
-    intent: help_filter_by_virus
-  - action: utter_help_filter_by_virus
-  - user: |
-     how to filter by molecular target
-    intent: help_filter_by_target
-  - action: utter_help_filter_by_target
+    intent: help4
+  - action: action_help
   - user: |
      who created you
     intent: who_creator
   - action: utter_who_creator
   - user: |
-     clear subset
-    intent: subset_clear
-  - action: utter_subset_clear
+     clear everything
+    intent: clear_data
+  - action: action_clear_data
+  - user: |
+     read mols from file
+    intent: load_sdf_file
+  - action: action_load_mols_sdf
+  - user: |
+     set activity column
+    intent: select_model_column
+  - action: action_set_model_column
+  - user: |
+     display most active compound
+    intent: show_most_active
+  - action: action_most_active
+  - user: |
+     display least active compound
+    intent: show_least_active
+  - action: action_least_active
+  - user: |
+     read scaffold from disk
+    intent: load_scaffold
+  - action: action_load_scaffold
+  - user: |
+     display scaffold
+    intent: show_scaffold
+  - action: action_show_scaffold
+  - user: |
+     heatmap column data
+    intent: heatmap_column
+  - action: action_heat_map_column
 
