@@ -146,7 +146,7 @@ class CountMols(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         sql = 'SELECT COUNT(ID) AS Count FROM MOLECULES;';
 
-        dispatcher.utter_message(text=sql);
+        dispatcher.utter_message(text=f"query: {sql} :");
         return[];
         dispatcher.utter_message(text=sql);
 
@@ -511,7 +511,7 @@ class TestSVG(Action):
         return "action_test_svg";
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:   
-        dispatcher.utter_message(text = svg);
+        dispatcher.utter_message(text = "action: load svg :");
         return [];
     
 #__________________________________________________________________________________________________________________________    
@@ -526,6 +526,6 @@ class TestCSV(Action):
         return "action_test_csv";
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:   
-        dispatcher.utter_message(text = csv);
+        dispatcher.utter_message(text = "action: load csv :");
         return [];
 
