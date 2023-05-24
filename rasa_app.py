@@ -5,7 +5,7 @@ import sqlite3
 import os
 import traceback
 import logging
-from typing import Any, Text, Dict, List, Tuple, Optional
+from typing import Any, Text, Dict, List, Tuple, Optional, Set
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 import time
@@ -217,7 +217,7 @@ def async_run_query(query: str, dispatcher: CollectingDispatcher):
 # _______________________________________________________________________________________________________________
 # trigger this with 'check pending'
 # !!Note this works without error
-def check_pending() -> List[Dict[Text, Any]]:                
+def check_pending() -> Tuple[Set[Text],Dict[Text, Any]]:                
         try:
             num_queries = get_all_pending_queries().__len__()
             
@@ -233,23 +233,14 @@ def check_pending() -> List[Dict[Text, Any]]:
             for k, v in dict(get_all_query_results()).items():
                 print(f"completed query: {k} : {v}")
                 remove_query(k)
-            # Set the status of the action to "ok".
-            response = {"status": "ok"}
+       
+         
 
-            # Set the data returned by the action.
-            response["data"] = "This is the data returned by the action."
-
-            # Set the metadata about the action.
-            response["metadata"] = {
-                "action_name": "my_action",
-                "timestamp": "2023-05-11T12:00:00Z",
-            }
-
-            return dict(get_all_query_results()).items()
+            return set(thread_query_dict.values()), dict(get_all_query_results())
         except Exception as e1:
             print("error while executing: " + traceback.format_exc())
 
-        return []
+        return set(), dict()
 
 
 app = Flask(__name__)
@@ -281,32 +272,18 @@ def send_message():
 
 @app.route("/api/query_status", methods=["GET"])
 def query_status():
-    rasa_payload = {"sender": "user", "message": "check pending"}
-    rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
-    print("query status: rasa responded")
-    print(rasa_response)
-    print("end response")
+    #rasa_payload = {"sender": "user", "message": "check pending"}
+    #rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
+    #print("query status: rasa responded")
+    #print(rasa_response)
+    #print("end response")
     # [{'recipient_id': 'user', 'text': 'running: action_check_pending'}, {'recipient_id': 'user', 'text': '1 queries already running'}, {'recipient_id': 'user', 'text': 'thread finished. removing from set'}]
 
+    pending_queries, finished_queries = check_pending()
     message_txt = ""
-    pending_queries = []
-    finished_queries = dict()
-    for obj in rasa_response:
-        print()
-        print(obj)
-        text = obj["text"]
-        if "pending query" in text:
-            text = text.replace("pending query:", "").strip()
-            pending_queries.append(text)
-        if "completed query" in text:
-            text = text.replace("completed query:", "").strip()
-            parts = text.split(":")
-            finished_queries[parts[0]] = parts[1]
-        message_txt += text
-
-        message_txt += "\n<br>"
+        
     response = {
-        "message": message_txt,
+        "message": "completed and pending queries",
         "pending": pending_queries,
         "completed": finished_queries,
     }
