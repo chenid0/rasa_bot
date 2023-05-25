@@ -71,7 +71,6 @@
               const icon = `<div id="icon-${response.id}" class="query-icon pending">${response.id}</div>`;
               $iconContainer.append(icon);
             }
-
             if (response.message.includes('svg')) {
               // Check if the response is an SVG
               const isSvg = response.message.includes('<svg');
@@ -83,11 +82,13 @@
                 // Append the SVG element to the chat area
                 $chatArea.append(svgElement);
               }
-            },
-            error: function (error) {
-              console.log(error);
             }
-          });
+
+          },
+          error: function (error) {
+            console.log(error);
+          }
+        });
       });
 
       // Periodically check the endpoint for completed queries
