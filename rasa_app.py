@@ -284,7 +284,7 @@ def query_status():
         
     response = {
         "message": "completed and pending queries",
-        "pending": pending_queries,
+        "pending": list(pending_queries),
         "completed": finished_queries,
     }
     return jsonify(response)
