@@ -71,17 +71,17 @@
               const icon = `<div id="icon-${response.id}" class="query-icon pending">${response.id}</div>`;
               $iconContainer.append(icon);
             }
-            if (response.message.includes('svg')) {
-              // Check if the response is an SVG
-              const isSvg = response.message.includes('<svg');
-              if (isSvg) {
-                // The response is an SVG, so add it to the chat area
-                const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                svgElement.innerHTML = response.message;
 
-                // Append the SVG element to the chat area
-                $chatArea.append(svgElement);
-              }
+            if (response.message.includes('svg')) {
+              // Create a temporary div to hold the SVG
+              const tempDiv = document.createElement('div');
+              tempDiv.innerHTML = response.message;
+
+              // Extract the SVG from the div
+              const svgElement = tempDiv.querySelector('svg');
+
+              // Append the SVG element to the chat area
+              $chatArea.append(svgElement);
             }
 
           },
