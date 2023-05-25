@@ -72,10 +72,10 @@
               $iconContainer.append(icon);
             }
 
-            if (response.message.includes('svg')) {
+            if (response.svg) {
               // Create a temporary div to hold the SVG
               const tempDiv = document.createElement('div');
-              tempDiv.innerHTML = response.message;
+              tempDiv.innerHTML = response.svg;
 
               // Extract the SVG from the div
               const svgElement = tempDiv.querySelector('svg');
