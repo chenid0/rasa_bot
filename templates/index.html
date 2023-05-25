@@ -71,11 +71,23 @@
               const icon = `<div id="icon-${response.id}" class="query-icon pending">${response.id}</div>`;
               $iconContainer.append(icon);
             }
-          },
-          error: function (error) {
-            console.log(error);
-          }
-        });
+
+            if (response.message.includes('svg')) {
+              // Check if the response is an SVG
+              const isSvg = response.message.includes('<svg');
+              if (isSvg) {
+                // The response is an SVG, so add it to the chat area
+                const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svgElement.innerHTML = response.message;
+
+                // Append the SVG element to the chat area
+                $chatArea.append(svgElement);
+              }
+            },
+            error: function (error) {
+              console.log(error);
+            }
+          });
       });
 
       // Periodically check the endpoint for completed queries
