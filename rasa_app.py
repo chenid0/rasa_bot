@@ -22,12 +22,23 @@ import threading
 import pandas as pd
 from io import StringIO
 
+
+
+csv= """
+col1,col2,col3
+1,a,true
+2,b,false
+3,c,true
+"""
+
+"""
 csv = 'Short Name,Medium Name,Long Name,Category,Font Color,Order,Synonyms,Clustal Substitution,Comment,<BackgroundColor>Hydrophobicity-KD,<BackgroundColor>Hydrophobicity-HW,<BackgroundColor>ChemicalStructure,<BackgroundColor>ChouFasman,<Data>Kyte-Doolittle,<Data>Hopp-Woods,<BackgroundColor>Clustal,<Data>logp (crippen),<Data>mr,<Data>TPSArea,<Data>kappa1,<Data>kappa2,<Data>kappa3,<Data>SArea,<Data>MW,Smiles\r \
 G,Gly,Glycine,neutral,black,1,G;Gly;GLY;Glycine,G,,"RGB(116,116,139)","RGB(120,120,136)","RGB(0,255,255)",green,-0.4,0,yellow,-0.856,15.1184,43.09,0.43129,2.63,1.63,31.7466,57.0515,C(C(=O)[r])N[r]\r \
 A,Ala,Alanine,neutral,black,2,A;Ala;ALA;Alanine,A,,"RGB(179,179,77)","RGB(139,139,116)","RGB(0,255,255)",red,1.8,-0.5,white,-0.4675,19.7134,43.09,0.539918,1.90548,3.63,40.9215,71.0782,C[C@@H](C(=O)[r])N[r]\r \
 dA,dAla,D-Alanine,neutral,red,2.1,dAla;dA,A,,"RGB(179,179,77)","RGB(139,139,116)","RGB(0,255,255)",red,1.8,-0.5,white,-0.4675,19.7134,43.09,0.539918,1.90548,3.63,40.9215,71.0782,C[C@H](C(=O)[r])N[r]\r \
 V,Val,Valine,aliphatic,black,3,V;Val;VAL;Valine,V,,"RGB(9,9,247)","RGB(179,179,76)","RGB(0,255,255)",blue,4.2,-1.5,green,0.1686,28.8774,43.09,0.759881,2.74564,2.34048,59.2712,99.1316,[r]C([C@@H](N[r])C(C)C)=O\r \
 dV,dVal,D-Valine,aliphatic,red,3.1,dV;dVal,V,,"RGB(9,9,247)","RGB(179,179,76)","RGB(0,255,255)",blue,4.2,-1.5,green,0.1686,28.8774,43.09,0.759881,2.74564,2.34048,59.2712,99.1316,[r]C([C@H](N[r])C(C)C)=O\r '
+"""
 
 svg = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="305" height="352">\
 <g id="unmapped">\
