@@ -214,9 +214,7 @@ def async_run_query(query: str) -> None:
         print(traceback.format_exc())
 
 
-# _______________________________________________________________________________________________________________
-# trigger this with 'check pending'
-# !!Note this works without error
+
 def check_pending() -> Tuple[Set[Text],Dict[Text, Any]]:                
         try:
             num_queries = get_all_pending_queries().__len__()
@@ -232,9 +230,7 @@ def check_pending() -> Tuple[Set[Text],Dict[Text, Any]]:
 
             for k, v in dict(get_all_query_results()).items():
                 print(f"completed query: {k} : {v}")
-                remove_query(k)
-       
-         
+                remove_query(k)                
 
             return set(thread_query_dict.values()), dict(get_all_query_results())
         except Exception as e1:
@@ -263,16 +259,20 @@ def send_message():
     rasa_payload = {"sender": "user", "message": message}
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
     message_txt = ""
+    queries = []
     for obj in rasa_response:
         if "query:" in obj["text"]:
             query_text = obj["text"].replace("query:", "").replace(" : ", "")
+            queries.append(query_text)
             async_run_query(query_text)
         message_txt += obj["text"]
         message_txt += "\n<br>"
     pending, completed = check_pending()
-    if query_text in completed:
-        response = {"message": str(completed[query_text])}
-        return jsonify(response)
+    for query in queries:
+        if query in pending:
+            message_txt += f"query: {query} is pending\n<br>"
+        if query in completed:
+            message_txt += f"query: {query} is completed\n<br>"    
     return jsonify({"message": message_txt})
 
 
