@@ -187,7 +187,7 @@ def run_query(query):
         add_query_result(query, traceback.format_exc())
 
 
-def async_run_query(query: str):
+def async_run_query(query: str) -> None:
     try:
         query_thread = threading.Thread(target=run_query, args=(query,))
         # Start the thread
@@ -266,11 +266,14 @@ def send_message():
     for obj in rasa_response:
         if "query:" in obj["text"]:
             query_text = obj["text"].replace("query:", "").replace(" : ", "")
-            async_run_query(query_text, None)
+            async_run_query(query_text)
         message_txt += obj["text"]
         message_txt += "\n<br>"
-    response = {"message": message_txt}
-    return jsonify(response)
+    pending, completed = check_pending()
+    if query_text in completed:
+        response = {"message": str(completed[query_text])}
+        return jsonify(response)
+    return jsonify({"message": message_txt})
 
 
 @app.route("/api/query_status", methods=["GET"])
