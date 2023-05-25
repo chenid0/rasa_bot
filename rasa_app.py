@@ -269,7 +269,9 @@ def send_message():
         if "action" in text:
             action_text = obj["text"].replace("action:", "").replace(" : ", "")
             if "load svg" in action_text:
-                return Response(svg, headers={"Content-Type": "image/svg+xml"})
+                #return Response(svg, headers={"Content-Type": "image/svg+xml"})
+                return jsonify({"message": message_txt,
+                                "svg": svg})
 
         message_txt += obj["text"]
         message_txt += "\n<br>"
