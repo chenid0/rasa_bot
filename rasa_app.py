@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, Response
 
 import sqlite3
 import os
