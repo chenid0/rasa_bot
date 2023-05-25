@@ -290,8 +290,9 @@ def send_message():
             if "load svg" in action_text:                
                 return jsonify({"message": message_txt, "svg": svg})
             elif "load csv" in action_text:
-                csv_data = StringIO(csv)
-                df = pd.read_csv(csv_data)
+                #csv_data = StringIO(csv)
+                #df = pd.read_csv(csv_data)
+                df = pd.DataFrame({'Col1': [1, 2], 'Col2': [3, 4]})
                 csv_json = df.to_json(orient='records')
                 return jsonify({"message": message_txt, "csv": csv_json})
 
