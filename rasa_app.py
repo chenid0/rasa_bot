@@ -24,12 +24,10 @@ from io import StringIO
 
 
 
-csv= """
-col1,col2,col3
+csv= """col1,col2,col3
 1,a,true
 2,b,false
-3,c,true
-"""
+3,c,true"""
 
 """
 csv = 'Short Name,Medium Name,Long Name,Category,Font Color,Order,Synonyms,Clustal Substitution,Comment,<BackgroundColor>Hydrophobicity-KD,<BackgroundColor>Hydrophobicity-HW,<BackgroundColor>ChemicalStructure,<BackgroundColor>ChouFasman,<Data>Kyte-Doolittle,<Data>Hopp-Woods,<BackgroundColor>Clustal,<Data>logp (crippen),<Data>mr,<Data>TPSArea,<Data>kappa1,<Data>kappa2,<Data>kappa3,<Data>SArea,<Data>MW,Smiles\r \
@@ -290,9 +288,9 @@ def send_message():
             if "load svg" in action_text:                
                 return jsonify({"message": message_txt, "svg": svg})
             elif "load csv" in action_text:
-                #csv_data = StringIO(csv)
-                #df = pd.read_csv(csv_data)
-                df = pd.DataFrame({'Col1': [1, 2], 'Col2': [3, 4]})
+                csv_data = StringIO(csv)
+                df = pd.read_csv(csv_data, sep=",")
+                #df = pd.DataFrame({'Col1': [1, 2], 'Col2': [3, 4]})
                 csv_json = df.to_json(orient='records')
                 return jsonify({"message": message_txt, "csv": csv_json})
 
