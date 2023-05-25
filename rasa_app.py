@@ -261,10 +261,16 @@ def send_message():
     message_txt = ""
     queries = []
     for obj in rasa_response:
-        if "query:" in obj["text"]:
+        text = obj["text"]
+        if "query:" in text:
             query_text = obj["text"].replace("query:", "").replace(" : ", "")
             queries.append(query_text)
             async_run_query(query_text)
+        if "action" in text:
+            action_text = obj["text"].replace("action:", "").replace(" : ", "")
+            if "load svg" in action_text:
+                return Response(svg, headers={"Content-Type": "image/svg+xml"})
+
         message_txt += obj["text"]
         message_txt += "\n<br>"
     pending, completed = check_pending()
