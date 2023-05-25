@@ -187,7 +187,7 @@ def run_query(query):
         add_query_result(query, traceback.format_exc())
 
 
-def async_run_query(query: str, dispatcher: CollectingDispatcher):
+def async_run_query(query: str):
     try:
         query_thread = threading.Thread(target=run_query, args=(query,))
         # Start the thread
@@ -201,7 +201,7 @@ def async_run_query(query: str, dispatcher: CollectingDispatcher):
             time.sleep(1)
 
         if query_thread.is_alive():
-            dispatcher.utter_message(text="query still running...exiting")
+            print("query still running...exiting")
 
         if not query_thread.is_alive():
             # The database query has finished, so join the thread to the main thread
@@ -209,9 +209,9 @@ def async_run_query(query: str, dispatcher: CollectingDispatcher):
             remove_thread(query_thread)
             results = "results: \n"
             results += str(get_query_result(query))
-            dispatcher.utter_message(text=results)
+            print(results)
     except Exception as e:
-        dispatcher.utter_message(text=traceback.format_exc())
+        print(traceback.format_exc())
 
 
 # _______________________________________________________________________________________________________________
@@ -264,6 +264,9 @@ def send_message():
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
     message_txt = ""
     for obj in rasa_response:
+        if "query:" in obj["text"]:
+            query_text = obj["text"].replace("query:", "").replace(" : ", "")
+            async_run_query(query_text, None)
         message_txt += obj["text"]
         message_txt += "\n<br>"
     response = {"message": message_txt}
