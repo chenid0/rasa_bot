@@ -280,6 +280,7 @@ def send_message():
         if "query:" in text:
             query_text = obj["text"].replace("query:", "").replace(" : ", "")
             queries.append(query_text)
+            print(f"running async query {query_text}}")
             async_run_query(query_text)
         if "action" in text:
             action_text = obj["text"].replace("action:", "").replace(" : ", "")
