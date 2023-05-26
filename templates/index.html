@@ -154,15 +154,20 @@
       if (existingIcon) {
         // The icon already exists, do nothing
         return;
-      }
-
-      // The icon does not exist, create it
+      }      
+       // The icon does not exist, create it
       const icon = document.createElement('div');
       icon.className = 'query-icon pending';
-      icon.textContent = query;
       icon.id = `icon-${query}`;
-      // Add the icon to the icon container
-      document.getElementById('icon-container').appendChild(icon);
+
+      const img = document.createElement('img');
+      img.src = 'path/to/your/image.png'; // Set the source to your PNG file
+      img.alt = query; // Set the alt text to the query
+      img.style.width = '50px'; // Optional: Set the width
+      img.style.height = '50px'; // Optional: Set the height
+
+      // Add the img to the icon div
+      icon.appendChild(img);
     }
 
     function removeIcon(query) {
