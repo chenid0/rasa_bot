@@ -211,7 +211,8 @@ def async_run_query(query: str) -> None:
 
         # Poll the thread periodically from the main thread to check if it's still running
         start_time = time.time()
-        while (time.time() - start_time) < 5 and query_thread.is_alive():
+        num_seconds_waiting = 5
+        while (time.time() - start_time) < num_seconds_waiting and query_thread.is_alive():
             print("Query is running in the background...")
             time.sleep(1)
 
