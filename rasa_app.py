@@ -243,11 +243,12 @@ def check_pending() -> Tuple[Set[Text], Dict[Text, Any]]:
                 remove_thread(thread)
                 print("thread finished. removing from set")
 
-        for k, v in dict(get_all_query_results()).items():
+        completed_result = dict(get_all_query_results())
+        for k, v in completed_result.items():
             print(f"completed query: {k} : {v}")
             remove_query(k)
 
-        return set(thread_query_dict.values()), dict(get_all_query_results())
+        return set(thread_query_dict.values()), completed_result
     except Exception as e1:
         print("error while executing: " + traceback.format_exc())
 
