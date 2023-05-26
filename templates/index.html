@@ -161,7 +161,7 @@
       icon.id = `icon-${query}`;
 
       const img = document.createElement('img');
-      img.src = 'icon.png'; // Set the source to your PNG file
+      img.src = "{{ url_for('static', filename='icon.png') }}"; // Set the source to your PNG file
       img.alt = query; // Set the alt text to the query
       img.style.width = '50px'; // Optional: Set the width
       img.style.height = '50px'; // Optional: Set the height
