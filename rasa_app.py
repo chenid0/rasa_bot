@@ -278,12 +278,12 @@ def send_message():
     for obj in rasa_response:
         text = obj["text"]
         if "query:" in text:
-            query_text = obj["text"].replace("query:", "").replace(" : ", "")
+            query_text = obj["text"].replace("query:", "").replace(":", "")
             queries.append(query_text)
             print(f"running async query \n{query_text}\n")
             async_run_query(query_text)
         if "action" in text:
-            action_text = obj["text"].replace("action:", "").replace(" : ", "")
+            action_text = obj["text"].replace("action:", "").replace(":", "")
             if "load svg" in action_text:                
                 return jsonify({"message": message_txt, "svg": svg})
             elif "load csv" in action_text:
