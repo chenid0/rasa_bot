@@ -129,24 +129,7 @@
           }
         });
       }, 10000);  // Check every 10 seconds
-
-
-    });
-    function addIcons() {
-      // Add a new button
-      const addIconButton = document.createElement('button');
-      addIconButton.textContent = 'Add Icon';
-      //addIconButton.addEventListener('click', createIcon);
-
-      // Add a new button
-      const removeIconButton = document.createElement('button');
-      removeIconButton.textContent = 'Remove Icons';
-      removeIconButton.addEventListener('click', removeAllIcons);
-
-      // Add the buttons to the chat area
-      document.getElementById('chat-area').appendChild(addIconButton);
-      document.getElementById('chat-area').appendChild(removeIconButton);
-    }
+    });    
 
     function createIcon(query) {
       // Check if the icon already exists
@@ -180,11 +163,7 @@
       while (document.getElementById('icon-container').firstChild) {
         document.getElementById('icon-container').removeChild(document.getElementById('icon-container').firstChild);
       }
-    }
-
-
-    // Call the function after the DOM has loaded
-    window.addEventListener('DOMContentLoaded', addIcons);
+    }    
   </script>
 </body>
 
