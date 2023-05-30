@@ -8,13 +8,17 @@
   <style>
     .icon-container {
       position: fixed;
-      bottom: 0;
-      width: 100%;
+      right: 0;
+      bottom: 50px; /* Adjust this value based on the height of your chat input */
+      width: 80px; /* Adjust width of the icon-container */
+      max-height: calc(100% - 100px); /* Adjust max height as per requirements */
+      overflow-y: auto; /* Enable scrolling if there are too many icons */
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
     }
-
+    
     .query-icon {
       margin: 10px;
       padding: 10px;
@@ -28,15 +32,16 @@
       min-height: 50px;
       cursor: pointer;
     }
-
+    
     .query-icon.completed {
       border-color: green;
     }
-
+    
     .query-icon.pending {
       border-color: orange;
     }
-  </style>
+    </style>
+    
 </head>
 
 <body>
