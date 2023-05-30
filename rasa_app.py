@@ -307,14 +307,7 @@ def send_message():
 
 
 @app.route("/api/query_status", methods=["GET"])
-def query_status():
-    # rasa_payload = {"sender": "user", "message": "check pending"}
-    # rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
-    # print("query status: rasa responded")
-    # print(rasa_response)
-    # print("end response")
-    # [{'recipient_id': 'user', 'text': 'running: action_check_pending'}, {'recipient_id': 'user', 'text': '1 queries already running'}, {'recipient_id': 'user', 'text': 'thread finished. removing from set'}]
-
+def query_status():    
     pending_queries, finished_queries = check_pending()
     message_txt = ""
 
