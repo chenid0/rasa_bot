@@ -30,25 +30,21 @@ def send_message():
     message_txt = ""
     queries = []
     for obj in rasa_response:
-        text = obj["text"]
-        
+        text = obj["text"]        
         if query_tag in text:
-            query_text = obj["text"].replace(query_tag, "").replace(":", "")
+            query_text = obj["text"].replace(query_tag, "")
             queries.append(query_text)
             print(f"running async query \n{query_text}\n")
             async_run_query(query_text)
         if action_tag in text:            
-            action_text = obj["text"].replace(action_tag, "").replace(":", "")                        
+            action_text = obj["text"].replace(action_tag, "")
             if svg_tag in action_text:
                 return jsonify({"message": message_txt, "svg": svg_str})
             elif csv_tag in action_text:
                 csv_data = StringIO(csv_str)
                 df = pd.read_csv(csv_data, sep=",")                
                 csv_json = df.to_json(orient="records")
-                return jsonify({"message": message_txt, "csv": csv_json})
-
-        message_txt += obj["text"]
-        message_txt += "\n<br>"
+                return jsonify({"message": message_txt, "csv": csv_json})        
     pending, completed = check_pending()
     for query in queries:
         if query in pending:
