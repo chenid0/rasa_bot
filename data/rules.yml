@@ -177,3 +177,28 @@ rules:
   - intent: test_CSV
   - action: action_test_csv
 
+- rule: list_properties
+  steps:
+  - intent: list_properties
+  - action: action_list_properties
+
+- rule: list_data
+  steps:
+  - intent: list_data
+  - action: action_list_data
+
+- rule: list_min_value
+  steps:
+  - intent: data_minimum
+  - action: action_min_value
+
+- rule: list_max_value
+  steps:
+  - intent: data_maximum
+  - action: action_max_value
+
+- rule: bin_data
+  steps:
+  - intent: bin_data
+  - action: action_historgram
+

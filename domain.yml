@@ -36,6 +36,11 @@ intents:
   - help_recommend_rgroups
   - test_svg
   - test_CSV
+  - list_properties
+  - list_data
+  - data_minimum
+  - data_maximum
+  - bin_data
 
 session_config:
   session_expiration_time: 60
@@ -86,6 +91,11 @@ actions:
   - action_help_recommend_rgroups
   - action_test_svg
   - action_test_csv
+  - action_list_properties
+  - action_list_data
+  - action_min_value
+  - action_max_value
+  - action_historgram
 
 entities:
   - sqlstatement
