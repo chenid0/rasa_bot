@@ -957,4 +957,128 @@ nlu:
     - TEST CSV
     - testcsv
 
+- intent: list_properties
+  examples: |
+    - list properties
+    - what properties
+    - tell properties
+    - which properties are there
+    - what properties are there
+    - what calculated properties
+    - what physicochemical properties
+    - which physico-chemical properties
+    - how many properties
+    - show properties
+    - show calculated properties
+    - describe calcuated properties
+    - display property list
+    - display properties
+    - display available properties
+    - show available properties
+    - display available properties
+
+- intent: list_data
+  examples: |
+    - list data columns
+    - list assay values
+    - list import values
+    - what data is there
+    - what data got loaded
+    - which data got loaded
+    - show data columns
+    - show assay columns
+    - show assay
+    - show imported data
+    - what imported data is ther
+    - available loaded data
+    - available imported columns
+    - describe imported data
+    - show imported columns
+    - what data columns
+    - which data columns
+    - display data fields
+    - display data columns
+    - display imported fields
+    - display imported columns
+
+- intent: data_minimum
+  examples: |
+    - show minimum value
+    - what is minimumm value
+    - display minimum value
+    - show min value
+    - what is minimumm value
+    - show minimum data value
+    - what is minimumm data value
+    - display minimum data value
+    - show minimum data value
+    - what is minimumm data value
+    - minimum
+    - show minimum
+    - display minimum
+    - what is minimum
+    - show min value
+    - what is minm value
+    - display min value
+    - show min value
+    - what is minm value
+    - show min data value
+    - what is minm data value
+    - display min data value
+    - show min data value
+    - what is minm data value
+    - min
+    - show min
+    - display min
+    - what is min
+
+- intent: data_maximum
+  examples: |
+    - show maximum value
+    - what is maximumm value
+    - display maximum value
+    - show min value
+    - what is maximumm value
+    - show maximum data value
+    - what is maximumm data value
+    - display maximum data value
+    - show maximum data value
+    - what is maximumm data value
+    - maximum
+    - show maximum
+    - display maximum
+    - what is maximum
+    - show max value
+    - what is maxm value
+    - display max value
+    - show min value
+    - what is maxm value
+    - show max data value
+    - what is maxm data value
+    - display max data value
+    - show max data value
+    - what is maxm data value
+    - max
+    - show max
+    - display max
+    - what is max
+
+- intent: bin_data
+  examples: |
+    - group data into bins
+    - build histogram
+    - divide data into bins
+    - categorize into bins
+    - count frequencies
+    - create frequencies
+    - display data frequencies
+    - build data histogram
+    - create histogram
+    - create property histogram
+    - create data histogram
+    - histogram
+    - summarize frequencies
+    - display frequences
+    - display property frequencies
+
 

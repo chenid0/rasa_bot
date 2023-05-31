@@ -3,7 +3,7 @@ stories:
 - story: test story 1
   steps:
   - user: |
-     text:
+     load sdf
     intent: load_sdf_file
   - action: action_load_mols_sdf
   - user: |
