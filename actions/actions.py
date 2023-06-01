@@ -59,6 +59,7 @@ g_history_calls = []
 
 def utter_query(dispatcher, query):
     dispatcher.utter_message(text=f"\n{query_tag} {query}\n")
+    dispatcher.utter_message(json_message={"query": query})
 
 
 def utter_svg(dispatcher, svg):
@@ -168,12 +169,6 @@ class HeatMapColumn(Action):
 
 
 # __________________________________________________________________________________________________
-
-
-# __________________________________________________________________________________________________
-# Count all molecules in MOLECULES table (unique set)____________________________________________________________
-# trigger this with count molecules
-# !!Note this one fails .. seems simple enough
 class CountMols(Action):
     def name(self) -> Text:
         return "action_count_mols"
@@ -489,9 +484,6 @@ class CalcExplicitProperties(Action):
         return []
 
 
-# __________________________________________________________________________________________________
-
-
 # _______________________________________________________________________________________________________________
 class FindLeastPotentRGroup(Action):
     def name(self) -> Text:
@@ -505,9 +497,6 @@ class FindLeastPotentRGroup(Action):
     ) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="running: action_least_potent_rgroup")
         return []
-
-
-# __________________________________________________________________________________________________
 
 
 # _______________________________________________________________________________________________________________
@@ -525,8 +514,6 @@ class FindMostPotentRGroup(Action):
         return []
 
 
-# __________________________________________________________________________________________________
-
 
 # _______________________________________________________________________________________________________________
 class RecommendRGroups(Action):
@@ -543,9 +530,6 @@ class RecommendRGroups(Action):
         return []
 
 
-# __________________________________________________________________________________________________
-
-
 # _______________________________________________________________________________________________________________
 class FindBioisosteres(Action):
     def name(self) -> Text:
@@ -559,9 +543,6 @@ class FindBioisosteres(Action):
     ) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="running: action_recommend_bioisosteres")
         return []
-
-
-# __________________________________________________________________________________________________
 
 
 # _______________________________________________________________________________________________________________
@@ -620,8 +601,10 @@ class ListAvailProperties(Action):
     ) -> List[Dict[Text, Any]]:
         tablename = "MOLDATA"
         sql1 = "SELECT name, type FROM PRAGMA_TABLE_INFO('" + tablename + "');"
-        # take only DOUBLE, FLOAT, INT and INTEGER fields
+        # take only DOUBLE, FLOAT, INT and INTEGER fields        
         dispatcher.utter_message(text="running: action_list_properties")
+        
+        utter_query(dispatcher, sql1)
         return []
 
 
@@ -640,6 +623,7 @@ class ListAvailData(Action):
         sql2 = "SELECT name, type FROM PRAGMA_TABLE_INFO('" + tablename + "');"
         # take only DOUBLE, FLOAT, INT and INTEGER fields
         dispatcher.utter_message(text="running: action_list_data")
+        utter_query(dispatcher, sql2)
         return []
 
 
@@ -705,7 +689,8 @@ class GetMaximumValue(Action):
         #
         #       ignore others for now
 
-        # tablename1 = "MOLPROPS"; tablename2 = "MOLDATA";
+        tablename1 = "MOLPROPS"
+        tablename2 = "MOLDATA"
         # for each column
         # sql2 = "SELECT MIN(" + column + ") FROM " + tablename + ";";
 
@@ -742,15 +727,17 @@ class CalculateHistogram(Action):
         #
         #       ignore others for now
 
-        # tablename1 = "MOLPROPS"; tablename2 = "MOLDATA";
+        tablename1 = "MOLPROPS"
+        tablename2 = "MOLDATA"
         # specific
-        # sql1 = "SELECT DISTINCT CAST(MW/100 As INT)*100 AS Bin, COUNT(*) AS Frequency FROM " + tablename + " GROUP BY Bin;";
+        sql1 = "SELECT DISTINCT CAST(MW/100 As INT)*100 AS Bin, COUNT(*) AS Frequency FROM " + tablename1 + " GROUP BY Bin;"
 
         # generic: for each column
-        # sql = "SELECT DISTINCT CAST(" + column + "/" + divide_val + " As INT)*" + divide_val + " AS Bin, COUNT(*) AS Frequency FROM " + tablename + " GROUP BY Bin;";
+        #sql = "SELECT DISTINCT CAST(" + column + "/" + divide_val + " As INT)*" + divide_val + " AS Bin, COUNT(*) AS Frequency FROM " + tablename + " GROUP BY Bin;";
 
         # we can export a simple csv formatted table to text.
         #  we can add a svg or gif from the data..
 
         dispatcher.utter_message(text="running: action_historgram")
+        utter_query(dispatcher, sql1)        
         return []

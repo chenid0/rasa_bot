@@ -8,6 +8,18 @@ from constants import (action_tag, csv_str, csv_tag, query_tag,
                        svg_str, svg_tag)
 from query import async_run_query, check_pending
 
+"""
+text: Optional[Text] = None,
+image: Optional[Text] = None,
+json_message: Optional[Dict[Text, Any]] = None,
+template: Optional[Text] = None,
+response: Optional[Text] = None,
+attachment: Optional[Text] = None,
+buttons: Optional[List[Dict[Text, Any]]] = None,
+elements: Optional[List[Dict[Text, Any]]] = None,
+"""
+
+
 app = Flask(__name__)
 rasa_endpoint = (
     "http://localhost:5005/webhooks/rest/webhook"  # replace with your Rasa endpoint
@@ -30,7 +42,13 @@ def send_message():
     message_txt = ""
     queries = []
     for obj in rasa_response:
-        text = obj["text"]        
+        text = obj.get("text")
+        print(f"text: {text}")
+        element_list = obj.get("elements")
+        print(f"elements: {element_list}")
+        json_data = obj.get("json_message")
+        print(f"json: {json_data}")
+        print()
         if query_tag in text:
             query_text = obj["text"].replace(query_tag, "")
             queries.append(query_text)
