@@ -60,6 +60,7 @@ g_history_calls = []
 def utter_query(dispatcher, query):
     dispatcher.utter_message(text=f"\n{query_tag} {query}\n")
     dispatcher.utter_message(json_message={"query": query})
+    dispatcher.utter_message(elements=[query,])
 
 
 def utter_svg(dispatcher, svg):
