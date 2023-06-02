@@ -49,12 +49,12 @@ def send_message():
         json_data = obj.get("json_message")
         print(f"json: {json_data}")
         print()
-        if query_tag in text:
+        if text and query_tag in text:
             query_text = obj["text"].replace(query_tag, "")
             queries.append(query_text)
             print(f"running async query \n{query_text}\n")
             async_run_query(query_text)
-        if action_tag in text:            
+        if text and action_tag in text:            
             action_text = obj["text"].replace(action_tag, "")
             if svg_tag in action_text:
                 return jsonify({"message": message_txt, "svg": svg_str})
