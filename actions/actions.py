@@ -601,7 +601,7 @@ class ListAvailProperties(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         tablename = "MOLDATA"
-        sql1 = "SELECT name, type FROM pragma_table_info('" + tablename + "');"
+        sql1 = "PRAGMA table_info('" + tablename + "');"
         # take only DOUBLE, FLOAT, INT and INTEGER fields        
         dispatcher.utter_message(text="running: action_list_properties")
         
