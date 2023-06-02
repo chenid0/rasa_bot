@@ -621,7 +621,7 @@ class ListAvailData(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         tablename = "MOLPROPS"
-        sql2 = "SELECT name, type FROM PRAGMA_TABLE_INFO('" + tablename + "');"
+        sql2 = "PRAGMA TABLE_INFO('" + tablename + "');"
         # take only DOUBLE, FLOAT, INT and INTEGER fields
         dispatcher.utter_message(text="running: action_list_data")
         utter_query(dispatcher, sql2)
