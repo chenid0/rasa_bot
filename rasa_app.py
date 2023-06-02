@@ -68,7 +68,7 @@ def send_message():
         if query in pending:
             message_txt += f"query: {query} is pending\n<br>"
         if query in completed:
-            message_txt += f"query: {query} is completed\n<br>"
+            message_txt += f"query: {query} is completed\n<br>{completed.get(query)}\n<br>"
     return jsonify({"message": message_txt})
 
 
