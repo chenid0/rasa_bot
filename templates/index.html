@@ -6,6 +6,10 @@
   <title>Chatbot</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
+     body {
+        margin-left: 250px; /* width of the side panel */
+    }
+
     .icon-container {
       position: fixed;
       right: 0;
@@ -46,10 +50,8 @@
         left: 0;
         height: 100%;
         width: 250px;
-        background-color: blue;
-        overflow-y: auto;
-        transition: transform 0.3s ease-in-out;
-        transform: translateX(-100%);
+        background-color: rgb(12, 12, 143);
+        overflow-y: auto;        
     }
 
     .hamburger-menu {
@@ -65,11 +67,7 @@
         background-color: white;
         display: block;
         margin: 5px 0;
-    }
-
-    .side-panel.open {
-        transform: translateX(0);
-    }
+    }  
     </style>
     
 </head>
@@ -77,9 +75,9 @@
 <body>
   <div class="side-panel" id="side-panel">
     <div class="hamburger-menu" id="hamburger-menu">
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
+        <span class="line">User Profile</span>
+        <span class="line">Settings</span>
+        <span class="line">Help</span>
     </div>
     <!-- Other content for the side panel goes here -->
 </div>
@@ -95,10 +93,6 @@
       const $chatForm = $('#chat-form');
       const $chatInput = $('#chat-input');
       const $iconContainer = $('#icon-container'); // Icon Container
-
-      $('#hamburger-menu').click(function() {
-            $('#side-panel').toggleClass('open');
-        });
 
       $chatForm.submit(function (event) {
         event.preventDefault();
