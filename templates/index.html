@@ -6,27 +6,33 @@
   <title>Chatbot</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
-     body {
-        margin-left: 100px; /* width of the side panel */
+    body {
+      margin-left: 100px;
+      /* width of the side panel */
     }
 
     .chat-form {
-      margin-left: 50px; /* width of the side panel */
+      margin-left: 50px;
+      /* width of the side panel */
     }
 
     .icon-container {
       position: fixed;
       right: 0;
-      bottom: 50px; /* Adjust this value based on the height of your chat input */
-      width: 80px; /* Adjust width of the icon-container */
-      max-height: calc(100% - 100px); /* Adjust max height as per requirements */
-      overflow-y: auto; /* Enable scrolling if there are too many icons */
+      bottom: 50px;
+      /* Adjust this value based on the height of your chat input */
+      width: 80px;
+      /* Adjust width of the icon-container */
+      max-height: calc(100% - 100px);
+      /* Adjust max height as per requirements */
+      overflow-y: auto;
+      /* Enable scrolling if there are too many icons */
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
     }
-    
+
     .query-icon {
       margin: 10px;
       padding: 10px;
@@ -40,67 +46,68 @@
       min-height: 50px;
       cursor: pointer;
     }
-    
+
     .query-icon.completed {
       border-color: green;
     }
-    
+
     .query-icon.pending {
       border-color: orange;
     }
+
     .side-panel {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100px;
-        background-color: rgb(12, 12, 143);
-        overflow-y: auto;        
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100px;
+      background-color: rgb(12, 12, 143);
+      overflow-y: auto;
     }
 
     .hamburger-menu {
-        width: 30px;
-        height: 22px;
-        position: relative;
-        margin: 15px;
+      width: 30px;
+      height: 22px;
+      position: relative;
+      margin: 15px;
     }
 
     .hamburger-menu .line {
-        width: 100%;
-        height: 2px;
-        background-color: white;
-        display: block;
-        margin: 5px 0;
+      width: 100%;
+      height: 2px;
+      background-color: white;
+      display: block;
+      margin: 5px 0;
     }
-      
+
     .dropdown {
-  position: relative;
-  display: inline-block;
-}
+      position: relative;
+      display: inline-block;
+    }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  min-width: 160px;
-  z-index: 1;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding: 12px 16px;
-  background-color: #f9f9f9;
-}
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      min-width: 160px;
+      z-index: 1;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      padding: 12px 16px;
+      background-color: #837b7b;
+      border: #837b7b;
+    }
 
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
 
-.dropdown:hover .dropdown-content {
-  display: block;
-}
+    .dropdown:hover .dropdown-content {
+      display: hover;
+    }
+  </style>
 
-    </style>
-    
 </head>
 
 <body>
@@ -109,7 +116,7 @@
       <span class="line">____</span>
       <span class="line">____</span>
       <span class="line">____</span>
-        
+
     </div>
     <div id="dropdown-content" class="dropdown-content">
       <a href="#">User Profile</a>
@@ -117,7 +124,7 @@
       <a href="#">Help</a>
     </div>
     <!-- Other content for the side panel goes here -->
-</div>
+  </div>
   <div id="chat-area"></div>
   <form id="chat-form" class="chat-form">
     <input type="text" name="message" id="chat-input">
@@ -166,16 +173,16 @@
               var table = $('<table></table>');
               var headers = Object.keys(data[0]);
               var headerRow = $('<tr></tr>');
-              headers.forEach(function(header) {
-                  headerRow.append($('<th></th>').text(header));
+              headers.forEach(function (header) {
+                headerRow.append($('<th></th>').text(header));
               });
               table.append(headerRow);
-              data.forEach(function(rowData) {
-                  var row = $('<tr></tr>');
-                  headers.forEach(function(header) {
-                      row.append($('<td></td>').text(rowData[header]));
-                  });
-                  table.append(row);
+              data.forEach(function (rowData) {
+                var row = $('<tr></tr>');
+                headers.forEach(function (header) {
+                  row.append($('<td></td>').text(rowData[header]));
+                });
+                table.append(row);
               });
               $chatArea.append(table);
             }
@@ -207,7 +214,7 @@
           }
         });
       }, 10000);  // Check every 10 seconds
-    });    
+    });
 
     function createIcon(query) {
       // Check if the icon already exists
@@ -215,8 +222,8 @@
       if (existingIcon) {
         // The icon already exists, do nothing
         return;
-      }      
-       // The icon does not exist, create it
+      }
+      // The icon does not exist, create it
       const icon = document.createElement('div');
       icon.className = 'query-icon pending';
       icon.id = `icon-${query}`;
@@ -243,18 +250,18 @@
         document.getElementById('icon-container').removeChild(document.getElementById('icon-container').firstChild);
       }
     }
-     // Get the dropdown content and hamburger menu
-     const dropdownContent = document.getElementById('dropdown-content');
+    // Get the dropdown content and hamburger menu
+    const dropdownContent = document.getElementById('dropdown-content');
     const hamburgerMenu = document.getElementById('hamburger-menu');
 
     // Add a click event listener to the hamburger menu
-    hamburgerMenu.addEventListener('click', function() {
-        // Toggle the visibility of the dropdown content
-        if (dropdownContent.style.display === 'none' || dropdownContent.style.display === '') {
-            dropdownContent.style.display = 'block';
-        } else {
-            dropdownContent.style.display = 'none';
-        }
+    hamburgerMenu.addEventListener('click', function () {
+      // Toggle the visibility of the dropdown content
+      if (dropdownContent.style.display === 'none' || dropdownContent.style.display === '') {
+        dropdownContent.style.display = 'block';
+      } else {
+        dropdownContent.style.display = 'none';
+      }
     });    
   </script>
 </body>
