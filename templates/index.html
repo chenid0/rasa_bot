@@ -242,7 +242,20 @@
       while (document.getElementById('icon-container').firstChild) {
         document.getElementById('icon-container').removeChild(document.getElementById('icon-container').firstChild);
       }
-    }    
+    }
+     // Get the dropdown content and hamburger menu
+     const dropdownContent = document.getElementById('dropdown-content');
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+
+    // Add a click event listener to the hamburger menu
+    hamburgerMenu.addEventListener('click', function() {
+        // Toggle the visibility of the dropdown content
+        if (dropdownContent.style.display === 'none' || dropdownContent.style.display === '') {
+            dropdownContent.style.display = 'block';
+        } else {
+            dropdownContent.style.display = 'none';
+        }
+    });    
   </script>
 </body>
 
