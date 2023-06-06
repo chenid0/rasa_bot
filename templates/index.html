@@ -14,6 +14,7 @@
 
     .chat-area {
       bottom: 50px;
+      position: relative;
     }
 
     .chat-form {
@@ -154,13 +155,15 @@
     </div>
     <!-- Other content for the side panel goes here -->
   </div>
-  <div id="chat-area" class="class-area"></div>
+  <div>
+  <div id="chat-area" class="chat-area"></div>
   <form id="chat-form" class="chat-form">
     <input type="text" name="message"  placeholder="Type your message here..." id="chat-input">
     <span class="input-group-append">
       <button class="btn btn-outline-secondary" type="submit">Send</button>
     </span>
   </form>
+</div>
   <div id="icon-container" class="icon-container"></div> <!-- Icon Container -->
   <script>
     $(function () {
