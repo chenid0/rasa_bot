@@ -13,14 +13,14 @@
     }
 
     .chat-form {
-      margin-left: 50px;      
+      margin-left: 30px;      
       /* width of the side panel */
       width: 60%;
-      height: 80vh;
-      margin: 5% auto;
-      border: 1px solid #ccc;
-      padding: 20px;
-      overflow-y: scroll;
+      height: 50px;
+      margin: 5% auto;      
+      padding: 20px;      
+      position: absolute;
+      bottom: 0;
     }
 
     .icon-container {
@@ -153,9 +153,9 @@
   <div id="chat-area"></div>
   <form id="chat-form" class="chat-form">
     <input type="text" name="message"  placeholder="Type your message here..." id="chat-input">
-    <div class="input-group-append">
+    <span class="input-group-append">
       <button class="btn btn-outline-secondary" type="submit">Send</button>
-    </div>
+    </span>
   </form>
   <div id="icon-container" class="icon-container"></div> <!-- Icon Container -->
   <script>
