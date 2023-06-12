@@ -212,7 +212,8 @@
             }
             if (response.csv) {
               var data = JSON.parse(response.csv);
-              var table = $('<table class="csv-table"></table>');
+              var outer_div = $('<div class=class="csv-table"></div>');
+              var table = $('<table ></table></div>');
               var headers = Object.keys(data[0]);
               var headerRow = $('<tr></tr>');
               headers.forEach(function (header) {
@@ -226,7 +227,8 @@
                 });
                 table.append(row);
               });
-              $chatArea.append(table);
+              outer_div.append(table);
+              $chatArea.append(outer_div);
             }
 
           },
