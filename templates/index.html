@@ -183,53 +183,43 @@
           contentType: 'application/json',
           data: JSON.stringify({ message }),
           success: function (response, status, xhr) {
-            $chatArea.append(`<p>You: ${message}</p>`);            
+            $chatArea.append(`<p>You: ${message}</p>`);
 
-            const contentType = xhr.getResponseHeader('Content-Type');
-            if (contentType && contentType.includes('image')) {
-              //$chatArea.append(`<p id="${response.id}">Bot: ${response.message}${response.message.includes('persistent') ? ' <span class="status">Checking status...</span>' : ''}</p>`);  // Add a span element with a class for persistent messages
-              $chatArea.append(`<p >Bot: </p>`);
-              $chatArea.append(handleHistogramFile(response.histogram));
-              //const imgElement = document.createElement('img');
-              //imgElement.src = URL.createObjectURL(response);
-              //$chatArea.append(imgElement);              
-            } else {
-              $chatArea.append(`<p id="${response.id}">Bot: ${response.message}${response.message.includes('persistent') ? ' <span class="status">Checking status...</span>' : ''}</p>`);  // Add a span element with a class for persistent messages
-              if (response.message.includes('persistent')) {
-                // Add an icon for the query
-                const icon = `<div id="icon-${response.id}" class="query-icon pending">${response.id}</div>`;
-                $iconContainer.append(icon);
-              }
+            $chatArea.append(`<p id="${response.id}">Bot: ${response.message}${response.message.includes('persistent') ? ' <span class="status">Checking status...</span>' : ''}</p>`);  // Add a span element with a class for persistent messages
+            if (response.message.includes('persistent')) {
+              // Add an icon for the query
+              const icon = `<div id="icon-${response.id}" class="query-icon pending">${response.id}</div>`;
+              $iconContainer.append(icon);
+            }
 
-              if (response.svg) {
-                // Create a temporary div to hold the SVG
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = response.svg;
+            if (response.svg) {
+              // Create a temporary div to hold the SVG
+              const tempDiv = document.createElement('div');
+              tempDiv.innerHTML = response.svg;
 
-                // Extract the SVG from the div
-                const svgElement = tempDiv.querySelector('svg');
+              // Extract the SVG from the div
+              const svgElement = tempDiv.querySelector('svg');
 
-                // Append the SVG element to the chat area
-                $chatArea.append(svgElement);
-              }
-              if (response.csv) {
-                var data = JSON.parse(response.csv);
-                var table = $('<table></table>');
-                var headers = Object.keys(data[0]);
-                var headerRow = $('<tr></tr>');
+              // Append the SVG element to the chat area
+              $chatArea.append(svgElement);
+            }
+            if (response.csv) {
+              var data = JSON.parse(response.csv);
+              var table = $('<table></table>');
+              var headers = Object.keys(data[0]);
+              var headerRow = $('<tr></tr>');
+              headers.forEach(function (header) {
+                headerRow.append($('<th></th>').text(header));
+              });
+              table.append(headerRow);
+              data.forEach(function (rowData) {
+                var row = $('<tr></tr>');
                 headers.forEach(function (header) {
-                  headerRow.append($('<th></th>').text(header));
+                  row.append($('<td></td>').text(rowData[header]));
                 });
-                table.append(headerRow);
-                data.forEach(function (rowData) {
-                  var row = $('<tr></tr>');
-                  headers.forEach(function (header) {
-                    row.append($('<td></td>').text(rowData[header]));
-                  });
-                  table.append(row);
-                });
-                $chatArea.append(table);
-              }
+                table.append(row);
+              });
+              $chatArea.append(table);
             }
 
           },
@@ -249,7 +239,7 @@
               createIcon(response.pending[i])
             }
             for (let [query, result] of Object.entries(response.completed)) {
-              if(query){
+              if (query) {
                 removeIcon(query);
                 $chatArea.append(`<p>Bot: ${query}</p>`);
                 $chatArea.append(`<p>Bot: ${result}</p>`);

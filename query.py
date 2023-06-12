@@ -123,15 +123,15 @@ def async_run_query(query: str) -> None:
 
 
 
-def run_histogram_query(query: str) -> str:
+def create_histogram_from_query(query: str) -> str:
     print(f"running histogram query {query}")
     run_query(query)
     data = get_query_result(query)
     remove_query(query)
     # Generate the histogram image
     plt.hist(data, bins=10)  # Replace 'data' with your histogram data
-    plt.xlabel('X-axis label')
-    plt.ylabel('Y-axis label')
+    plt.xlabel('logP')
+    plt.ylabel('Count')
     plt.title('Histogram')
     plt.grid(True)
 
