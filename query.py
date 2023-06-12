@@ -123,7 +123,7 @@ def async_run_query(query: str) -> None:
 
 
 
-def run_histogram_query(query: str) -> BytesIO:
+def run_histogram_query(query: str) -> str:
     print(f"running histogram query {query}")
     run_query(query)
     data = get_query_result(query)
@@ -136,10 +136,9 @@ def run_histogram_query(query: str) -> BytesIO:
 
     # Save the image to a BytesIO object
     image_stream = BytesIO()
-    plt.savefig(image_stream, format='png')
-    image_stream.seek(0)
+    plt.savefig(image_stream, format='svg')    
     
-    return image_stream
+    return image_stream.getvalue()
 
 
 
