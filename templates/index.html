@@ -183,13 +183,13 @@
           contentType: 'application/json',
           data: JSON.stringify({ message }),
           success: function (response) {
-            $chatArea.append(`<p>You: ${message}</p>`);
-            $chatArea.append(`<p id="${response.id}">Bot: ${response.message}${response.message.includes('persistent') ? ' <span class="status">Checking status...</span>' : ''}</p>`);  // Add a span element with a class for persistent messages
+            $chatArea.append(`<p>You: ${message}</p>`);            
 
             const contentType = xhr.getResponseHeader('Content-Type');
             if (contentType && contentType.includes('image')) {
               handleHistogramFile(response.histogram);
             } else {
+              $chatArea.append(`<p id="${response.id}">Bot: ${response.message}${response.message.includes('persistent') ? ' <span class="status">Checking status...</span>' : ''}</p>`);  // Add a span element with a class for persistent messages
               if (response.message.includes('persistent')) {
                 // Add an icon for the query
                 const icon = `<div id="icon-${response.id}" class="query-icon pending">${response.id}</div>`;
