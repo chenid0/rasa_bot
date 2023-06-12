@@ -220,6 +220,9 @@
               });
               $chatArea.append(table);
             }
+            if (response.histogram) {
+              handleHistogramFile(response.histogram);
+            }
 
           },
           error: function (error) {
@@ -296,7 +299,19 @@
       } else {
         dropdownContent.style.display = 'none';
       }
-    });    
+    });
+    // Function to handle the histogram file response
+function handleHistogramFile(data) {
+  const blob = new Blob([data], { type: 'image/png' });
+  const url = URL.createObjectURL(blob);
+
+  const imgElement = document.createElement('img');
+  imgElement.src = url;
+
+  const histogramContainer = document.getElementById('histogram-container');
+  histogramContainer.innerHTML = '';
+  histogramContainer.appendChild(imgElement);
+}    
   </script>
 </body>
 
