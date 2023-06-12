@@ -5,7 +5,7 @@ import requests
 from flask import Flask, jsonify, render_template, request, send_file
 
 from constants import (action_tag, csv_str, csv_tag, query_tag,
-                       svg_str, svg_tag, histogram_query_tag)
+                       svg_str, svg_tag, histogram_tag)
 from query import async_run_query, check_pending, run_histogram_query
 
 """
@@ -55,8 +55,8 @@ def send_message():
                 queries.append(query_text)
                 print(f"running async query \n{query_text}\n")
                 async_run_query(query_text)
-            if histogram_query_tag in text:
-                query_text = obj["text"].replace(histogram_query_tag, "")
+            if histogram_tag in text:
+                query_text = obj["text"].replace(histogram_tag, "")
                 queries.append(query_text)
                 print(f"running histogram query \n{query_text}\n")
                 bytes = run_histogram_query(query_text)
