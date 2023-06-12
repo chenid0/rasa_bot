@@ -124,6 +124,7 @@ def async_run_query(query: str) -> None:
 
 
 def run_histogram_query(query: str) -> BytesIO:
+    print(f"running histogram query {query}")
     run_query(query)
     data = get_query_result(query)
     # Generate the histogram image
