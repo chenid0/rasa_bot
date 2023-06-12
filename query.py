@@ -127,6 +127,7 @@ def run_histogram_query(query: str) -> str:
     print(f"running histogram query {query}")
     run_query(query)
     data = get_query_result(query)
+    remove_query(query)
     # Generate the histogram image
     plt.hist(data, bins=10)  # Replace 'data' with your histogram data
     plt.xlabel('X-axis label')
@@ -139,8 +140,6 @@ def run_histogram_query(query: str) -> str:
     plt.savefig(image_stream, format='svg')    
     
     return image_stream.getvalue()
-
-
 
 
 def check_pending() -> Tuple[Set[Text], Dict[Text, Any]]:
