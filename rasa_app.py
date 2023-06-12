@@ -2,11 +2,11 @@ import logging
 from io import StringIO
 import pandas as pd
 import requests
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, send_file
 
 from constants import (action_tag, csv_str, csv_tag, query_tag,
-                       svg_str, svg_tag)
-from query import async_run_query, check_pending
+                       svg_str, svg_tag, histogram_query_tag)
+from query import async_run_query, check_pending, run_histogram_query
 
 """
 text: Optional[Text] = None,
@@ -54,6 +54,13 @@ def send_message():
             queries.append(query_text)
             print(f"running async query \n{query_text}\n")
             async_run_query(query_text)
+        if text and histogram_query_tag in text:
+            query_text = obj["text"].replace(query_tag, "")
+            queries.append(query_text)
+            print(f"running async query \n{query_text}\n")
+            bytes = run_histogram_query(query_text)
+            return send_file(bytes, mimetype='image/png')
+
         if text and action_tag in text:            
             action_text = obj["text"].replace(action_tag, "")
             if svg_tag in action_text:

@@ -9,7 +9,7 @@ import re
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from constants import query_tag, action_tag, svg_tag, csv_tag
+from constants import query_tag, action_tag, svg_tag, csv_tag, histogram_query_tag
 
 # SELECT MOLID FROM MOLECULES EXCEPT SELECT MOLID FROM MARKING WHERE MARK = "good"
 
@@ -56,6 +56,10 @@ g_activity_col = ""
 g_history_calls = []
 # list in order of calls e.g. "action_load_mols_sdf: filename", "add_scaffold: mol", ...
 
+
+
+def utter_histogram_query(dispatcher, query):
+    dispatcher.utter_message(text=f"\n{histogram_query_tag} {query}\n")
 
 def utter_query(dispatcher, query):
     dispatcher.utter_message(text=f"\n{query_tag} {query}\n")
@@ -731,7 +735,8 @@ class CalculateHistogram(Action):
         tablename1 = "MOLPROPS"
         tablename2 = "MOLDATA"
         # specific
-        sql1 = "SELECT DISTINCT CAST(MW/100 As INT)*100 AS Bin, COUNT(*) AS Frequency FROM " + tablename1 + " GROUP BY Bin;"
+        #sql1 = "SELECT DISTINCT CAST(MW/100 As INT)*100 AS Bin, COUNT(*) AS Frequency FROM " + tablename1 + " GROUP BY Bin;"
+        sql = "select distinct cast(logP_rdkit / 1 as int)  as Bin, count(ID) as Frequency from MOLPROPS GROUP by Bin;"
 
         # generic: for each column
         #sql = "SELECT DISTINCT CAST(" + column + "/" + divide_val + " As INT)*" + divide_val + " AS Bin, COUNT(*) AS Frequency FROM " + tablename + " GROUP BY Bin;";
@@ -740,5 +745,5 @@ class CalculateHistogram(Action):
         #  we can add a svg or gif from the data..
 
         dispatcher.utter_message(text="running: action_historgram")
-        utter_query(dispatcher, sql1)        
+        utter_histogram_query(dispatcher, sql)
         return []

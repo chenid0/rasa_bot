@@ -6,6 +6,8 @@ from functools import lru_cache
 from threading import Thread
 from typing import Any, Dict, List, Set, Text, Tuple, Union
 from constants import db_path_name
+import matplotlib.pyplot as plt
+from io import BytesIO
 
 thread_query_dict = dict()
 
@@ -118,6 +120,27 @@ def async_run_query(query: str) -> None:
             print(results)
     except Exception as e:
         print(traceback.format_exc())
+
+
+
+def run_histogram_query(query: str) -> BytesIO:
+    run_query(query)
+    data = get_query_result(query)
+    # Generate the histogram image
+    plt.hist(data, bins=10)  # Replace 'data' with your histogram data
+    plt.xlabel('X-axis label')
+    plt.ylabel('Y-axis label')
+    plt.title('Histogram')
+    plt.grid(True)
+
+    # Save the image to a BytesIO object
+    image_stream = BytesIO()
+    plt.savefig(image_stream, format='png')
+    image_stream.seek(0)
+    
+    return image_stream
+
+
 
 
 def check_pending() -> Tuple[Set[Text], Dict[Text, Any]]:
