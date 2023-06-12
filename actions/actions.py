@@ -658,10 +658,12 @@ class GetMinimumValue(Action):
         #
         #       ignore others for now
 
-        # tablename1 = "MOLPROPS"; tablename2 = "MOLDATA";
+        tablename1 = "MOLPROPS"
+        tablename2 = "MOLDATA"
         # for each column
-        # sql2 = "SELECT MIN(" + column + ") FROM " + tablename + ";";
+        sql2 = "SELECT MIN(" + "logP_rdkit" + ") FROM " + tablename1 + ";"
         dispatcher.utter_message(text="running: action_min_value")
+        utter_query(dispatcher, sql2)
 
         # we will export a molecule svg with it later on...
 
@@ -697,12 +699,14 @@ class GetMaximumValue(Action):
         tablename1 = "MOLPROPS"
         tablename2 = "MOLDATA"
         # for each column
-        # sql2 = "SELECT MIN(" + column + ") FROM " + tablename + ";";
+        sql2 = "SELECT MIN(" + "logP_rdkit" + ") FROM " + tablename1 + ";"
 
         # we will export a molecule svg with it later on...
 
         dispatcher.utter_message(text="running: action_max_value")
+        utter_query(dispatcher, sql2)
         return []
+    
 
 
 # action: action_historgram
