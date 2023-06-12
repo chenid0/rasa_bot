@@ -699,7 +699,7 @@ class GetMaximumValue(Action):
         tablename1 = "MOLPROPS"
         tablename2 = "MOLDATA"
         # for each column
-        sql2 = "SELECT MIN(" + "logP_rdkit" + ") FROM " + tablename1 + ";"
+        sql2 = "SELECT MAX(" + "logP_rdkit" + ") FROM " + tablename1 + ";"
 
         # we will export a molecule svg with it later on...
 
