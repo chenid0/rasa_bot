@@ -7,7 +7,7 @@ from threading import Thread
 from typing import Any, Dict, List, Set, Text, Tuple, Union
 from constants import db_path_name
 import matplotlib.pyplot as plt
-from io import BytesIO
+from io import BytesIO, StringIO
 
 thread_query_dict = dict()
 
@@ -135,7 +135,7 @@ def run_histogram_query(query: str) -> str:
     plt.grid(True)
 
     # Save the image to a BytesIO object
-    image_stream = BytesIO()
+    image_stream = StringIO()
     plt.savefig(image_stream, format='svg')    
     
     return image_stream.getvalue()
