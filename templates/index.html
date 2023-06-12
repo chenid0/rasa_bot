@@ -18,12 +18,12 @@
     }
 
     .chat-form {
-      margin-left: 30px;      
+      margin-left: 30px;
       /* width of the side panel */
       width: 60%;
       height: 50px;
-      margin: 5% auto;      
-      padding: 20px;      
+      margin: 5% auto;
+      padding: 20px;
       position: absolute;
       bottom: 0;
     }
@@ -118,6 +118,7 @@
     .dropdown:hover .dropdown-content {
       display: block;
     }
+
     #chat-form {
       width: 60%;
       margin: 0 auto;
@@ -156,14 +157,14 @@
     <!-- Other content for the side panel goes here -->
   </div>
   <div>
-  <div id="chat-area" class="chat-area"></div>
-  <form id="chat-form" class="chat-form">
-    <input type="text" name="message"  placeholder="Type your message here..." id="chat-input">
-    <span class="input-group-append">
-      <button class="btn btn-outline-secondary" type="submit">Send</button>
-    </span>
-  </form>
-</div>
+    <div id="chat-area" class="chat-area"></div>
+    <form id="chat-form" class="chat-form">
+      <input type="text" name="message" placeholder="Type your message here..." id="chat-input">
+      <span class="input-group-append">
+        <button class="btn btn-outline-secondary" type="submit">Send</button>
+      </span>
+    </form>
+  </div>
   <div id="icon-container" class="icon-container"></div> <!-- Icon Container -->
   <script>
     $(function () {
@@ -185,43 +186,45 @@
             $chatArea.append(`<p>You: ${message}</p>`);
             $chatArea.append(`<p id="${response.id}">Bot: ${response.message}${response.message.includes('persistent') ? ' <span class="status">Checking status...</span>' : ''}</p>`);  // Add a span element with a class for persistent messages
 
-            if (response.message.includes('persistent')) {
-              // Add an icon for the query
-              const icon = `<div id="icon-${response.id}" class="query-icon pending">${response.id}</div>`;
-              $iconContainer.append(icon);
-            }
-
-            if (response.svg) {
-              // Create a temporary div to hold the SVG
-              const tempDiv = document.createElement('div');
-              tempDiv.innerHTML = response.svg;
-
-              // Extract the SVG from the div
-              const svgElement = tempDiv.querySelector('svg');
-
-              // Append the SVG element to the chat area
-              $chatArea.append(svgElement);
-            }
-            if (response.csv) {
-              var data = JSON.parse(response.csv);
-              var table = $('<table></table>');
-              var headers = Object.keys(data[0]);
-              var headerRow = $('<tr></tr>');
-              headers.forEach(function (header) {
-                headerRow.append($('<th></th>').text(header));
-              });
-              table.append(headerRow);
-              data.forEach(function (rowData) {
-                var row = $('<tr></tr>');
-                headers.forEach(function (header) {
-                  row.append($('<td></td>').text(rowData[header]));
-                });
-                table.append(row);
-              });
-              $chatArea.append(table);
-            }
-            if (response.histogram) {
+            const contentType = xhr.getResponseHeader('Content-Type');
+            if (contentType && contentType.includes('image')) {
               handleHistogramFile(response.histogram);
+            } else {
+              if (response.message.includes('persistent')) {
+                // Add an icon for the query
+                const icon = `<div id="icon-${response.id}" class="query-icon pending">${response.id}</div>`;
+                $iconContainer.append(icon);
+              }
+
+              if (response.svg) {
+                // Create a temporary div to hold the SVG
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = response.svg;
+
+                // Extract the SVG from the div
+                const svgElement = tempDiv.querySelector('svg');
+
+                // Append the SVG element to the chat area
+                $chatArea.append(svgElement);
+              }
+              if (response.csv) {
+                var data = JSON.parse(response.csv);
+                var table = $('<table></table>');
+                var headers = Object.keys(data[0]);
+                var headerRow = $('<tr></tr>');
+                headers.forEach(function (header) {
+                  headerRow.append($('<th></th>').text(header));
+                });
+                table.append(headerRow);
+                data.forEach(function (rowData) {
+                  var row = $('<tr></tr>');
+                  headers.forEach(function (header) {
+                    row.append($('<td></td>').text(rowData[header]));
+                  });
+                  table.append(row);
+                });
+                $chatArea.append(table);
+              }
             }
 
           },
@@ -301,17 +304,17 @@
       }
     });
     // Function to handle the histogram file response
-function handleHistogramFile(data) {
-  const blob = new Blob([data], { type: 'image/png' });
-  const url = URL.createObjectURL(blob);
+    function handleHistogramFile(data) {
+      const blob = new Blob([data], { type: 'image/png' });
+      const url = URL.createObjectURL(blob);
 
-  const imgElement = document.createElement('img');
-  imgElement.src = url;
+      const imgElement = document.createElement('img');
+      imgElement.src = url;
 
-  const histogramContainer = document.getElementById('histogram-container');
-  histogramContainer.innerHTML = '';
-  histogramContainer.appendChild(imgElement);
-}    
+      const histogramContainer = document.getElementById('histogram-container');
+      histogramContainer.innerHTML = '';
+      histogramContainer.appendChild(imgElement);
+    }    
   </script>
 </body>
 

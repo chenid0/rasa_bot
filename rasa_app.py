@@ -59,8 +59,8 @@ def send_message():
                 query_text = obj["text"].replace(histogram_tag, "")
                 queries.append(query_text)
                 print(f"running histogram query \n{query_text}\n")
-                bytes = run_histogram_query(query_text)
-                return jsonify({"message": message_txt, "histogram": bytes})
+                hist_data = run_histogram_query(query_text)
+                return send_file(hist_data, mimetype='image/png')     
 
             if action_tag in text:            
                 action_text = obj["text"].replace(action_tag, "")
