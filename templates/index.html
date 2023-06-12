@@ -188,10 +188,11 @@
             const contentType = xhr.getResponseHeader('Content-Type');
             if (contentType && contentType.includes('image')) {
               //$chatArea.append(`<p id="${response.id}">Bot: ${response.message}${response.message.includes('persistent') ? ' <span class="status">Checking status...</span>' : ''}</p>`);  // Add a span element with a class for persistent messages
-              //$chatArea.append(handleHistogramFile(response.histogram));
-              const imgElement = document.createElement('img');
-              imgElement.src = URL.createObjectURL(response);
-              $chatArea.append(imgElement);              
+              $chatArea.append(`<p >Bot: </p>`);
+              $chatArea.append(handleHistogramFile(response.histogram));
+              //const imgElement = document.createElement('img');
+              //imgElement.src = URL.createObjectURL(response);
+              //$chatArea.append(imgElement);              
             } else {
               $chatArea.append(`<p id="${response.id}">Bot: ${response.message}${response.message.includes('persistent') ? ' <span class="status">Checking status...</span>' : ''}</p>`);  // Add a span element with a class for persistent messages
               if (response.message.includes('persistent')) {
