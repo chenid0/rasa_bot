@@ -55,7 +55,7 @@ def send_message():
             print(f"running async query \n{query_text}\n")
             async_run_query(query_text)
         if text and histogram_query_tag in text:
-            query_text = obj["text"].replace(query_tag, "")
+            query_text = obj["text"].replace(histogram_query_tag, "")
             queries.append(query_text)
             print(f"running async query \n{query_text}\n")
             bytes = run_histogram_query(query_text)
