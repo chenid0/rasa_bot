@@ -248,10 +248,10 @@
             for (let i in response.pending) {
               createIcon(response.pending[i])
             }
-            for (let [query2, result] of Object.entries(response.completed)) {
-              if(query2 != None){
-                removeIcon(query2);
-                $chatArea.append(`<p>Bot: ${query2}</p>`);
+            for (let [query, result] of Object.entries(response.completed)) {
+              if(query){
+                removeIcon(query);
+                $chatArea.append(`<p>Bot: ${query}</p>`);
                 $chatArea.append(`<p>Bot: ${result}</p>`);
               }
             }
