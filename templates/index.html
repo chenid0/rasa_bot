@@ -182,7 +182,7 @@
           url: '/api/messages',
           contentType: 'application/json',
           data: JSON.stringify({ message }),
-          success: function (response) {
+          success: function (response, status, xhr) {
             $chatArea.append(`<p>You: ${message}</p>`);            
 
             const contentType = xhr.getResponseHeader('Content-Type');
