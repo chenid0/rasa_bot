@@ -248,10 +248,12 @@
             for (let i in response.pending) {
               createIcon(response.pending[i])
             }
-            for (let [query, result] of Object.entries(response.completed)) {
-              removeIcon(query);
-              $chatArea.append(`<p>Bot: ${query}</p>`);
-              $chatArea.append(`<p>Bot: ${result}</p>`);
+            for (let [query2, result] of Object.entries(response.completed)) {
+              if(query2 != None){
+                removeIcon(query2);
+                $chatArea.append(`<p>Bot: ${query2}</p>`);
+                $chatArea.append(`<p>Bot: ${result}</p>`);
+              }
             }
           },
           error: function (error) {
@@ -289,12 +291,6 @@
       document.getElementById('icon-container').removeChild(document.getElementById(`icon-${query}`));
     }
 
-    function removeAllIcons() {
-      // Remove all icons from the icon container
-      while (document.getElementById('icon-container').firstChild) {
-        document.getElementById('icon-container').removeChild(document.getElementById('icon-container').firstChild);
-      }
-    }
     // Get the dropdown content and hamburger menu
     const dropdownContent = document.getElementById('dropdown-content');
     const hamburgerMenu = document.getElementById('hamburger-menu');
@@ -307,20 +303,7 @@
       } else {
         dropdownContent.style.display = 'none';
       }
-    });
-    // Function to handle the histogram file response
-    function handleHistogramFile(data) {
-      const blob = new Blob([data], { type: 'image/png' });
-      const url = URL.createObjectURL(blob);
-
-      const imgElement = document.createElement('img');
-      imgElement.src = url;
-
-      const histogramContainer = document.getElementById('histogram-container');
-      histogramContainer.innerHTML = '';
-      histogramContainer.appendChild(imgElement);
-      return histogramContainer;
-    }    
+    });    
   </script>
 </body>
 
