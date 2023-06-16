@@ -643,25 +643,12 @@ class GetMinimumValue(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        # Get column names from "MOLPROPS" and "MOLDATA"
-        #  regex out (case insensitive compare) : could match multiple
-        #       'logp'-> 'logP_rdkit'
-        #       'HBA', 'Hydrogen Bond Acceptor', 'H-Bond Acceptor', HBond Acceptor', 'Acceptors'->'HBA'
-        #       'TPSA', 'PSA', 'Polar Surface'-> 'TPSA_rdkit'
-        #       'HBD', 'Hydrogen Bond Donar', 'HBond Donar', 'H-Bond Donar', 'Donar', 'Doner' -> 'HBD'
-        #       'Surface Area', 'SA' -> 'SArea_rdkit'
-        #       'fCSP3', 'fracCsp3','Fraction Csp3', 'number csp3 carbons' ->fracCSP3_rdkit
-        #       'Number of Spiroatoms', 'Number of spiro-atoms', 'spiroatoms', 'spiro-atoms', 'Spiro-atom-count' -> 'SpiroAtoms_rdkit'
-        #       'Number of BridgeHeadAtoms', Bridgehead count', 'bridgehead atoms' -> 'BridgeHeadAtoms_rdkit'
-        #       'RotBond', 'RotatableBond', 'Rotatable' -> 'Rotatable_bonds'
-        #       'MW','Molecular Weight', 'MolWeight', 'mass' -> 'MW'
-        #
-        #       ignore others for now
+        # Get column names from "MOLPROPS" and "MOLDATA"        
 
         tablename1 = "MOLPROPS"
         tablename2 = "MOLDATA"
         # for each column
-        sql2 = "SELECT MIN(" + "logP_rdkit" + ") FROM " + tablename1 + ";"
+        sql2 = "SELECT MIN($TOKEN$) FROM " + tablename1 + ";"
         dispatcher.utter_message(text="running: action_min_value")
         utter_query(dispatcher, sql2)
 
@@ -681,25 +668,11 @@ class GetMaximumValue(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        # Get column names from "MOLPROPS" and "MOLDATA"
-        #  regex out (case insensitive compare) : could match multiple
-        #       'logp'-> 'logP_rdkit'
-        #       'HBA', 'Hydrogen Bond Acceptor', 'H-Bond Acceptor', HBond Acceptor', 'Acceptors'->'HBA'
-        #       'TPSA', 'PSA', 'Polar Surface'-> 'TPSA_rdkit'
-        #       'HBD', 'Hydrogen Bond Donar', 'HBond Donar', 'H-Bond Donar', 'Donar', 'Doner' -> 'HBD'
-        #       'Surface Area', 'SA' -> 'SArea_rdkit'
-        #       'fCSP3', 'fracCsp3','Fraction Csp3', 'number csp3 carbons' ->fracCSP3_rdkit
-        #       'Number of Spiroatoms', 'Number of spiro-atoms', 'spiroatoms', 'spiro-atoms', 'Spiro-atom-count' -> 'SpiroAtoms_rdkit'
-        #       'Number of BridgeHeadAtoms', Bridgehead count', 'bridgehead atoms' -> 'BridgeHeadAtoms_rdkit'
-        #       'RotBond', 'RotatableBond', 'Rotatable' -> 'Rotatable_bonds'
-        #       'MW','Molecular Weight', 'MolWeight', 'mass' -> 'MW'
-        #
-        #       ignore others for now
-
+        # Get column names from "MOLPROPS" and "MOLDATA"        
         tablename1 = "MOLPROPS"
         tablename2 = "MOLDATA"
         # for each column
-        sql2 = "SELECT MAX(" + "logP_rdkit" + ") FROM " + tablename1 + ";"
+        sql2 = "SELECT MAX($TOKEN$) FROM " + tablename1 + ";"
 
         # we will export a molecule svg with it later on...
 
@@ -720,27 +693,12 @@ class CalculateHistogram(Action):
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: Dict[Text, Any],
-    ) -> List[Dict[Text, Any]]:
-        # Get column names from "MOLPROPS" and "MOLDATA"
-        #  regex out (case insensitive compare) : could match multiple
-        #       'logp'-> 'logP_rdkit'
-        #       'HBA', 'Hydrogen Bond Acceptor', 'H-Bond Acceptor', HBond Acceptor', 'Acceptors'->'HBA'
-        #       'TPSA', 'PSA', 'Polar Surface'-> 'TPSA_rdkit'
-        #       'HBD', 'Hydrogen Bond Donar', 'HBond Donar', 'H-Bond Donar', 'Donar', 'Doner' -> 'HBD'
-        #       'Surface Area', 'SA' -> 'SArea_rdkit'
-        #       'fCSP3', 'fracCsp3','Fraction Csp3', 'number csp3 carbons' ->fracCSP3_rdkit
-        #       'Number of Spiroatoms', 'Number of spiro-atoms', 'spiroatoms', 'spiro-atoms', 'Spiro-atom-count' -> 'SpiroAtoms_rdkit'
-        #       'Number of BridgeHeadAtoms', Bridgehead count', 'bridgehead atoms' -> 'BridgeHeadAtoms_rdkit'
-        #       'RotBond', 'RotatableBond', 'Rotatable' -> 'Rotatable_bonds'
-        #       'MW','Molecular Weight', 'MolWeight', 'mass' -> 'MW'
-        #
-        #       ignore others for now
-
+    ) -> List[Dict[Text, Any]]:       
         tablename1 = "MOLPROPS"
         tablename2 = "MOLDATA"
         # specific
         #sql1 = "SELECT DISTINCT CAST(MW/100 As INT)*100 AS Bin, COUNT(*) AS Frequency FROM " + tablename1 + " GROUP BY Bin;"
-        sql = "select distinct cast(logP_rdkit / 1 as int)  as Bin, count(ID) as Frequency from MOLPROPS GROUP by Bin;"
+        sql = "select distinct cast($TOKEN$ / 1 as int)  as Bin, count(ID) as Frequency from MOLPROPS GROUP by Bin;"
 
         # generic: for each column
         #sql = "SELECT DISTINCT CAST(" + column + "/" + divide_val + " As INT)*" + divide_val + " AS Bin, COUNT(*) AS Frequency FROM " + tablename + " GROUP BY Bin;";
