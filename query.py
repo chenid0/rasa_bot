@@ -155,7 +155,7 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
     # Set x-axis tick labels
     #plt.xticks(range(len(fields)), fields)
     plt.figure(figsize=(15, 10))
-    values, bins, bars = plt.hist(fields, weights=counts, bins='auto', alpha=0.7, rwidth=0.85)
+    values, bins, bars = plt.hist(fields, weights=counts, bins=10, alpha=0.7, rwidth=0.85)
     plt.xlabel(xlabel=xlabel)
     plt.ylabel("Frequency")
     plt.title = ('Histogram')        
