@@ -3,7 +3,6 @@ from io import StringIO
 import pandas as pd
 import requests
 from flask import Flask, jsonify, render_template, request, send_file
-
 from constants import (
     action_tag,
     csv_str,
@@ -14,6 +13,7 @@ from constants import (
     histogram_tag,
 )
 from query import async_run_query, check_pending, create_histogram_from_query
+from typing import Any, Dict, List, Optional, Set, Text, Tuple
 
 """
 text: Optional[Text] = None,
@@ -92,11 +92,12 @@ keyword_replacements = {
 }
 
 
-def find_keyword(sentence: str, keywords: dict) -> str:
+def find_keyword(sentence: str, keywords: Dict[str,str]) -> str:
     print(sentence)
     for keyword, replacement in keywords.items():
-        print(keyword)
-        if keyword.capitalize() in sentence.capitalize():            
+        print(keyword.capitalize(), " : " ,sentence.capitalize())
+        if keyword.capitalize() in sentence.capitalize():
+            print(f"keyword found: {keyword} -> {replacement}")
             return replacement
     print("no keyword found. defaulting to logP_rdkit")
     return "logP_rdkit"
