@@ -89,6 +89,8 @@ def run_query(query):
         add_query_result(query, rows)
         #time.sleep(15)
     except Exception as e:
+        print(f"error running query {query}")
+        print(traceback.format_exc())
         add_query_result(query, traceback.format_exc())
 
 
