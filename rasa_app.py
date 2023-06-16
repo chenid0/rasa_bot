@@ -40,8 +40,7 @@ rasa_action_endpoint = "http://localhost:5055/webhook"
 
 def find_keyword(sentence: str, keywords: Dict[str,str]) -> str:
     print(sentence)
-    for keyword, replacement in keywords.items():
-        print(keyword.upper(), " : " ,sentence.upper())
+    for keyword, replacement in keywords.items():    
         if keyword.upper() in sentence.upper():
             print(f"keyword found: {keyword} -> {replacement}")
             return replacement
@@ -77,8 +76,7 @@ def send_message():
                 async_run_query(query_text)
             if histogram_tag in text:
                 query_text = obj["text"].replace(histogram_tag, "")
-                keyword = find_keyword(message, keyword_replacements)
-                print(query_text)
+                keyword = find_keyword(message, keyword_replacements)                
                 query_text = query_text.replace("$TOKEN$", keyword)
                 print(query_text)
                 queries.append(query_text)
