@@ -129,7 +129,8 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
     print(f"running histogram query {query}")
     run_query(query)
     data = get_query_result(query)
-    print(f"got data {data}")
+    for datum in data:
+        print(datum)
     
     remove_query(query)
     # Generate the histogram image
