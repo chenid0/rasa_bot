@@ -94,6 +94,7 @@ db_virus_knowledgebase = '/home/mark/chatbot/db/Viruses.db'
 
 action_tag = "action:"
 query_tag = "query:"
+tokenized_query_tag = "tokenized_query:"
 svg_tag = "load svg"
 csv_tag = "load csv"
 histogram_tag ="histogram:"

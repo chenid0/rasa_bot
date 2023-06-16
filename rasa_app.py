@@ -96,6 +96,7 @@ def find_keyword(sentence: str, keywords: dict) -> str:
     for keyword, replacement in keywords.items():
         if keyword.capitalize() in sentence.capitalize():
             return replacement
+    print("no keyword found. defaulting to logP_rdkit")
     return "logP_rdkit"
 
 
@@ -128,12 +129,12 @@ def send_message():
             if histogram_tag in text:
                 query_text = obj["text"].replace(histogram_tag, "")
                 keyword = find_keyword(message, keyword_replacements)
-                if keyword:
-                    query_text = query_text.replace("$TOKEN$", keyword)                
-                queries.append(query_text)                
+                print(query_text)
+                query_text = query_text.replace("$TOKEN$", keyword)
+                print(query_text)
+                queries.append(query_text)
                 print(f"running histogram query \n{query_text}\n")
-                hist_svg = create_histogram_from_query(query_text)                
-                # return send_file(hist_data, mimetype='image/png')
+                hist_svg = create_histogram_from_query(query_text, keyword)          
                 return jsonify({"message": message_txt, "svg": hist_svg})
 
             if action_tag in text:

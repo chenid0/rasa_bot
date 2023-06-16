@@ -9,7 +9,7 @@ import re
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from constants import query_tag, action_tag, svg_tag, csv_tag, histogram_tag
+from constants import query_tag, action_tag, svg_tag, csv_tag, histogram_tag, tokenized_query_tag
 
 # SELECT MOLID FROM MOLECULES EXCEPT SELECT MOLID FROM MARKING WHERE MARK = "good"
 
@@ -60,6 +60,10 @@ g_history_calls = []
 
 def utter_histogram(dispatcher, query):
     dispatcher.utter_message(text=f"\n{histogram_tag} {query}\n")
+
+
+def utter_tokenized_query(dispatcher, query):
+    dispatcher.utter_message(text=f"\n{tokenized_query_tag} {query}\n")    
 
 def utter_query(dispatcher, query):
     dispatcher.utter_message(text=f"\n{query_tag} {query}\n")
@@ -677,7 +681,7 @@ class GetMaximumValue(Action):
         # we will export a molecule svg with it later on...
 
         dispatcher.utter_message(text="running: action_max_value")
-        utter_query(dispatcher, sql2)
+        utter_tokenized_query(dispatcher, sql2)
         return []
     
 
