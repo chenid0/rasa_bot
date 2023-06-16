@@ -143,9 +143,17 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
     plt.bar(fields, counts)
 
     # Set labels and title
-    plt.xlabel('Label')
+    plt.xlabel(xlabel)
     plt.ylabel('Count')
     plt.title('Histogram')
+
+    
+    # Label each bar
+    for i in range(len(fields)):
+        plt.text(i, counts[i], str(counts[i]), ha='center', va='bottom')
+
+    # Set x-axis tick labels
+    plt.xticks(range(len(fields)), fields)
 
     # Save the image to a BytesIO object
     image_stream = StringIO()
