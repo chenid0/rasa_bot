@@ -162,6 +162,8 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
     plt.ylabel("Frequency")
     plt.title = ('Histogram')        
     #plt.show()
+    # Format y-axis tick labels
+    plt.ticklabel_format(style='plain', axis='y')
     
     # Label each bar with value
     #for value, frequency in zip(fields, counts):
