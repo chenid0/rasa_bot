@@ -95,8 +95,8 @@ keyword_replacements = {
 def find_keyword(sentence: str, keywords: dict) -> str:
     print(sentence)
     for keyword, replacement in keywords.items():
-        if keyword.capitalize() in sentence.capitalize():
-            print(keyword)
+        print(keyword)
+        if keyword.capitalize() in sentence.capitalize():            
             return replacement
     print("no keyword found. defaulting to logP_rdkit")
     return "logP_rdkit"
