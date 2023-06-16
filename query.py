@@ -129,16 +129,23 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
     print(f"running histogram query {query}")
     run_query(query)
     data = get_query_result(query)
-    for datum in data:
-        print(datum)
+    fields, counts = zip(*data)
     
     remove_query(query)
     # Generate the histogram image
-    plt.hist(data, bins)  # Replace 'data' with your histogram data
-    plt.xlabel(xlabel)
+    #plt.hist(data, bins)  # Replace 'data' with your histogram data
+    #plt.xlabel(xlabel)
+    #plt.ylabel('Count')
+    #plt.title('Histogram')
+    #plt.grid(True)
+    
+    # Plotting the histogram
+    plt.bar(fields, counts)
+
+    # Set labels and title
+    plt.xlabel('Label')
     plt.ylabel('Count')
     plt.title('Histogram')
-    plt.grid(True)    
 
     # Save the image to a BytesIO object
     image_stream = StringIO()
