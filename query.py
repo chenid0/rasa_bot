@@ -140,7 +140,7 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
     #plt.grid(True)
     
     # Plotting the histogram
-    plt.bar(fields, counts)
+    plt.bar(fields, counts, width=0.5)
 
     # Set labels and title
     plt.xlabel(xlabel)
@@ -149,11 +149,12 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
 
     
     # Label each bar
-    for i in range(len(fields)):
-        plt.text(i, counts[i], str(counts[i]), ha='center', va='bottom')
+    for i, count in enumerate(counts):
+        plt.text(i, count, str(count), ha='center', va='bottom')
 
     # Set x-axis tick labels
     plt.xticks(range(len(fields)), fields)
+    plt.tight_layout()
 
     # Save the image to a BytesIO object
     image_stream = StringIO()
