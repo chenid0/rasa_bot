@@ -129,8 +129,7 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
     print(f"running histogram query {query}")
     run_query(query)
     data = get_query_result(query)
-    fields, counts = zip(*data)
-    
+    fields, counts = zip(*data)    
     remove_query(query)
     # Generate the histogram image
     #plt.hist(data, bins)  # Replace 'data' with your histogram data
@@ -157,14 +156,23 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
     #plt.figure(figsize=(15, 10))
     #plt.hist(fields, weights=counts, bins=8, alpha=0.7, rwidth=0.85)
     # Plotting the histogram
-    plt.bar(fields, counts, width=0.5)
+    max_index = counts.index(max(counts))
+    max_count = counts[max_index]
+    max_field = fields[max_index]
+    threshold = 0.01 * max_count
+    filtered_fields = [field for field, count in zip(fields, counts) if count >= threshold]
+    filtered_counts = [count for count in counts if count >= threshold]
+
+
+
+    plt.bar(filtered_fields, filtered_counts, width=0.5)
     plt.xlabel(xlabel=xlabel)
     plt.ylabel("Frequency")
     plt.title = ('Histogram')        
     #plt.show()
     # Format y-axis tick labels
     plt.ticklabel_format(style='plain', axis='y')
-    
+
     # Label each bar with value
     #for value, frequency in zip(fields, counts):
     #    plt.text(value, frequency, str(value), ha='center', va='bottom')
