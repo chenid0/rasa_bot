@@ -128,8 +128,7 @@ def async_run_query(query: str) -> None:
 def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
     print(f"running histogram query {query}")
     run_query(query)
-    data = get_query_result(query)
-    fields, counts = zip(*data)    
+    data = get_query_result(query)    
     remove_query(query)
     # Generate the histogram image
     #plt.hist(data, bins)  # Replace 'data' with your histogram data
@@ -156,11 +155,12 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
     #plt.figure(figsize=(15, 10))
     #plt.hist(fields, weights=counts, bins=8, alpha=0.7, rwidth=0.85)
     # Plotting the histogram
+    field_values, counts = zip(*data)    
     max_index = counts.index(max(counts))
     max_count = counts[max_index]
-    max_field = fields[max_index]
+    max_field = field_values[max_index]
     threshold = 0.01 * max_count
-    filtered_fields = [field for field, count in zip(fields, counts) if count >= threshold]
+    filtered_fields = [field for field, count in zip(field_values, counts) if count >= threshold]
     filtered_counts = [count for count in counts if count >= threshold]
 
 
@@ -179,7 +179,8 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
 
     # Save the image to a BytesIO object
     image_stream = StringIO()
-    plt.savefig(image_stream, format='svg')    
+    plt.savefig(image_stream, format='svg')
+    plt.close()
     
     return image_stream.getvalue()
 
