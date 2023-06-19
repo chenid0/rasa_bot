@@ -160,7 +160,7 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
 
 
     # Generate the histogram image
-    plt.hist(counts, bins)  # Replace 'data' with your histogram data
+    plt.hist(x=counts, bins=bins)  # Replace 'data' with your histogram data
     plt.xlabel(xlabel)
     plt.ylabel('Count')
     plt.title('Histogram')
