@@ -130,12 +130,7 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
     run_query(query)
     data = get_query_result(query)    
     remove_query(query)
-    # Generate the histogram image
-    #plt.hist(data, bins)  # Replace 'data' with your histogram data
-    #plt.xlabel(xlabel)
-    #plt.ylabel('Count')
-    #plt.title('Histogram')
-    #plt.grid(True)
+    
     
     # Plotting the histogram
     #plt.bar(fields, counts, width=0.5)
@@ -164,18 +159,21 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
     filtered_counts = [count for count in counts if count >= threshold]
 
 
+    # Generate the histogram image
+    plt.hist(filtered_counts, bins)  # Replace 'data' with your histogram data
+    plt.xlabel(xlabel)
+    plt.ylabel('Count')
+    plt.title('Histogram')
+    plt.grid(True)
 
-    plt.bar(filtered_fields, filtered_counts, width=0.5)
-    plt.xlabel(xlabel=xlabel)
-    plt.ylabel("Frequency")
-    plt.title = ('Histogram')        
-    #plt.show()
+
+    #plt.bar(filtered_fields, filtered_counts, width=0.5)
+    #plt.xlabel(xlabel=xlabel)
+    #plt.ylabel("Frequency")
+    #plt.title = ('Histogram')            
     # Format y-axis tick labels
-    plt.ticklabel_format(style='plain', axis='y')
-
-    # Label each bar with value
-    #for value, frequency in zip(fields, counts):
-    #    plt.text(value, frequency, str(value), ha='center', va='bottom')
+    #plt.ticklabel_format(style='plain', axis='y')
+    
 
     # Save the image to a BytesIO object
     image_stream = StringIO()
