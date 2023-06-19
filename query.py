@@ -160,20 +160,20 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
 
 
     # Generate the histogram image
-    plt.hist(x=counts, bins=bins)  # Replace 'data' with your histogram data
-    plt.xlabel(xlabel)
-    plt.ylabel('Count')
-    plt.title('Histogram')
-    plt.ticklabel_format(style='plain', axis='y')
-    plt.grid(True)
-
-
-    #plt.bar(filtered_fields, filtered_counts, width=0.5)
-    #plt.xlabel(xlabel=xlabel)
-    #plt.ylabel("Frequency")
-    #plt.title = ('Histogram')            
-    # Format y-axis tick labels
+    #plt.hist(x=counts, bins=bins)  # Replace 'data' with your histogram data
+    #plt.xlabel(xlabel)
+    #plt.ylabel('Count')
+    #plt.title('Histogram')
     #plt.ticklabel_format(style='plain', axis='y')
+    #plt.grid(True)
+
+
+    plt.bar(filtered_fields, filtered_counts, width=0.5)
+    plt.xlabel(xlabel=xlabel)
+    plt.ylabel("Frequency")
+    plt.title = ('Histogram')            
+    # Format y-axis tick labels
+    plt.ticklabel_format(style='plain', axis='y')
     
 
     # Save the image to a BytesIO object
