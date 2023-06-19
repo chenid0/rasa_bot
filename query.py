@@ -125,36 +125,19 @@ def async_run_query(query: str) -> None:
 
 
 
-def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
+def create_histogram_from_query(query: str, xlabel: str, bins = 10, min_threshold=0.01) -> str:
     print(f"running histogram query {query}")
     run_query(query)
     data = get_query_result(query)    
     remove_query(query)
     
-    
-    # Plotting the histogram
-    #plt.bar(fields, counts, width=0.5)
-
-    # Set labels and title
-    #plt.xlabel(xlabel)
-    #plt.ylabel('Count')
-    #plt.title('Histogram')
-
-    
-    # Label each bar
-    #for i, count in enumerate(counts):
-    #    plt.text(i, count, str(count), ha='center', va='bottom')
-
-    # Set x-axis tick labels
-    #plt.xticks(range(len(fields)), fields)
-    #plt.figure(figsize=(15, 10))
-    #plt.hist(fields, weights=counts, bins=8, alpha=0.7, rwidth=0.85)
+       
     # Plotting the histogram
     field_values, counts = zip(*data)    
     max_index = counts.index(max(counts))
     max_count = counts[max_index]
     max_field = field_values[max_index]
-    threshold = 0.01 * max_count
+    threshold = min_threshold * max_count
     filtered_fields = [field for field, count in zip(field_values, counts) if count >= threshold]
     filtered_counts = [count for count in counts if count >= threshold]
 
@@ -168,7 +151,7 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
     #plt.grid(True)
 
 
-    plt.bar(field_values, counts, width=0.5)
+    plt.bar(filtered_fields, filtered_counts, width=0.5)
     plt.xlabel(xlabel=xlabel)
     plt.ylabel("Frequency")
     plt.title = ('Histogram')            
