@@ -168,7 +168,7 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10) -> str:
     #plt.grid(True)
 
 
-    plt.bar(filtered_fields, filtered_counts, width=0.5)
+    plt.bar(field_values, counts, width=0.5)
     plt.xlabel(xlabel=xlabel)
     plt.ylabel("Frequency")
     plt.title = ('Histogram')            
