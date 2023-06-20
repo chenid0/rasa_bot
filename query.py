@@ -138,11 +138,12 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10, min_threshol
     max_count = counts[max_index]
     max_field = field_values[max_index]
     threshold = min_threshold * max_count
+    #filter out values that are less than the threshold
     filtered_fields = [field for field, count in zip(field_values, counts) if count >= threshold]
     filtered_counts = [count for count in counts if count >= threshold]
 
 
-    # Generate the histogram image
+    # Generate the histogram image. still doesn't work well
     #plt.hist(x=counts, bins=bins)  # Replace 'data' with your histogram data
     #plt.xlabel(xlabel)
     #plt.ylabel('Count')
@@ -158,7 +159,6 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10, min_threshol
     # Format y-axis tick labels
     plt.ticklabel_format(style='plain', axis='y')
     
-
     # Save the image to a BytesIO object
     image_stream = StringIO()
     plt.savefig(image_stream, format='svg')
