@@ -125,6 +125,34 @@ def async_run_query(query: str) -> None:
 
 
 
+def create_scatter_from_query(query: str, xlabel: str, bins = 10, min_threshold=0.01) -> str:
+    print(f"running histogram query {query}")
+    run_query(query)
+    data = get_query_result(query)    
+    remove_query(query)
+           
+
+    
+    # Splitting the tuples into two lists
+    x_data = [i[0] for i in data]
+    y_data = [i[1] for i in data]
+
+    # Creating the scatter plot
+    plt.scatter(x_data, y_data)
+
+    # Optionally, adding a title and labels
+    plt.title('Scatter plot')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    
+    # Save the image to a BytesIO object
+    image_stream = StringIO()
+    plt.savefig(image_stream, format='svg')
+    plt.close()
+    
+    return image_stream.getvalue()
+
+
 def create_histogram_from_query(query: str, xlabel: str, bins = 10, min_threshold=0.01) -> str:
     print(f"running histogram query {query}")
     run_query(query)

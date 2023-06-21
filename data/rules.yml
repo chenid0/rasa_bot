@@ -202,3 +202,8 @@ rules:
   - intent: bin_data
   - action: action_historgram
 
+- rule: scatter_plot
+  steps:
+  - intent: scatter_plot
+  - action: action_scatter_plot
+

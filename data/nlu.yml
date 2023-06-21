@@ -1081,4 +1081,11 @@ nlu:
     - display frequences
     - display property frequencies
 
-
+- intent: scatter_plot
+  examples: |
+    - build scatter plot
+    - create scatter plot
+    - display scatter plot
+    - show scatter plot
+    - plot data
+    - plot data points    

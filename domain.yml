@@ -96,6 +96,7 @@ actions:
   - action_min_value
   - action_max_value
   - action_historgram
+  - action_scatter_plot
 
 entities:
   - sqlstatement

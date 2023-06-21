@@ -9,57 +9,32 @@ import re
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from constants import query_tag, action_tag, svg_tag, csv_tag, histogram_tag, tokenized_query_tag
+from constants import query_tag, action_tag, svg_tag, csv_tag, histogram_tag, tokenized_query_tag, scatter_tag
 
-# SELECT MOLID FROM MOLECULES EXCEPT SELECT MOLID FROM MARKING WHERE MARK = "good"
-
-# action: action_help
-# action: action_load_mols_sdf
-# action: action_load_mols_cddvault
-# action: action_load_mols_postgres
-# action: action_set_model_column
-# action: action_heat_map_column
-# action: action_count_mols
-# action: action_r_analysis
-# action: action_reload_data
-# action: action_show_scaffold
-# action: action_most_active
-# action: action_least_active
-# action: action_load_scaffold
-# action: action_draw_scaffold
-# action: action_paste_scaffold
-# action: action_help_properties
-# action: action_calc_properties
-# action: action_explicit_property
-
-# action: action_least_potent_rgroup
-# action: action_most_potent_rgroup
-# action: action_recommend_rgroups
-# action: action_recommend_bioisosteres
-# action: action_help_recommend_rgroups
 
 
 # globals: persistent variables : how do we remember these? db? per user per project
-g_current_scaffold = ""
+#g_current_scaffold = ""
 # table:rowid [SCAFFOLDS:SCAFID]
-g_calc_properties = set()
+#g_calc_properties = set()
 # [logP, MW, rotB, TPSA]
-g_display_cols_in_order = []
+#g_display_cols_in_order = []
 # col names to display table:col [MOLECULES:MOLID, MOLDATA:EXTERNALKEY, MOLDATA:IC50, MOLDATA:Ki, MOLPROPS:logP, MOLPROPS:MW ]
-g_rename_cols = []
+#g_rename_cols = []
 # rename ori name:new name  [measured Ki(n) for xyza: Ki(nM), LOGP_RDKIT, logP]
-g_heatmap_cols = []
+#g_heatmap_cols = []
 # heatmap to col name:range:color/range:color/range:color [Ki(n):0->1000]
-g_activity_col = ""
+#g_activity_col = ""
 # activity or model column
-
-g_history_calls = []
+#g_history_calls = []
 # list in order of calls e.g. "action_load_mols_sdf: filename", "add_scaffold: mol", ...
 
 
+def utter_scatter(dispatcher, query):
+    dispatcher.utter_message(text=f"\n{scatter_tag} {query}\n")    
 
 def utter_histogram(dispatcher, query):
-    dispatcher.utter_message(text=f"\n{histogram_tag} {query}\n")
+    dispatcher.utter_message(text=f"\n{histogram_tag} {query}\n")    
 
 
 def utter_tokenized_query(dispatcher, query):
@@ -703,6 +678,35 @@ class CalculateHistogram(Action):
         # specific
         #sql1 = "SELECT DISTINCT CAST(MW/100 As INT)*100 AS Bin, COUNT(*) AS Frequency FROM " + tablename1 + " GROUP BY Bin;"
         sql = "select distinct cast($TOKEN$ / 1 as int)  as Bin, count(ID) as Frequency from MOLPROPS GROUP by Bin;"
+
+        # generic: for each column
+        #sql = "SELECT DISTINCT CAST(" + column + "/" + divide_val + " As INT)*" + divide_val + " AS Bin, COUNT(*) AS Frequency FROM " + tablename + " GROUP BY Bin;";
+
+        # we can export a simple csv formatted table to text.
+        #  we can add a svg or gif from the data..
+
+        dispatcher.utter_message(text="running: action_historgram")
+        utter_histogram(dispatcher, sql)
+        return []
+
+
+
+# action: action_historgram
+# _______________________________________________________________________________________________________________
+class ScatterPlot(Action):
+    def name(self) -> Text:
+        return "action_scatter_plot"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:       
+        tablename1 = "MOLPROPS"
+        tablename2 = "MOLDATA"
+        
+        sql = "select logp_rdkit,  from MOLPROPS GROUP by Bin;"
 
         # generic: for each column
         #sql = "SELECT DISTINCT CAST(" + column + "/" + divide_val + " As INT)*" + divide_val + " AS Bin, COUNT(*) AS Frequency FROM " + tablename + " GROUP BY Bin;";
