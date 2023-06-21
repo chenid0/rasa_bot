@@ -124,11 +124,11 @@ def async_run_query(query: str) -> None:
         print(traceback.format_exc())
 
 
-
 def create_scatter_from_query(query: str) -> str:
-    print(f"running histogram query {query}")
+    print(f"running scatter query {query}")
     run_query(query)
-    data = get_query_result(query)    
+    data = get_query_result(query)
+    print(data)
     remove_query(query)
     
     # Splitting the tuples into two lists
