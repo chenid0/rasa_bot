@@ -715,5 +715,5 @@ class ScatterPlot(Action):
         #  we can add a svg or gif from the data..
 
         dispatcher.utter_message(text="running: action_historgram")
-        utter_histogram(dispatcher, sql)
+        utter_scatter(dispatcher, sql)
         return []
