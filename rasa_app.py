@@ -2,7 +2,7 @@ import logging
 from io import StringIO
 import pandas as pd
 import requests
-from flask import Flask, jsonify, render_template, request, send_file
+from flask import Flask, jsonify, render_template, request, send_file, Response
 from constants import (
     action_tag,
     csv_str,
@@ -11,6 +11,7 @@ from constants import (
     svg_str,
     svg_tag,
     histogram_tag,
+    scatter_tag,
     keyword_replacements
 )
 from query import async_run_query, check_pending, create_histogram_from_query
@@ -58,8 +59,7 @@ def send_message():
     message = request.json["message"]
     rasa_payload = {"sender": "user", "message": message}
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
-    message_txt = ""
-    queries = []
+    
     for obj in rasa_response:
         text = obj.get("text")
         print(f"text: {text}")
@@ -69,39 +69,54 @@ def send_message():
         print(f"json: {json_data}")
         print()
         if text:
-            if query_tag in text:
-                query_text = obj["text"].replace(query_tag, "")
-                queries.append(query_text)
-                print(f"running async query \n{query_text}\n")
-                async_run_query(query_text)
-            if histogram_tag in text:
-                query_text = obj["text"].replace(histogram_tag, "")
-                keyword = find_keyword(message, keyword_replacements)                
-                query_text = query_text.replace("$TOKEN$", keyword)
-                print(query_text)
-                queries.append(query_text)
-                print(f"running histogram query \n{query_text}\n")
-                hist_svg = create_histogram_from_query(query_text, keyword)          
-                return jsonify({"message": message_txt, "svg": hist_svg})
+            return create_response(text, message)
 
-            if action_tag in text:
-                action_text = obj["text"].replace(action_tag, "")
-                if svg_tag in action_text:
-                    return jsonify({"message": message_txt, "svg": svg_str})
-                elif csv_tag in action_text:
-                    csv_data = StringIO(csv_str)
-                    df = pd.read_csv(csv_data, sep=",")
-                    csv_json = df.to_json(orient="records")
-                    return jsonify({"message": message_txt, "csv": csv_json})
-    pending, completed = check_pending()
-    for query in queries:
-        if query in pending:
-            message_txt += f"query: {query} is pending\n<br>"
-        if query in completed:
-            message_txt += (
-                f"query: {query} is completed\n<br>{completed.get(query)}\n<br>"
-            )
-    return jsonify({"message": message_txt})
+def create_response(text, message) -> Response:
+    message_txt = ""
+    queries = []
+    if query_tag in text:
+        query_text = text.replace(query_tag, "")
+        queries.append(query_text)
+        print(f"running async query \n{query_text}\n")
+        async_run_query(query_text)
+        pending, completed = check_pending()
+        for query in queries:
+            if query in pending:
+                message_txt += f"query: {query} is pending\n<br>"
+            if query in completed:
+                message_txt += (
+                    f"query: {query} is completed\n<br>{completed.get(query)}\n<br>"
+                )
+        return jsonify({"message": message_txt})
+    if histogram_tag in text:
+        query_text = text.replace(histogram_tag, "")
+        keyword = find_keyword(message, keyword_replacements)                
+        query_text = query_text.replace("$TOKEN$", keyword)
+        print(query_text)
+        queries.append(query_text)
+        print(f"running histogram query \n{query_text}\n")
+        hist_svg = create_histogram_from_query(query_text, keyword)          
+        return jsonify({"message": message_txt, "svg": hist_svg})
+    if scatter_tag in text:
+        query_text = text.replace(histogram_tag, "")
+        #keyword = find_keyword(message, keyword_replacements)                
+        #query_text = query_text.replace("$TOKEN$", keyword)
+        print(query_text)
+        queries.append(query_text)
+        print(f"running scatter query \n{query_text}\n")
+        hist_svg = create_histogram_from_query(query_text, keyword)          
+        return jsonify({"message": message_txt, "svg": hist_svg})
+    if action_tag in text:
+        action_text = text.replace(action_tag, "")
+        if svg_tag in action_text:
+            return jsonify({"message": message_txt, "svg": svg_str})
+        elif csv_tag in action_text:
+            csv_data = StringIO(csv_str)
+            df = pd.read_csv(csv_data, sep=",")
+            csv_json = df.to_json(orient="records")
+            return jsonify({"message": message_txt, "csv": csv_json})
+    return jsonify({"message": "no action taken"})
+  
 
 
 @app.route("/api/query_status", methods=["GET"])
