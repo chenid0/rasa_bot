@@ -125,13 +125,11 @@ def async_run_query(query: str) -> None:
 
 
 
-def create_scatter_from_query(query: str, xlabel: str, bins = 10, min_threshold=0.01) -> str:
+def create_scatter_from_query(query: str) -> str:
     print(f"running histogram query {query}")
     run_query(query)
     data = get_query_result(query)    
     remove_query(query)
-           
-
     
     # Splitting the tuples into two lists
     x_data = [i[0] for i in data]

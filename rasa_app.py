@@ -14,7 +14,7 @@ from constants import (
     scatter_tag,
     keyword_replacements
 )
-from query import async_run_query, check_pending, create_histogram_from_query
+from query import async_run_query, check_pending, create_histogram_from_query, create_scatter_from_query
 from typing import Any, Dict, List, Optional, Set, Text, Tuple
 
 """
@@ -104,7 +104,7 @@ def create_response(text, message) -> Response:
         print(query_text)
         queries.append(query_text)
         print(f"running scatter query \n{query_text}\n")
-        hist_svg = create_histogram_from_query(query_text, keyword)          
+        hist_svg = create_scatter_from_query(query_text)
         return jsonify({"message": message_txt, "svg": hist_svg})
     if action_tag in text:
         action_text = text.replace(action_tag, "")
