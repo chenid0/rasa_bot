@@ -98,7 +98,7 @@ tokenized_query_tag = "tokenized_query:"
 svg_tag = "load svg"
 csv_tag = "load csv"
 histogram_tag ="histogram:"
-scatter_tag ="histogram:"
+scatter_tag ="scatterplot:"
 
 
 # Get column names from "MOLPROPS" and "MOLDATA"
