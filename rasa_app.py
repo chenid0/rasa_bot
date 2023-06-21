@@ -12,9 +12,14 @@ from constants import (
     svg_tag,
     histogram_tag,
     scatter_tag,
-    keyword_replacements
+    keyword_replacements,
 )
-from query import async_run_query, check_pending, create_histogram_from_query, create_scatter_from_query
+from query import (
+    async_run_query,
+    check_pending,
+    create_histogram_from_query,
+    create_scatter_from_query,
+)
 from typing import Any, Dict, List, Optional, Set, Text, Tuple
 
 """
@@ -38,10 +43,9 @@ rasa_endpoint = (
 rasa_action_endpoint = "http://localhost:5055/webhook"
 
 
-
-def find_keyword(sentence: str, keywords: Dict[str,str]) -> str:
+def find_keyword(sentence: str, keywords: Dict[str, str]) -> str:
     print(sentence)
-    for keyword, replacement in keywords.items():    
+    for keyword, replacement in keywords.items():
         if keyword.upper() in sentence.upper():
             print(f"keyword found: {keyword} -> {replacement}")
             return replacement
@@ -59,7 +63,7 @@ def send_message():
     message = request.json["message"]
     rasa_payload = {"sender": "user", "message": message}
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
-    
+
     for obj in rasa_response:
         text = obj.get("text")
         print(f"text: {text}")
@@ -70,6 +74,7 @@ def send_message():
         print()
         if text:
             return create_response(text, message)
+
 
 def create_response(text, message) -> Response:
     message_txt = ""
@@ -90,17 +95,17 @@ def create_response(text, message) -> Response:
         return jsonify({"message": message_txt})
     if histogram_tag in text:
         query_text = text.replace(histogram_tag, "")
-        keyword = find_keyword(message, keyword_replacements)                
+        keyword = find_keyword(message, keyword_replacements)
         query_text = query_text.replace("$TOKEN$", keyword)
         print(query_text)
         queries.append(query_text)
         print(f"running histogram query \n{query_text}\n")
-        hist_svg = create_histogram_from_query(query_text, keyword)          
+        hist_svg = create_histogram_from_query(query_text, keyword)
         return jsonify({"message": message_txt, "svg": hist_svg})
     if scatter_tag in text:
         query_text = text.replace(histogram_tag, "")
-        #keyword = find_keyword(message, keyword_replacements)                
-        #query_text = query_text.replace("$TOKEN$", keyword)
+        # keyword = find_keyword(message, keyword_replacements)
+        # query_text = query_text.replace("$TOKEN$", keyword)
         print(query_text)
         queries.append(query_text)
         print(f"running scatter query \n{query_text}\n")
@@ -116,7 +121,6 @@ def create_response(text, message) -> Response:
             csv_json = df.to_json(orient="records")
             return jsonify({"message": message_txt, "csv": csv_json})
     return jsonify({"message": "no action taken"})
-  
 
 
 @app.route("/api/query_status", methods=["GET"])
