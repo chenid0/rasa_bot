@@ -132,16 +132,17 @@ def create_scatter_from_query(query: str) -> str:
     remove_query(query)
     
     # Splitting the tuples into two lists
-    x_data = [i[0] for i in data]
-    y_data = [i[1] for i in data]
+    x_data, y_data = zip(*data)
+    #x_data = [i[0] for i in data]
+    #y_data = [i[1] for i in data]
 
     # Creating the scatter plot
     plt.scatter(x_data, y_data)
 
     # Optionally, adding a title and labels
-    plt.title('Scatter plot')
-    plt.xlabel('x')
-    plt.ylabel('y')
+    #plt.title('Scatter plot')
+    #plt.xlabel('x')
+    #plt.ylabel('y')
     
     # Save the image to a BytesIO object
     image_stream = StringIO()
