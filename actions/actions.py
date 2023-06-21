@@ -685,7 +685,7 @@ class CalculateHistogram(Action):
         # we can export a simple csv formatted table to text.
         #  we can add a svg or gif from the data..
 
-        dispatcher.utter_message(text="running: action_historgram")
+        #dispatcher.utter_message(text="running: action_historgram")
         utter_histogram(dispatcher, sql)
         return []
 
@@ -714,6 +714,6 @@ class ScatterPlot(Action):
         # we can export a simple csv formatted table to text.
         #  we can add a svg or gif from the data..
 
-        dispatcher.utter_message(text="running: action_scatter_plot")
+        #dispatcher.utter_message(text="running: action_scatter_plot")
         utter_scatter(dispatcher, sql)
         return []
