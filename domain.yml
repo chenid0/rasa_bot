@@ -41,6 +41,7 @@ intents:
   - data_minimum
   - data_maximum
   - bin_data
+  - scatter_plot
 
 session_config:
   session_expiration_time: 60
