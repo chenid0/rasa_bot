@@ -42,6 +42,22 @@ rasa_endpoint = (
 # Define the URL of the Rasa action server
 rasa_action_endpoint = "http://localhost:5055/webhook"
 
+def find_keywords(sentence: str, keywords: Dict[str, str]) -> List[str]:
+    print(sentence)
+    keywords_found = []
+    words = sentence.split()
+    for word in words:
+        for keyword, replacement in keywords.items():
+            if keyword.upper() in word.upper():
+                print(f"keyword found: {keyword} -> {replacement}")
+                keywords_found.append(replacement)
+    if not keywords_found:
+        print("no keyword found. defaulting to logP_rdkit")
+        keywords_found.append("logP_rdkit")
+        keywords_found.append("sarea_rdkit")
+    return keywords_found
+
+
 
 def find_keyword(sentence: str, keywords: Dict[str, str]) -> str:
     print(sentence)
@@ -98,15 +114,15 @@ def create_response(text, message) -> Response:
         query_text = text.replace(histogram_tag, "")
         keyword = find_keyword(message, keyword_replacements)
         query_text = query_text.replace("$TOKEN$", keyword)
-        print(query_text)
         queries.append(query_text)
         print(f"running histogram query \n{query_text}\n")
         hist_svg = create_histogram_from_query(query_text, keyword)
         return jsonify({"message": message_txt, "svg": hist_svg})
     if scatter_tag in text:
         query_text = text.replace(scatter_tag, "")
-        # keyword = find_keyword(message, keyword_replacements)
-        # query_text = query_text.replace("$TOKEN$", keyword)
+        keywords = find_keywords(message, keyword_replacements)        
+        query_text = query_text.replace("$TOKEN$", keywords[0], 1)
+        query_text = query_text.replace("$TOKEN$", keywords[1], 1)
         print(query_text)
         queries.append(query_text)
         print(f"running scatter query \n{query_text}\n")
