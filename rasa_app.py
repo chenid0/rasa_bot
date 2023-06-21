@@ -79,6 +79,7 @@ def send_message():
 def create_response(text, message) -> Response:
     message_txt = ""
     queries = []
+    print(f"determining action from text: {text}")
     if query_tag in text:
         query_text = text.replace(query_tag, "")
         queries.append(query_text)
@@ -103,7 +104,7 @@ def create_response(text, message) -> Response:
         hist_svg = create_histogram_from_query(query_text, keyword)
         return jsonify({"message": message_txt, "svg": hist_svg})
     if scatter_tag in text:
-        query_text = text.replace(histogram_tag, "")
+        query_text = text.replace(scatter_tag, "")
         # keyword = find_keyword(message, keyword_replacements)
         # query_text = query_text.replace("$TOKEN$", keyword)
         print(query_text)
