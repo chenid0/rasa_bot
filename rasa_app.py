@@ -76,8 +76,8 @@ def home():
 
 @app.route("/api/messages", methods=["POST"])
 def send_message():
-    rasa_message = request.json["message"]    
-    rasa_words = rasa_message.split()
+    orig_message = request.json["message"]    
+    rasa_words = orig_message.split()
     cleaned_message = []
     for word in rasa_words:
         print(f"word: {word}")
