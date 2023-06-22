@@ -124,7 +124,7 @@ def async_run_query(query: str) -> None:
         print(traceback.format_exc())
 
 
-def create_scatter_from_query(query: str) -> str:
+def create_scatter_from_query(query: str, xlabel: str, ylabel: str) -> str:
     print(f"running scatter query {query}")
     run_query(query)
     data = get_query_result(query)
@@ -139,8 +139,8 @@ def create_scatter_from_query(query: str) -> str:
 
     # Optionally, adding a title and labels
     plt.title('Scatter plot')
-    plt.xlabel('x')
-    plt.ylabel('y')
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
     
     # Save the image to a BytesIO object
     image_stream = StringIO()

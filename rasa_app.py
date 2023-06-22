@@ -121,12 +121,14 @@ def create_response(text, message) -> Response:
     if scatter_tag in text:
         query_text = text.replace(scatter_tag, "")
         keywords = find_keywords(message, keyword_replacements)        
-        query_text = query_text.replace("$TOKEN$", keywords[0], 1)
-        query_text = query_text.replace("$TOKEN$", keywords[1], 1)
+        xlabel = keywords[0]
+        ylabel = keywords[1]
+        query_text = query_text.replace("$TOKEN$", xlabel , 1)
+        query_text = query_text.replace("$TOKEN$", ylabel, 1)
         print(query_text)
         queries.append(query_text)
         print(f"running scatter query \n{query_text}\n")
-        hist_svg = create_scatter_from_query(query_text)
+        hist_svg = create_scatter_from_query(query_text, xlabel, ylabel)
         return jsonify({"message": message_txt, "svg": hist_svg})
     if action_tag in text:
         action_text = text.replace(action_tag, "")
