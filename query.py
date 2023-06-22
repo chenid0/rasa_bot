@@ -142,6 +142,16 @@ def create_scatter_from_query(query: str, xlabel: str, ylabel: str) -> str:
     # Creating the scatter plot
     plt.scatter(x_data, y_data)
 
+    # Calculating the coefficients of the best-fit line
+    slope, intercept = np.polyfit(x_data, y_data, 1)
+
+    # Calculating the predicted y values
+    y_pred = slope * x_data + intercept
+
+    # Adding the best-fit line
+    plt.plot(x_data, y_pred, color='red', label='Best-fit Line')
+
+
     # Calculating the correlation coefficient
     #r = np.corrcoef(x_data, y_data)[0, 1]
     #r_squared = r**2
@@ -153,8 +163,8 @@ def create_scatter_from_query(query: str, xlabel: str, ylabel: str) -> str:
     x_min, x_max = plt.xlim()
     y_min, y_max = plt.ylim()
     r2_line = np.linspace(x_min, x_max, 100)
-    ratio = y_max/x_max
-    plt.plot(r2_line, r2 * r2_line * ratio, color="red", linestyle="--")
+    #ratio = y_max/x_max
+    #plt.plot(r2_line, r2 * r2_line * ratio, color="red", linestyle="--")
 
     # Adding the correlation line
     #plt.plot(x_data, r*x_data, color='red', label=f'R2 = {r_squared:.2f}')
