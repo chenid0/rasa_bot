@@ -139,23 +139,21 @@ def create_scatter_from_query(query: str, xlabel: str, ylabel: str) -> str:
     x_data = np.array(x_data)
     y_data = np.array(y_data)
 
-    # Set the plot limits to match the data range
-    x_min = np.min(x_data)
-    x_max = np.max(x_data)
-    y_min = np.min(y_data)
-    y_max = np.max(y_data)
-    plt.xlim(x_min, x_max)
-    plt.ylim(y_min, y_max)
-
     # Creating the scatter plot
     plt.scatter(x_data, y_data)
 
     # Calculating the correlation coefficient
-    r = np.corrcoef(x_data, y_data)[0, 1]
-    r_squared = r**2
+    #r = np.corrcoef(x_data, y_data)[0, 1]
+    #r_squared = r**2
+
+    # Calculate the R2 coefficient
+    r2 = np.corrcoef(x_data, y_data)[0, 1] ** 2
+    
+    # Add the R2 coefficient line to the graph
+    plt.annotate(f"R2 = {r2:.2f}", (0.1, 0.9), xycoords="axes fraction")
 
     # Adding the correlation line
-    plt.plot(x_data, r*x_data, color='red', label=f'R2 = {r_squared:.2f}')
+    #plt.plot(x_data, r*x_data, color='red', label=f'R2 = {r_squared:.2f}')
 
 
 
