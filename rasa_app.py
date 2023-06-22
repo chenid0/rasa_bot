@@ -76,14 +76,18 @@ def home():
 
 @app.route("/api/messages", methods=["POST"])
 def send_message():
-    rasa_message = request.json["message"]
-    orig_message = str(rasa_message)
-    for keyword in keyword_replacements.keys():
-        if keyword.upper() == rasa_message.upper():
-            print(f"keyword found: {keyword}")
-            rasa_message = rasa_message.replace(keyword, "")
-    print(f"rasa_message: {rasa_message}")
-    rasa_payload = {"sender": "user", "message": rasa_message}
+    rasa_message = request.json["message"]    
+    rasa_words = rasa_message.split()
+    cleaned_message = []
+    for word in rasa_words:
+        print(f"word: {word}")
+        if word.upper() in keyword_replacements.keys():
+            print(f"keyword found: {word}. not adding to new message")            
+        else:
+            cleaned_message.append(word)
+    cleaned_str = cleaned_message.join(" ")
+    print(f"rasa_message: {cleaned_str}")
+    rasa_payload = {"sender": "user", "message": cleaned_str}
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
 
     for obj in rasa_response:
