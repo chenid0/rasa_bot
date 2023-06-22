@@ -8,6 +8,7 @@ from typing import Any, Dict, List, Set, Text, Tuple, Union
 from constants import db_path_name
 import matplotlib.pyplot as plt
 from io import BytesIO, StringIO
+import numpy as np
 
 thread_query_dict = dict()
 
@@ -136,6 +137,13 @@ def create_scatter_from_query(query: str, xlabel: str, ylabel: str) -> str:
 
     # Creating the scatter plot
     plt.scatter(x_data, y_data)
+
+    # Calculating the correlation coefficient
+    r = np.corrcoef(x_data, y_data)[0, 1]
+    r_squared = r**2
+
+    # Adding the correlation line
+    plt.plot(x_data, r*x_data, color='red', label=f'R2 = {r_squared:.2f}')
 
     # Optionally, adding a title and labels
     plt.title('Scatter plot')
