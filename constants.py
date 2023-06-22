@@ -117,7 +117,7 @@ scatter_tag ="scatterplot:"
 #       ignore others for now
 
 keyword_replacements = {
-    "LOPP": "LOGP_RDKIT",
+    "LOGP": "LOGP_RDKIT",
     "HBA": "HBA",
     "HYDROGEN BOND ACCEPTOR": "HBA",
     "H-BOND ACCEPTOR": "HBA",
@@ -133,6 +133,7 @@ keyword_replacements = {
     "DONAR": "HBD",
     "DONER": "HBD",
     "SURFACE AREA": "SAREA_RDKIT",
+    "SAREA": "SAREA_RDKIT",
     "SA": "SAREA_RDKIT",
     "FCSP3": "FRACCSP3_RDKIT",
     "FRACCSP3": "FRACCSP3_RDKIT",
