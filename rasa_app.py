@@ -82,6 +82,7 @@ def send_message():
         if keyword.upper() == rasa_message.upper():
             print(f"keyword found: {keyword}")
             rasa_message = rasa_message.replace(keyword, "")
+    print(f"rasa_message: {rasa_message}")
     rasa_payload = {"sender": "user", "message": rasa_message}
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
 
