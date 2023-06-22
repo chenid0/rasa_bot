@@ -152,23 +152,13 @@ def create_scatter_from_query(query: str, xlabel: str, ylabel: str) -> str:
     plt.plot(x_data, y_pred, color='red', label='Best-fit Line')
 
 
-    # Calculating the correlation coefficient
-    #r = np.corrcoef(x_data, y_data)[0, 1]
-    #r_squared = r**2
-
     # Calculate the R2 coefficient
-    r2 = np.corrcoef(x_data, y_data)[0, 1] ** 2
-    
-    # Add the R2 coefficient line to the graph
-    x_min, x_max = plt.xlim()
-    y_min, y_max = plt.ylim()
-    r2_line = np.linspace(x_min, x_max, 100)
-    #ratio = y_max/x_max
-    #plt.plot(r2_line, r2 * r2_line * ratio, color="red", linestyle="--")
+    r = np.corrcoef(x_data, y_data)[0, 1]
+    r_squared = r**2
 
-    # Adding the correlation line
-    #plt.plot(x_data, r*x_data, color='red', label=f'R2 = {r_squared:.2f}')
-
+    # Annotating the R-squared value
+    plt.text(0.05, 0.95, f'R2 = {r_squared:.2f}', transform=plt.gca().transAxes, ha='left', va='top')
+ 
 
 
     # Optionally, adding a title and labels
