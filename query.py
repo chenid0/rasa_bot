@@ -153,7 +153,8 @@ def create_scatter_from_query(query: str, xlabel: str, ylabel: str) -> str:
     x_min, x_max = plt.xlim()
     y_min, y_max = plt.ylim()
     r2_line = np.linspace(x_min, x_max, 100)
-    plt.plot(r2_line, r2 * r2_line * 33, color="red", linestyle="--")
+    ratio = y_max/x_max
+    plt.plot(r2_line, r2 * r2_line * ratio, color="red", linestyle="--")
 
     # Adding the correlation line
     #plt.plot(x_data, r*x_data, color='red', label=f'R2 = {r_squared:.2f}')
