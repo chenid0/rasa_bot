@@ -76,8 +76,12 @@ def home():
 
 @app.route("/api/messages", methods=["POST"])
 def send_message():
-    message = request.json["message"]
-    rasa_payload = {"sender": "user", "message": message}
+    rasa_message = request.json["message"]    
+    orig_message = str(rasa_message)
+    for keyword, replacement in keyword_replacements.items():
+        if keyword.upper() in rasa_message.upper():
+            rasa_message = rasa_message.replace(keyword, "")
+    rasa_payload = {"sender": "user", "message": rasa_message}
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
 
     for obj in rasa_response:
@@ -89,7 +93,7 @@ def send_message():
         print(f"json: {json_data}")
         print()
         if text:
-            return create_response(text, message)
+            return create_response(text, orig_message)
 
 
 def create_response(text, message) -> Response:
