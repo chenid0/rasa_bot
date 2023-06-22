@@ -85,7 +85,7 @@ def send_message():
             print(f"keyword found: {word}. not adding to new message")            
         else:
             cleaned_message.append(word)
-    cleaned_str = cleaned_message.join(" ")
+    cleaned_str = " ".join(cleaned_message)
     print(f"rasa_message: {cleaned_str}")
     rasa_payload = {"sender": "user", "message": cleaned_str}
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
