@@ -706,7 +706,7 @@ class ScatterPlot(Action):
         tablename1 = "MOLPROPS"
         tablename2 = "MOLDATA"
         
-        sql = "select logp_rdkit, sarea_rdkit from MOLPROPS limit 1000;"
+        sql = "select logp_rdkit, sarea_rdkit from MOLPROPS limit 10000;"
 
         # generic: for each column
         #sql = "SELECT DISTINCT CAST(" + column + "/" + divide_val + " As INT)*" + divide_val + " AS Bin, COUNT(*) AS Frequency FROM " + tablename + " GROUP BY Bin;";
