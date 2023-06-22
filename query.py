@@ -150,7 +150,10 @@ def create_scatter_from_query(query: str, xlabel: str, ylabel: str) -> str:
     r2 = np.corrcoef(x_data, y_data)[0, 1] ** 2
     
     # Add the R2 coefficient line to the graph
-    plt.annotate(f"R2 = {r2:.2f}", (0.1, 0.9), xycoords="axes fraction")
+    x_min, x_max = plt.xlim()
+    y_min, y_max = plt.ylim()
+    r2_line = np.linspace(x_min, x_max, 100)
+    plt.plot(r2_line, r2 * r2_line, color="red", linestyle="--")
 
     # Adding the correlation line
     #plt.plot(x_data, r*x_data, color='red', label=f'R2 = {r_squared:.2f}')
