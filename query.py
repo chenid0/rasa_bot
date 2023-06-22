@@ -135,6 +135,10 @@ def create_scatter_from_query(query: str, xlabel: str, ylabel: str) -> str:
     # Splitting the tuples into two lists
     x_data, y_data = zip(*data)    
 
+    # Convert the data to numpy arrays
+    x_data = np.array(x_data)
+    y_data = np.array(y_data)
+
     # Creating the scatter plot
     plt.scatter(x_data, y_data)
 
