@@ -149,6 +149,14 @@ def create_scatter_from_query(query: str, xlabel: str, ylabel: str) -> str:
     # Adding the correlation line
     plt.plot(x_data, r*x_data, color='red', label=f'R2 = {r_squared:.2f}')
 
+    # Set the plot limits to match the data range
+    x_min = np.min(x_data)
+    x_max = np.max(x_data)
+    y_min = np.min(y_data)
+    y_max = np.max(y_data)
+    plt.xlim(x_min, x_max)
+    plt.ylim(y_min, y_max)
+
     # Optionally, adding a title and labels
     plt.title('Scatter plot')
     plt.xlabel(xlabel)
