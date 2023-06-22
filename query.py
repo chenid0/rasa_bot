@@ -128,7 +128,7 @@ def create_scatter_from_query(query: str, xlabel: str, ylabel: str) -> str:
     print(f"running scatter query {query}")
     run_query(query)
     data = get_query_result(query)
-    print(data)
+    #print(data)
     remove_query(query)
     
     # Splitting the tuples into two lists
