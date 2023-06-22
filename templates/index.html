@@ -22,7 +22,7 @@
       bottom: 100px;
       position: absolute;
       overflow-y: scroll;
-      max-height: 400px;
+      max-height: 600px;
     }
 
     .chat-form {
@@ -175,6 +175,23 @@
   </div>
   <div id="icon-container" class="icon-container"></div> <!-- Icon Container -->
   <script>
+     $(function () {
+      function setChatAreaMaxHeight() {
+        const windowHeight = $(window).height();  // Get the current window height
+        const chatFormHeight = $('.chat-form').outerHeight();  // Get the height of the chat form
+        const iconContainerHeight = $('.icon-container').outerHeight();  // Get the height of the icon container
+        const chatAreaMaxHeight = windowHeight - chatFormHeight - iconContainerHeight - 150;  // Calculate the max-height
+        $('.chat-area').css('max-height', chatAreaMaxHeight + 'px');  // Set the max-height of the chat area dynamically
+      }
+
+      // Call the function initially
+      setChatAreaMaxHeight();
+
+      // Call the function whenever the window is resized
+      $(window).resize(function () {
+        setChatAreaMaxHeight();
+      });
+    });
     $(function () {
       const $chatArea = $('#chat-area');
       const $chatForm = $('#chat-form');
