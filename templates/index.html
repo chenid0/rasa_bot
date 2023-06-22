@@ -22,7 +22,7 @@
       bottom: 100px;
       position: absolute;
       overflow-y: scroll;
-      max-height: 600px;
+      max-height: 800px;
     }
 
     .chat-form {
@@ -180,7 +180,7 @@
         const windowHeight = $(window).height();  // Get the current window height
         const chatFormHeight = $('.chat-form').outerHeight();  // Get the height of the chat form
         const iconContainerHeight = $('.icon-container').outerHeight();  // Get the height of the icon container
-        const chatAreaMaxHeight = windowHeight - chatFormHeight - iconContainerHeight - 50;  // Calculate the max-height
+        const chatAreaMaxHeight = windowHeight - chatFormHeight - iconContainerHeight;  // Calculate the max-height
         $('.chat-area').css('max-height', chatAreaMaxHeight + 'px');  // Set the max-height of the chat area dynamically
       }
 
