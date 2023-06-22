@@ -42,6 +42,7 @@ rasa_endpoint = (
 # Define the URL of the Rasa action server
 rasa_action_endpoint = "http://localhost:5055/webhook"
 
+
 def find_keywords(sentence: str, keywords: Dict[str, str]) -> List[str]:
     print(sentence)
     keywords_found = []
@@ -56,7 +57,6 @@ def find_keywords(sentence: str, keywords: Dict[str, str]) -> List[str]:
         keywords_found.append("logP_rdkit")
         keywords_found.append("sarea_rdkit")
     return keywords_found
-
 
 
 def find_keyword(sentence: str, keywords: Dict[str, str]) -> str:
@@ -76,10 +76,11 @@ def home():
 
 @app.route("/api/messages", methods=["POST"])
 def send_message():
-    rasa_message = request.json["message"]    
+    rasa_message = request.json["message"]
     orig_message = str(rasa_message)
-    for keyword, replacement in keyword_replacements.items():
+    for keyword in keyword_replacements.keys():
         if keyword.upper() in rasa_message.upper():
+            print(f"keyword found: {keyword}")
             rasa_message = rasa_message.replace(keyword, "")
     rasa_payload = {"sender": "user", "message": rasa_message}
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
@@ -124,10 +125,10 @@ def create_response(text, message) -> Response:
         return jsonify({"message": message_txt, "svg": hist_svg})
     if scatter_tag in text:
         query_text = text.replace(scatter_tag, "")
-        keywords = find_keywords(message, keyword_replacements)        
+        keywords = find_keywords(message, keyword_replacements)
         xlabel = keywords[0]
         ylabel = keywords[1]
-        query_text = query_text.replace("$TOKEN$", xlabel , 1)
+        query_text = query_text.replace("$TOKEN$", xlabel, 1)
         query_text = query_text.replace("$TOKEN$", ylabel, 1)
         print(query_text)
         queries.append(query_text)
