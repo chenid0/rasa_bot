@@ -162,7 +162,7 @@ def create_scatter_from_query(query: str, xlabel: str, ylabel: str) -> str:
     plt.text(0.05, 0.95, f'R2 = {r_squared:.2f}', transform=plt.gca().transAxes, ha='left', va='top')
 
     # Optionally, adding a title and labels
-    #plt.title('Scatter plot')
+    plt.title('Scatter plot')
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     
@@ -204,7 +204,7 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10, min_threshol
     plt.bar(filtered_fields, filtered_counts, width=0.5)
     plt.xlabel(xlabel=xlabel)
     plt.ylabel("Frequency")
-    plt.title = ('Histogram')            
+    plt.title('Histogram')            
     # Format y-axis tick labels
     plt.ticklabel_format(style='plain', axis='y')
     
