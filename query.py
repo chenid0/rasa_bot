@@ -86,13 +86,15 @@ def run_query(query):
         for row in rows:
             for i in range(len(column_names)):
                 results += str(column_names[i] + ": " + str(row[i]))
-        conn.close()
+      
         add_query_result(query, rows)
         #time.sleep(15)
     except Exception as e:
         print(f"error running query {query}")
         print(traceback.format_exc())
         add_query_result(query, traceback.format_exc())
+    finally:
+        conn.close()
 
 
 def async_run_query(query: str) -> None:
