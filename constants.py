@@ -118,6 +118,7 @@ scatter_tag ="scatterplot:"
 
 keyword_replacements = {
     "LOGP": "LOGP_RDKIT",
+    "LOGP_RDKIT": "LOGP_RDKIT",
     "HBA": "HBA",
     "HYDROGEN BOND ACCEPTOR": "HBA",
     "H-BOND ACCEPTOR": "HBA",

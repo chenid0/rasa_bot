@@ -112,11 +112,11 @@ def send_message():
             return create_response(text, orig_message)
 
 def replace_keywords(message: str) -> str:
-    cleaned_str = message
+    cleaned_str = message.upper()
     for keyword_phrase in keyword_replacements.keys():
         keyword_phrase_upper = keyword_phrase.upper()
-        cleaned_str = message.replace(' ' + keyword_phrase_upper + ' ', ' ')
-        cleaned_str = message.replace(' ' + keyword_phrase_upper, '')  # Check if phrase is at the end    
+        cleaned_str = cleaned_str.replace(' ' + keyword_phrase_upper + ' ', ' ')
+        cleaned_str = cleaned_str.replace(' ' + keyword_phrase_upper, '')  # Check if phrase is at the end    
     return cleaned_str
 
 
