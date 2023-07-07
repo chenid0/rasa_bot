@@ -90,7 +90,7 @@ def send_message():
         if len(matches) > 1:
             print(f"matches: {matches}")
         elif len(matches) == 1:
-            spell_checked.append(matches.keys()[0])
+            spell_checked.append(next(iter(matches)))
         else:
             spell_checked.append(word)
             
