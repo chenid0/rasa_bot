@@ -86,6 +86,7 @@ def send_message():
     spell_checked = []
     for word in rasa_words:
         matches = compare_to_string(keywords_for_spellcheck, word, max_edit_distance=1)
+        print(f"matches: {matches}")
         if len(matches) > 1:
             print(f"matches: {matches}")
         elif len(matches) == 1:
