@@ -12,7 +12,8 @@ from constants import (
     svg_tag,
     histogram_tag,
     scatter_tag,
-    keyword_replacements,
+    keyword_replacements, 
+    keywords_for_spellcheck
 )
 from query import (
     async_run_query,
@@ -20,6 +21,7 @@ from query import (
     create_histogram_from_query,
     create_scatter_from_query,
 )
+from edit_distance import compare_to_string
 from typing import Any, Dict, List, Optional, Set, Text, Tuple
 
 """
@@ -76,18 +78,25 @@ def home():
 
 @app.route("/api/messages", methods=["POST"])
 def send_message():
-    orig_message = request.json["message"]    
+    orig_message = request.json.get("message")
+    if not orig_message:
+        return jsonify({"message": "No message provided"})
+
     rasa_words = orig_message.split()
-    cleaned_message = []
+    spell_checked = []
     for word in rasa_words:
-        print(f"word: {word}")
-        if word.upper() in keyword_replacements.keys():
-            print(f"keyword found: {word}. not adding to new message")            
+        matches = compare_to_string(keywords_for_spellcheck, word, max_edit_distance=1)
+        if len(matches) > 1:
+            print(f"matches: {matches}")
+        elif len(matches) == 1:
+            spell_checked.append(matches[0])
         else:
-            cleaned_message.append(word)
-    cleaned_str = " ".join(cleaned_message)
-    print(f"rasa_message: {cleaned_str}")
-    rasa_payload = {"sender": "user", "message": cleaned_str}
+            spell_checked.append(word)
+            
+    spell_checked_str = ' '.join(spell_checked)
+    cleaned_message = replace_keywords(spell_checked_str)    
+    print(f"rasa_message: {cleaned_message}")
+    rasa_payload = {"sender": "user", "message": cleaned_message}
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
 
     for obj in rasa_response:
@@ -100,6 +109,14 @@ def send_message():
         print()
         if text:
             return create_response(text, orig_message)
+
+def replace_keywords(message: str) -> str:
+    cleaned_str = message
+    for keyword_phrase in keyword_replacements.keys():
+        keyword_phrase_upper = keyword_phrase.upper()
+        cleaned_str = message.replace(' ' + keyword_phrase_upper + ' ', ' ')
+        cleaned_str = message.replace(' ' + keyword_phrase_upper, '')  # Check if phrase is at the end    
+    return cleaned_str
 
 
 def create_response(text, message) -> Response:
