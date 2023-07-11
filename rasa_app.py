@@ -45,8 +45,7 @@ rasa_endpoint = (
 rasa_action_endpoint = "http://localhost:5055/webhook"
 
 
-def find_keywords(sentence: str, keywords: Dict[str, str]) -> List[str]:
-    print(sentence)
+def find_keywords(sentence: str, keywords: Dict[str, str]) -> List[str]:    
     keywords_found = []
     words = sentence.split()
     for word in words:
@@ -61,8 +60,7 @@ def find_keywords(sentence: str, keywords: Dict[str, str]) -> List[str]:
     return keywords_found
 
 
-def find_keyword(sentence: str, keywords: Dict[str, str]) -> str:
-    print(sentence)
+def find_keyword(sentence: str, keywords: Dict[str, str]) -> str:    
     for keyword, replacement in keywords.items():
         if keyword.upper() in sentence.upper():
             print(f"keyword found: {keyword} -> {replacement}")
@@ -112,12 +110,13 @@ def send_message():
             return create_response(text, orig_message)
 
 def replace_keywords(message: str) -> str:
-    cleaned_str = message.upper()
+    input_str = message.upper()
+    output_str = ""
     for keyword_phrase in keyword_replacements.keys():
         keyword_phrase_upper = keyword_phrase.upper()
-        cleaned_str = cleaned_str.replace(' ' + keyword_phrase_upper + ' ', ' ')
-        cleaned_str = cleaned_str.replace(' ' + keyword_phrase_upper, '')  # Check if phrase is at the end    
-    return cleaned_str
+        output_str = input_str.replace(' ' + keyword_phrase_upper + ' ', ' ')
+        output_str = input_str.replace(' ' + keyword_phrase_upper, '')  # Check if phrase is at the end    
+    return output_str
 
 
 def create_response(text, message) -> Response:
