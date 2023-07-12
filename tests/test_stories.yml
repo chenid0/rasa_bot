@@ -1,53 +1,37 @@
 stories:
 
-- story: test story 1
+- story: text story 1
   steps:
   - user: |
      load sdf
     intent: load_sdf_file
-  - action: action_load_mols_sdf
+  - action: utter_load_sdf_file
   - user: |
      who are you?
     intent: who_r_u
   - action: utter_who_r_u
   - user: |
-     what do you do?
-    intent: help4
-  - action: action_help
+     how do you work?
+    intent: help
+  - action: utter_help
   - user: |
-     who created you
-    intent: who_creator
-  - action: utter_who_creator
+     draw a new scaffold
+    intent: draw_scaffold
+  - action: utter_draw_scaffold
   - user: |
-     clear everything
-    intent: clear_data
-  - action: action_clear_data
+     create histogram
+    intent: bin_data
+  - action: utter_bin_data
   - user: |
-     read mols from file
-    intent: load_sdf_file
-  - action: action_load_mols_sdf
+     find minimum
+    intent: data_minimum
+  - action: utter_data_minimum
   - user: |
-     set activity column
-    intent: select_model_column
-  - action: action_set_model_column
+     create scatterplot
+    intent: scatter_xy
+  - action: utter_scatter_xy
   - user: |
-     display most active compound
-    intent: show_most_active
-  - action: action_most_active
-  - user: |
-     display least active compound
-    intent: show_least_active
-  - action: action_least_active
-  - user: |
-     read scaffold from disk
-    intent: load_scaffold
-  - action: action_load_scaffold
-  - user: |
-     display scaffold
-    intent: show_scaffold
-  - action: action_show_scaffold
-  - user: |
-     heatmap column data
-    intent: heatmap_column
-  - action: action_heat_map_column
+     perfrom  rgroup analysis
+    intent: perform_r_analysis
+  - action: utter_perform_r_analysis
 
