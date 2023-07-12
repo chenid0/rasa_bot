@@ -84,34 +84,28 @@ rules:
 
 - rule: load_mols_sqlite
   steps:
-  - intent: load_mols_sqlite
-   
+  - intent: load_mols_sqlite   
 
 - rule: load_smiles
   steps:
-  - intent: load_smiles
-   
+  - intent: load_smiles   
 
 - rule: load_mols
   steps:
-  - intent: load_mols
-   
+  - intent: load_mols   
 
 - rule: load_chembl_by_id
   steps:
-  - intent: load_chembl_by_id
-   
+  - intent: load_chembl_by_id   
 
 - rule: load_api
   steps:
-  - intent: load_api
-   
+  - intent: load_api  
 
 - rule: add_scaffold
   steps:
   - intent: add_scaffold
    
-
 - rule: load_scaffold
   steps:
   - intent: load_scaffold
@@ -126,7 +120,6 @@ rules:
   steps:
   - intent: paste_scaffold
    
-
 - rule: append_csv_columns
   steps:
   - intent: append_csv_columns
@@ -136,7 +129,6 @@ rules:
   steps:
   - intent: molecule_count
    
-
 - rule: list_properties
   steps:
   - intent: list_properties
