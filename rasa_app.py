@@ -24,17 +24,6 @@ from query import (
 )
 from typing import Any, Dict, List, Optional, Set, Text, Tuple
 
-"""
-text: Optional[Text] = None,
-image: Optional[Text] = None,
-json_message: Optional[Dict[Text, Any]] = None,
-template: Optional[Text] = None,
-response: Optional[Text] = None,
-attachment: Optional[Text] = None,
-buttons: Optional[List[Dict[Text, Any]]] = None,
-elements: Optional[List[Dict[Text, Any]]] = None,
-"""
-
 
 app = Flask(__name__)
 rasa_endpoint = (
@@ -43,6 +32,7 @@ rasa_endpoint = (
 
 # Define the URL of the Rasa action server
 rasa_action_endpoint = "http://localhost:5055/webhook"
+chembl_path = "./databases/chembl_33.db"
 
 
 def find_keywords(sentence: str, keywords: Dict[str, str]) -> List[str]:
@@ -179,7 +169,7 @@ def get_assay_id(assay_id):
     cursor.close()
     conn.close()
 
-def query(n, cursor):
+def query(n, cursor) -> List[Tuple[str, int, int, str, float, str, str, int]]:
     query = f"""
     SELECT cs.canonical_smiles, act.activity_id, act.assay_id, act.standard_relation,
         act.standard_value, act.standard_units, act.standard_type, act.molregno
@@ -191,7 +181,6 @@ def query(n, cursor):
     # Made query and received assay id, execute query
     cursor.execute(query)
     r = cursor.fetchall()
-
     return r
 def gen_csv(results):
     output_file = "output.csv"
@@ -201,6 +190,7 @@ def gen_csv(results):
         writer.writerow(['Canonical Smiles', 'Activity ID', 'Assay ID', 'Standard Relation',
                         'Standard Value', 'Standard Units', 'Standard Type', 'Molregno'])
         writer.writerows(results)
+
 def print_results(results):
     # Print the results in command prompt
     for row in results:
@@ -216,8 +206,8 @@ def print_results(results):
         print("Standard Type:", standard_type)
         print("Molregno:", molregno)
 
-def get_virus(organism):
-    conn = sqlite3.connect("chembl_33.db")
+def get_virus(organism):    
+    conn = sqlite3.connect(chembl_path)
     cursor = conn.cursor()
     query = f"""SELECT td.organism, td.pref_name, td.target_type FROM target_dictionary td WHERE td.organism like '%{organism}%' ORDER by td.organism"""
     # Made query and received assay id, execute query
