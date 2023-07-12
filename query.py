@@ -154,12 +154,16 @@ def create_scatter_from_query(query: str, xlabel: str, ylabel: str) -> str:
     plt.plot(x_data, y_pred, color='red', label='Best-fit Line')
 
 
-    # Calculate the R2 coefficient
+    # Calculate the R and R2 coefficient
+    # Calculate the Pearson correlation coefficient
     r = np.corrcoef(x_data, y_data)[0, 1]
     r_squared = r**2
 
-    # Annotating the R-squared value
-    plt.text(0.05, 0.95, f'R2 = {r_squared:.2f}', transform=plt.gca().transAxes, ha='left', va='top')
+
+    # plt.text(0.05, 0.95, f'R2 = {r_squared:.2f}', transform=plt.gca().transAxes, ha='left', va='top')
+    # Annotating the R-squared and Pearson coefficient
+    plt.text(0.05, 0.95, f'R2 = {r_squared:.2f}\nPearson = {r:.2f}', transform=plt.gca().transAxes, ha='left', va='top')
+
 
     # Optionally, adding a title and labels
     plt.title('Scatter plot')
@@ -190,15 +194,7 @@ def create_histogram_from_query(query: str, xlabel: str, bins = 10, min_threshol
     #filter out values that are less than the threshold
     filtered_fields = [field for field, count in zip(field_values, counts) if count >= threshold]
     filtered_counts = [count for count in counts if count >= threshold]
-
-
-    # Generate the histogram image. still doesn't work well
-    #plt.hist(x=counts, bins=bins)  # Replace 'data' with your histogram data
-    #plt.xlabel(xlabel)
-    #plt.ylabel('Count')
-    #plt.title('Histogram')
-    #plt.ticklabel_format(style='plain', axis='y')
-    #plt.grid(True)
+    
 
 
     plt.bar(filtered_fields, filtered_counts, width=0.5)

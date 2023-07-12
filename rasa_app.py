@@ -2,6 +2,8 @@ import logging
 from io import StringIO
 import pandas as pd
 import requests
+import sqlite3
+import csv 
 from flask import Flask, jsonify, render_template, request, send_file, Response
 from constants import (
     action_tag,
@@ -12,8 +14,7 @@ from constants import (
     svg_tag,
     histogram_tag,
     scatter_tag,
-    keyword_replacements, 
-    keywords_for_spellcheck
+    keyword_replacements,
 )
 from query import (
     async_run_query,
@@ -21,7 +22,6 @@ from query import (
     create_histogram_from_query,
     create_scatter_from_query,
 )
-from edit_distance import compare_to_string
 from typing import Any, Dict, List, Optional, Set, Text, Tuple
 
 """
@@ -45,7 +45,8 @@ rasa_endpoint = (
 rasa_action_endpoint = "http://localhost:5055/webhook"
 
 
-def find_keywords(sentence: str, keywords: Dict[str, str]) -> List[str]:    
+def find_keywords(sentence: str, keywords: Dict[str, str]) -> List[str]:
+    print(sentence)
     keywords_found = []
     words = sentence.split()
     for word in words:
@@ -60,7 +61,8 @@ def find_keywords(sentence: str, keywords: Dict[str, str]) -> List[str]:
     return keywords_found
 
 
-def find_keyword(sentence: str, keywords: Dict[str, str]) -> str:    
+def find_keyword(sentence: str, keywords: Dict[str, str]) -> str:
+    print(sentence)
     for keyword, replacement in keywords.items():
         if keyword.upper() in sentence.upper():
             print(f"keyword found: {keyword} -> {replacement}")
@@ -76,26 +78,18 @@ def home():
 
 @app.route("/api/messages", methods=["POST"])
 def send_message():
-    orig_message = request.json.get("message")
-    if not orig_message:
-        return jsonify({"message": "No message provided"})
-
+    orig_message = request.json["message"]    
     rasa_words = orig_message.split()
-    spell_checked = []
+    cleaned_message = []
     for word in rasa_words:
-        matches = compare_to_string(keywords_for_spellcheck, word, max_edit_distance=1)
-        print(f"matches: {matches}")
-        if len(matches) > 1:
-            print(f"matches: {matches}")
-        elif len(matches) == 1:
-            spell_checked.append(next(iter(matches)))
+        print(f"word: {word}")
+        if word.upper() in keyword_replacements.keys():
+            print(f"keyword found: {word}. not adding to new message")            
         else:
-            spell_checked.append(word)
-            
-    spell_checked_str = ' '.join(spell_checked)
-    cleaned_message = replace_keywords(spell_checked_str)    
-    print(f"rasa_message: {cleaned_message}")
-    rasa_payload = {"sender": "user", "message": cleaned_message}
+            cleaned_message.append(word)
+    cleaned_str = " ".join(cleaned_message)
+    print(f"rasa_message: {cleaned_str}")
+    rasa_payload = {"sender": "user", "message": cleaned_str}
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
 
     for obj in rasa_response:
@@ -108,15 +102,6 @@ def send_message():
         print()
         if text:
             return create_response(text, orig_message)
-
-def replace_keywords(message: str) -> str:
-    input_str = message.upper()
-    output_str = ""
-    for keyword_phrase in keyword_replacements.keys():
-        keyword_phrase_upper = keyword_phrase.upper()
-        output_str = input_str.replace(' ' + keyword_phrase_upper + ' ', ' ')
-        output_str = input_str.replace(' ' + keyword_phrase_upper, '')  # Check if phrase is at the end    
-    return output_str
 
 
 def create_response(text, message) -> Response:
@@ -181,6 +166,64 @@ def query_status():
     }
     return jsonify(response)
 
+
+def get_assay_id(assay_id):
+    conn = sqlite3.connect("chembl_33.db")
+    cursor = conn.cursor()
+    if not assay_id.isnumeric():
+        print("Please enter an integer")
+    else:
+        res = query(assay_id, cursor)
+        gen_csv(res)
+        print_results(res)
+    cursor.close()
+    conn.close()
+
+def query(n, cursor):
+    query = f"""
+    SELECT cs.canonical_smiles, act.activity_id, act.assay_id, act.standard_relation,
+        act.standard_value, act.standard_units, act.standard_type, act.molregno
+    FROM Activities AS act
+    JOIN compound_structures AS cs ON act.molregno = cs.molregno
+    WHERE act.assay_id = {n}
+    LIMIT 1;
+    """
+    # Made query and received assay id, execute query
+    cursor.execute(query)
+    r = cursor.fetchall()
+
+    return r
+def gen_csv(results):
+    output_file = "output.csv"
+    # Generate and fill up CSV file with recently pulled data
+    with open(output_file, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['Canonical Smiles', 'Activity ID', 'Assay ID', 'Standard Relation',
+                        'Standard Value', 'Standard Units', 'Standard Type', 'Molregno'])
+        writer.writerows(results)
+def print_results(results):
+    # Print the results in command prompt
+    for row in results:
+        canonical_smiles, activity_id, assay_id, standard_relation, \
+        standard_value, standard_units, standard_type, molregno = row
+        
+        print("Canonical Smiles:", canonical_smiles)
+        print("Activity ID:", activity_id)
+        print("Assay ID:", assay_id)
+        print("Standard Relation:", standard_relation)
+        print("Standard Value:", standard_value)
+        print("Standard Units:", standard_units)
+        print("Standard Type:", standard_type)
+        print("Molregno:", molregno)
+
+def get_virus(organism):
+    conn = sqlite3.connect("chembl_33.db")
+    cursor = conn.cursor()
+    query = f"""SELECT td.organism, td.pref_name, td.target_type FROM target_dictionary td WHERE td.organism like '%{n}%' ORDER by td.organism"""
+    # Made query and received assay id, execute query
+    cursor.execute(query)
+    r = cursor.fetchall()
+    print(r)
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")

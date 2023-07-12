@@ -41,7 +41,6 @@ intents:
   - data_minimum
   - data_maximum
   - bin_data
-  - scatter_plot
 
 session_config:
   session_expiration_time: 60
@@ -97,7 +96,6 @@ actions:
   - action_min_value
   - action_max_value
   - action_historgram
-  - action_scatter_plot
 
 entities:
   - sqlstatement

@@ -1,14 +1,13 @@
 version: "3.1"
 
 nlu:
-- intent: clear_data
+- intent: test_fcn
   examples: |
-    - clear
-    - clear data
-    - delete data
-    - delete molecules
-    - start over
-    - restart
+    - test fucntion
+    - testfunction
+    - testfcn
+    - test fcn
+    - function test
 
 - intent: help
   examples: |
@@ -233,7 +232,6 @@ nlu:
 - intent: help5
   examples: |
     - help
-    - help
     - help getting started.
     - help me
     - help me
@@ -244,6 +242,39 @@ nlu:
     - provide help
     - howto
     - how to
+
+- intent: help_properties
+  examples: |
+    - what can you predict
+    - tell me about properties
+    - help properties
+    - property help
+    - which properties can you predict
+    - which properties can be calculated
+    - how are properties calculated
+    - what properties can be calculated
+    - help calc properties
+    - help calculate properties
+    - help predict properties
+
+- intent: help_recommend_rgroups
+  examples: |
+    - help recommend rgroups
+    - help find better rgroups
+    - help suggest better rgroups
+    - help improve rgroups
+    - howto find new rgroups
+    - how to improve rgroups
+    - explain rgroup recommender
+    - explain bioisosteres
+    - what  are bioisosteres
+    - how to bioisostere
+    - how to rgroup recommender
+    - how to recommend rgps
+    - how to recommend rgroups
+    - help bioisosteres
+    - how does rgroup recommender work
+    - how to use rgroup recommender
 
 - intent: who_r_u
   examples: |
@@ -450,31 +481,21 @@ nlu:
     - what libraries do you use
     - what libraries are you made of
     - what software do you use
+    - how were you built
+    - what software libraries
 
 - intent: load_sdf_file
   examples: |
     - Load molecules from file
-    - open file
+    - open sdf file
     - open sdf
     - open mofile
-    - import molecules
-    - open file browser
-    - load mols
-    - load molecules
-    - load mols from disk
     - load mol file
     - load sdf file
     - load sdf
     - import sdf
-    - import smiles
-    - load smiles file
-    - import smiles file
     - import molecle file
     - import molfile
-    - read mols
-    - read molecules
-    - read mols from disk
-    - read mol file
     - read sdf file
     - read sdf
 
@@ -492,11 +513,266 @@ nlu:
     - read molecules from cdd
     - read molecules from cddvault
 
-- intent: load_postgres
+- intent: load_mols_postgres
+  examples: |
+    - read mols from postgres
+    - import postgres mol
+    - molecules from postgres
+    - connect postgres to get mols
+    - search postgres to get mols
+    - find mols in postgres
+    - geet postgres molecules
+    - read molecules from postgres
+    - get postgres molecules
+    - get molecules from postgres
+
+- intent: load_mols_sqlite
+  examples: |
+    - read mols from sqlite
+    - import sqlite mol
+    - molecules from sqlite
+    - connect sqlite to get mols
+    - search sqlite to get mols
+    - find mols in sqlite
+    - geet sqlite molecules
+    - read molecules from sqlite
+    - get sqlite molecules
+    - get molecules from sqlite
+
+- intent: load_smiles
+  examples: |
+    - read smi file
+    - read smiles file
+    - read smiles
+    - load smiles from disk
+    - load smiles file
+    - open smiles file
+    - open smile
+    - import smiles
+
+- intent: load_mols
+  examples: |
+    - import molecules
+    - open file browser
+    - load mols
+    - load molecules
+    - load mols from disk
+    - read mols
+    - read molecules
+    - read mols from disk
+    - read mol file
+
+- intent: load_chembl_by_id
+  examples: |
+    - load chembl id
+    - load assay id
+    - load chembl id =
+    - search chembl id
+    - load molecules for chembl id
+    - load chemblid
+
+- intent: load_api
   examples: |
     - open project
     - project api
     - project ui
+
+- intent: add_scaffold
+  examples: |
+    - Add scaf
+    - add scaffold
+
+- intent: load_scaffold
+  examples: |
+    - import scaffold
+    - load scaffold
+    - read scaffold
+    - load scaffold from file
+    - import scaffold from file
+    - read scaffold from file
+    - upload scaffold
+    - upload scaffold from file
+    - import scaf
+    - load scaf
+    - read scaf
+    - load scaf from file
+    - import scaf from file
+    - read scaf from file
+    - upload scaf
+    - upload scaf from file
+    - Import scaffold file
+    - Load scaffold file
+    - Read scaffold file
+    - upload scaf from from disk
+    - Import scaffold from disk
+    - Load scaffold from disk
+    - Read scaffold from disk
+    - Retrieve scaffold from disk
+    - Fetch scaffold from disk
+    - Retrieve scaffold file
+    - Fetch scaffold file
+
+- intent: draw_scaffold
+  examples: |
+    - draw scaf
+    - draw scaffold
+    - open scaffold drawer
+    - scaffold drawer
+    - scaf drawer
+    - scaffold dialog
+    - scaffold UI
+    - draw scaffold UI
+    - draw scaffold dialog
+    - open scaffold UI
+    - open scaffold dialog
+    - scaffold interface
+    - open scaffold interface
+    - open drawer for scaffold
+    - open scafUI
+    - open scaf drawer
+    - draw scaf UI
+    - draw scaf dialog
+
+- intent: paste_scaffold
+  examples: |
+    - paste scaffold
+    - paste scaf
+    - paste R scaffold
+    - paste R scaf
+    - paste Rgroup scaffold
+    - paste R-group scaffold
+
+- intent: append_csv_columns
+  examples: |
+    - append csv columns
+    - import csv columns
+    - import data from csv
+    - append data from csv
+    - append columns from file
+    - append columns from csv
+
+- intent: molecule_count
+  examples: |
+    - how many molecules exist in db
+    - how many molecules do you have
+    - molecule count
+    - count molecules
+    - how many molecules
+    - total number of molecules
+    - how many molecules are available
+
+- intent: list_properties
+  examples: |
+    - list properties
+    - what properties
+    - tell properties
+    - which properties are there
+    - what properties are there
+    - what calculated properties
+    - what physicochemical properties
+    - which physico-chemical properties
+    - how many properties
+    - show properties
+    - show calculated properties
+    - describe calcuated properties
+    - display property list
+    - display properties
+    - display available properties
+    - show available properties
+    - display available properties
+    - show prop set
+    - show property set
+    - show molecule property set
+    - display property set
+    - display prop set
+    - what is current prop set
+    - what props are currently calculated
+    - what props are calculated
+
+- intent: list_data
+  examples: |
+    - list data columns
+    - list assay values
+    - list import values
+    - what data is there
+    - what data got loaded
+    - which data got loaded
+    - show data columns
+    - show assay columns
+    - show assay
+    - show imported data
+    - what imported data is ther
+    - available loaded data
+    - available imported columns
+    - describe imported data
+    - show imported columns
+    - what data columns
+    - which data columns
+    - display data fields
+    - display data columns
+    - display imported fields
+    - display imported columns
+    - describe data columns
+    - describe data
+    - describe columns
+
+- intent: data_minimum
+  examples: |
+    - show minimum value
+    - what is minimumm value
+    - display minimum value
+    - show min value
+    - what is minimumm value
+    - show minimum data value
+    - what is minimumm data value
+    - display minimum data value
+    - show minimum data value
+    - what is minimumm data value
+    - minimum
+    - show minimum
+    - display minimum
+    - what is minimum
+    - what is minm value
+    - display min value
+    - show min value
+    - show min data value
+    - what is minm data value
+    - display min data value
+    - show min data value
+    - what is minm data value
+    - min
+    - show min
+    - display min
+    - what is min
+
+- intent: data_maximum
+  examples: |
+    - show maximum value
+    - what is maximumm value
+    - display maximum value
+    - show max value
+    - what is maximumm value
+    - show maximum data value
+    - what is maximumm data value
+    - display maximum data value
+    - show maximum data value
+    - what is maximumm data value
+    - maximum
+    - show maximum
+    - display maximum
+    - what is maximum
+    - show max value
+    - what is maxm value
+    - display max value
+    - show max data value
+    - what is maxm data value
+    - display max data value
+    - show max data value
+    - what is maxm data value
+    - max
+    - show max
+    - display max
+    - what is max
 
 - intent: select_model_column
   examples: |
@@ -531,49 +807,66 @@ nlu:
     - pick activity data field
     - select activity data field
 
-- intent: heatmap_column
+- intent: calc_properties
   examples: |
-    - add heatmap
-    - heatmap column
-    - color column
-    - column heatmap
-    - heatmap data field
-    - color data field
-    - data field heatmap
-    - heatmap field
-    - color field
-    - data heatmap
-    - add data heatmap
-    - heatmap data
-    - color data
-    - color column
+    - predict properties
+    - calcualte properties
+    - add properties
+    - calc properties
+    - calc props
+    - show props
+    - predict props
+    - predict physicochemical props
+    - calculate physicochemical props
+    - cacl physicochemical props
 
-- intent: molecule_count
+- intent: calc_explicit_properties
   examples: |
-    - how many molecules exist in db
-    - how many molecules do you have
-    - molecule count
-    - count molecules
-    - how many molecules
-    - total number of molecules
-    - how many molecules are available
-
-- intent: perform_r_analysis
-  examples: |
-    - perform sar analysis
-    - analyze rgroups
-    - create rgroup tables
-    - make sar tables
-    - make r-tables
-    - analyze sar
-    - open sar ui
-    - open sar dialog
-
-- intent: reload_data
-  examples: |
-    - reload project
-    - reload data
-    - reload
+    - calculate logp
+    - caclulate MW
+    - calculate logP, mw
+    - calculate TPSA
+    - calcualte Total Polar Surface area
+    - calculate tpsa, logP, MW
+    - calculate MW, tpsa
+    - calculate logP, tpsa
+    - calculate rotatable bonds
+    - calculate logP, rotatable bonds
+    - calculate HBA, HBD, rotB
+    - calculate HBD, HBA, rotB
+    - calculate mw, hba, rotb
+    - calculate rotb, logP, hba, hbd
+    - calcualte hbd, hba, logp, mw
+    - calc logp
+    - calulate MW
+    - calc logP, mw
+    - calc TPSA
+    - calc Total Polar Surface area
+    - calc tpsa, logP, MW
+    - calc MW, tpsa
+    - calc logP, tpsa
+    - calc rotatable bonds
+    - calc logP, rotatable bonds
+    - calc HBA, HBD, rotB
+    - calc HBD, HBA, rotB
+    - calcualte mw, hba, rotb
+    - calc rotb, logP, hba, hbd
+    - calc hbd, hba, logp, mw
+    - predict logp
+    - predict MW
+    - predict logP, mw
+    - predict TPSA
+    - predictualte Total Polar Surface area
+    - predict tpsa, logP, MW
+    - predict MW, tpsa
+    - predict logP, tpsa
+    - predict rotatable bonds
+    - predict logP, rotatable bonds
+    - predict HBA, HBD, rotB
+    - predictualte HBD, HBA, rotB
+    - predictualte mw, hba, rotb
+    - predict rotb, logP, hba, hbd
+    - predictualte hbd, hba, logp, mw
 
 - intent: show_scaffold
   examples: |
@@ -669,182 +962,114 @@ nlu:
     - show compound of least activity
     - depict compound of  least activity
 
-- intent: load_scaffold
+- intent: reload_data
   examples: |
-    - import scaffold
-    - load scaffold
-    - read scaffold
-    - load scaffold from file
-    - import scaffold from file
-    - read scaffold from file
-    - upload scaffold
-    - upload scaffold from file
-    - import scaf
-    - load scaf
-    - read scaf
-    - load scaf from file
-    - import scaf from file
-    - read scaf from file
-    - upload scaf
-    - upload scaf from file
-    - Import scaffold file
-    - Load scaffold file
-    - Read scaffold file
-    - upload scaf from from disk
-    - Import scaffold from disk
-    - Load scaffold from disk
-    - Read scaffold from disk
-    - Retrieve scaffold from disk
-    - Fetch scaffold from disk
-    - Retrieve scaffold file
-    - Fetch scaffold file
+    - reload project
+    - reload data
+    - reload
 
-- intent: draw_scaffold
+- intent: bin_data
   examples: |
-    - Add scaf
-    - add scaffold
-    - draw scaf
-    - draw scaffold
-    - open scaffold drawer
-    - scaffold drawer
-    - scaf drawer
-    - scaffold dialog
-    - scaffold UI
-    - draw scaffold UI
-    - draw scaffold dialog
-    - open scaffold UI
-    - open scaffold dialog
-    - scaffold interface
-    - open scaffold interface
-    - open drawer for scaffold
-    - open scafUI
-    - open scaf drawer
-    - draw scaf UI
-    - draw scaf dialog
+    - group data into bins
+    - build histogram
+    - divide data into bins
+    - categorize into bins
+    - count frequencies
+    - create frequencies
+    - display data frequencies
+    - build data histogram
+    - create histogram
+    - create property histogram
+    - create data histogram
+    - histogram
+    - summarize frequencies
+    - display frequences
+    - display property frequencies
+    - bin data
+    - display data frequency
+    - display property frequency
+    - create frequency plot
+    - build frequency plot
+    - make frequency plot
+    - make histogram
 
-- intent: paste_scaffold
+- intent: scatter_xy
   examples: |
-    - paste scaffold
-    - paste scaf
-    - paste R scaffold
-    - paste R scaf
-    - paste Rgroup scaffold
-    - paste R-group scaffold
+    - scatterplot xy
+    - scatterplotxy
+    - create scatterplot xy
+    - make scatterplot
+    - calculate R2
+    - calcuate R-squared for
+    - calculate R2 for
+    - make scatterplot for
+    - make scatter plot xy
+    - plot x versus y
+    - plot [x] versus [y]
+    - scatter plot for [x] versus [y]
+    - create scatterplot for [x] and [y]
+    - draw scatterplot [x] [y]
+    - draw scatterplot [x] and [y]
 
-- intent: help_properties
+- intent: heatmap_column
   examples: |
-    - what can you predict
-    - tell me about properties
-    - help properties
-    - property help
-    - which properties can you predict
-    - which properties can be calculated
-    - how are properties calculated
-    - what properties can be calculated
-    - help calc properties
-    - help calculate properties
-    - help predict properties
+    - add heatmap
+    - heatmap column
+    - color column
+    - column heatmap
+    - heatmap data field
+    - color data field
+    - data field heatmap
+    - heatmap field
+    - color field
+    - data heatmap
+    - add data heatmap
+    - heatmap data
+    - color data
+    - color column
 
-- intent: calc_properties
+- intent: clear_data
   examples: |
-    - calculate properties
-    - predict properties
-    - calculate properties UI
-    - open properties UI
-    - open properties dialog
-    - property dialog
-    - propertyUI
-    - property UI
-    - property selector
-    - calc properties
-    - calc properties UI
-    - calc property dialog
+    - clear
+    - clear data
+    - delete data
+    - delete molecules
+    - start over
+    - restart
 
-- intent: calc_explicit_properties
+- intent: test_svg
   examples: |
-    - calculate logp
-    - caclulate MW
-    - calculate logP, mw
-    - calculate TPSA
-    - calcualte Total Polar Surface area
-    - calculate tpsa, logP, MW
-    - calculate MW, tpsa
-    - calculate logP, tpsa
-    - calculate rotatable bonds
-    - calculate logP, rotatable bonds
-    - calculate HBA, HBD, rotB
-    - calculate HBD, HBA, rotB
-    - calculate mw, hba, rotb
-    - calculate rotb, logP, hba, hbd
-    - calcualte hbd, hba, logp, mw
-    - calc logp
-    - calulate MW
-    - calc logP, mw
-    - calc TPSA
-    - calc Total Polar Surface area
-    - calc tpsa, logP, MW
-    - calc MW, tpsa
-    - calc logP, tpsa
-    - calc rotatable bonds
-    - calc logP, rotatable bonds
-    - calc HBA, HBD, rotB
-    - calc HBD, HBA, rotB
-    - calcualte mw, hba, rotb
-    - calc rotb, logP, hba, hbd
-    - calc hbd, hba, logp, mw
-    - predict logp
-    - predict MW
-    - predict logP, mw
-    - predict TPSA
-    - predictualte Total Polar Surface area
-    - predict tpsa, logP, MW
-    - predict MW, tpsa
-    - predict logP, tpsa
-    - predict rotatable bonds
-    - predict logP, rotatable bonds
-    - predict HBA, HBD, rotB
-    - predictualte HBD, HBA, rotB
-    - predictualte mw, hba, rotb
-    - predict rotb, logP, hba, hbd
-    - predictualte hbd, hba, logp, mw
+    - test svg
+    - test SVG
+    - Test svg
+    - Test SVG
+    - TEST SVG
+    - testsvg
 
-- intent: show_most_potent_rgroup
+- intent: test_CSV
   examples: |
-    - show most active rgroups
-    - which is the most active rgroup
-    - rgroup that is most active
-    - most potent rgroup
-    - Display the rgroup with the highest activity
-    - Draw the most active rgroup
-    - Visualize the most active rgroup
-    - Depict the most active rgroup
-    - Show the rgroup with the highest activity
-    - most potent rgroup
-    - Display the rgroup with the highest activity
-    - Draw the most active rgroup
-    - Visualize the most active rgroup
-    - Depict the most active rgroup
-    - Show the rgroup with the highest activity
-    - most potent R
-    - Display the R with the highest activity
-    - Draw the most active rgroup
-    - Visualize the most active rgroup
-    - Depict the most active rgroup
-    - Show the R with the highest activity
-    - Display the most active rgroup
-    - Display the most active rgroup
-    - Display the most active rgroup
-    - display rgroup of greatest activity
-    - show rgroup of greatest activity
-    - depict rgroup of  greatest activity
-    - display R of greatest activity
-    - show R of greatest activity
-    - depict R of  greatest activity
-    - display rgroup of greatest activity
-    - show rgroup of greatest activity
-    - depict rgroup of  greatest activity
-    - show best rgroup
-    - display best rgroup
+    - test csv
+    - test CSV
+    - Test csv
+    - Test CSV
+    - TEST CSV
+    - testcsv
+
+- intent: perform_r_analysis
+  examples: |
+    - perform sar analysis
+    - analyze rgroups
+    - create rgroup tables
+    - make sar tables
+    - make r-tables
+    - analyze sar
+    - open sar ui
+    - open sar dialog
+    - do r analysis
+    - do sar analysis
+    - analyze r groups
+    - do r group analysis
+    - do rgp analysis
 
 - intent: show_least_potent_rgroup
   examples: |
@@ -884,6 +1109,44 @@ nlu:
     - show worst rgroup
     - display worst rgroup
 
+- intent: show_most_potent_rgroup
+  examples: |
+    - show most active rgroups
+    - which is the most active rgroup
+    - rgroup that is most active
+    - most potent rgroup
+    - Display the rgroup with the highest activity
+    - Draw the most active rgroup
+    - Visualize the most active rgroup
+    - Depict the most active rgroup
+    - Show the rgroup with the highest activity
+    - most potent rgroup
+    - Display the rgroup with the highest activity
+    - Draw the most active rgroup
+    - Visualize the most active rgroup
+    - Depict the most active rgroup
+    - Show the rgroup with the highest activity
+    - most potent R
+    - Display the R with the highest activity
+    - Draw the most active rgroup
+    - Visualize the most active rgroup
+    - Depict the most active rgroup
+    - Show the R with the highest activity
+    - Display the most active rgroup
+    - Display the most active rgroup
+    - Display the most active rgroup
+    - display rgroup of highest activity
+    - show rgroup of highest activity
+    - depict rgroup of  highest activity
+    - display R of highest activity
+    - show R of highest activity
+    - depict R of  highest activity
+    - display rgroup of highest activity
+    - show rgroup of highest activity
+    - depict rgroup of  highest activity
+    - show best rgroup
+    - display best rgroup
+
 - intent: recommend_rgroups
   examples: |
     - recommend rgroups
@@ -908,6 +1171,7 @@ nlu:
     - recommend new rgroups for
     - suggest new rgroups for
     - predict rgroups for
+    - predict rgrps
 
 - intent: recommend_biosteres
   examples: |
@@ -923,169 +1187,73 @@ nlu:
     - recommend biosteres for [r_num]
     - suggest biosteres for [r_num]
     - show biosteres for [r_num]
-    - display similar rgroupss for [r_num]
-    - recommend similar rgroupss for [r_num]
-    - suggest similar rgroupss for [r_num]
-    - show similar rgroupss for [r_num]
-    - display related rgroupss for [r_num]
-    - recommend related rgroupss for [r_num]
-    - suggest related rgroupss for [r_num]
-    - show related rgroupss for [r_num]
+    - display similar rgroups for [r_num]
+    - recommend similar rgroups for [r_num]
+    - suggest similar rgroups for [r_num]
+    - show similar rgroups for [r_num]
+    - display related rgroups for [r_num]
+    - recommend related rgroups for [r_num]
+    - suggest related rgroups for [r_num]
+    - show related rgroups for [r_num]
+    - find bioisosteres
+    - find bio-isosteres
 
-- intent: help_recommend_rgroups
+- intent: sar_by_catalog
   examples: |
-    - help recommend rgroups
-    - help find better rgroups
-    - help suggest better rgroups
-    - help improve rgroups
+    - search commercial catalog
+    - sar by catalog
+    - search catalog
+    - find similar commercial compounds
+    - search catalog for similar mols
+    - search catalog for similar molecules
+    - find commercial compounds
+    - search vendor catalogs
+    - search vendor database
+    - search vendor molecules
+    - search vendor mols
+    - sar search by catalog
+    - search similar mols in commercial database
 
-- intent: test_svg
+- intent: search_sure_chembl
   examples: |
-    - test svg
-    - test SVG
-    - Test svg
-    - Test SVG
-    - TEST SVG
-    - testsvg
+    - search surechembl
+    - search sure chembl
+    - search patent molecules
+    - search similar mols in patent db
+    - search patent database
+    - find  similar mols in patent database
+    - find similar patented molecules
+    - find identical patented molecules
+    - search for patent molecules
+    - which are patented
+    - which molecules are in surechembl
 
-- intent: test_CSV
+- intent: search_chemb_mols
   examples: |
-    - test csv
-    - test CSV
-    - Test csv
-    - Test CSV
-    - TEST CSV
-    - testcsv
+    - search chembl
+    - search chembl
+    - search chembl molecules
+    - search similar mols in literature
+    - search chembl database
+    - find  similar mols in chembl database
+    - find similar published molecules
+    - find identical published molecules
+    - search for literature mols
+    - which are in literature
+    - which mols are published
 
-- intent: list_properties
+- intent: find_scaffolds
   examples: |
-    - list properties
-    - what properties
-    - tell properties
-    - which properties are there
-    - what properties are there
-    - what calculated properties
-    - what physicochemical properties
-    - which physico-chemical properties
-    - how many properties
-    - show properties
-    - show calculated properties
-    - describe calcuated properties
-    - display property list
-    - display properties
-    - display available properties
-    - show available properties
-    - display available properties
+    - find scaffolds
+    - identify scaffolds
+    - find relevant scaffolds
+    - build relevant scaffold
+    - build scaffolds
+    - create relevant scaffolds
+    - perform mcs
+    - use mcs to find scaffolds
+    - make relevant scaffolds
+    - perform scaffold analysis
+    - build scaffold tree
 
-- intent: list_data
-  examples: |
-    - list data columns
-    - list assay values
-    - list import values
-    - what data is there
-    - what data got loaded
-    - which data got loaded
-    - show data columns
-    - show assay columns
-    - show assay
-    - show imported data
-    - what imported data is ther
-    - available loaded data
-    - available imported columns
-    - describe imported data
-    - show imported columns
-    - what data columns
-    - which data columns
-    - display data fields
-    - display data columns
-    - display imported fields
-    - display imported columns
 
-- intent: data_minimum
-  examples: |
-    - show minimum value
-    - what is minimumm value
-    - display minimum value
-    - show min value
-    - what is minimumm value
-    - show minimum data value
-    - what is minimumm data value
-    - display minimum data value
-    - show minimum data value
-    - what is minimumm data value
-    - minimum
-    - show minimum
-    - display minimum
-    - what is minimum
-    - show min value
-    - what is minm value
-    - display min value
-    - show min value
-    - what is minm value
-    - show min data value
-    - what is minm data value
-    - display min data value
-    - show min data value
-    - what is minm data value
-    - min
-    - show min
-    - display min
-    - what is min
-
-- intent: data_maximum
-  examples: |
-    - show maximum value
-    - what is maximumm value
-    - display maximum value
-    - show min value
-    - what is maximumm value
-    - show maximum data value
-    - what is maximumm data value
-    - display maximum data value
-    - show maximum data value
-    - what is maximumm data value
-    - maximum
-    - show maximum
-    - display maximum
-    - what is maximum
-    - show max value
-    - what is maxm value
-    - display max value
-    - show min value
-    - what is maxm value
-    - show max data value
-    - what is maxm data value
-    - display max data value
-    - show max data value
-    - what is maxm data value
-    - max
-    - show max
-    - display max
-    - what is max
-
-- intent: bin_data
-  examples: |
-    - group data into bins
-    - build histogram
-    - divide data into bins
-    - categorize into bins
-    - count frequencies
-    - create frequencies
-    - display data frequencies
-    - build data histogram
-    - create histogram
-    - create property histogram
-    - create data histogram
-    - histogram
-    - summarize frequencies
-    - display frequences
-    - display property frequencies
-
-- intent: scatter_plot
-  examples: |
-    - build scatter plot
-    - create scatter plot
-    - display scatter plot
-    - show scatter plot
-    - plot data
-    - plot data points    

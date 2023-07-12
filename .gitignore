@@ -1,2 +1,7 @@
 templates/index copy.html
 actions/actions copy.py
+chembl_33/chembl_33_sqlite/INSTALL_sqlite
+databases/chembl_33.db
+actions/__pycache__/*
+models/*
+
