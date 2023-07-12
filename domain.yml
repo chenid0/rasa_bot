@@ -63,8 +63,6 @@ responses:
   utter_default:
   - text: "try again. I do not understand intent."
 
-
-actions:
   
 
 entities:
