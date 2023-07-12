@@ -65,37 +65,7 @@ responses:
 
 
 actions:
-  - action_help
-  - action_clear_data
-  - action_load_mols_sdf
-  - action_load_mols_cddvault
-  - action_load_mols_postgres
-  - action_set_model_column
-  - action_heat_map_column
-  - action_count_mols
-  - action_r_analysis
-  - action_reload_data
-  - action_show_scaffold
-  - action_most_active
-  - action_least_active
-  - action_load_scaffold
-  - action_draw_scaffold
-  - action_paste_scaffold
-  - action_help_properties
-  - action_calc_properties
-  - action_explicit_property
-  - action_least_potent_rgroup
-  - action_most_potent_rgroup
-  - action_recommend_rgroups
-  - action_recommend_bioisosteres
-  - action_help_recommend_rgroups
-  - action_test_svg
-  - action_test_csv
-  - action_list_properties
-  - action_list_data
-  - action_min_value
-  - action_max_value
-  - action_historgram
+  
 
 entities:
   - sqlstatement
