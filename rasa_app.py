@@ -219,7 +219,7 @@ def print_results(results):
 def get_virus(organism):
     conn = sqlite3.connect("chembl_33.db")
     cursor = conn.cursor()
-    query = f"""SELECT td.organism, td.pref_name, td.target_type FROM target_dictionary td WHERE td.organism like '%{n}%' ORDER by td.organism"""
+    query = f"""SELECT td.organism, td.pref_name, td.target_type FROM target_dictionary td WHERE td.organism like '%{organism}%' ORDER by td.organism"""
     # Made query and received assay id, execute query
     cursor.execute(query)
     r = cursor.fetchall()
