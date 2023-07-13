@@ -66,8 +66,176 @@ responses:
   utter_default:
   - text: "try again. I do not understand intent."
 
+  utter_nlu_fallback:
+  - text: utter_nlu_fallback
+
+  utter_test_fcn:
+  - text: utter_test_fcn
+
+  utter_help:
+  - text: utter_help
+
+  utter_help2:
+  - text: utter_help2
+
+  utter_help3:
+  - text: utter_help3
+
+  utter_help4:
+  - text: utter_help4
+
+  utter_help5:
+  - text: utter_help5
+  
+  utter_help_properties:
+  - text: utter_help_properties
+  
+  utter_help_recommend_rgroups:
+  - text: utter_help_recommend_rgroups
+  
+  utter_who_r_u:
+  - text: utter_who_r_u
+  
+  utter_who_creator:
+  - text: utter_who_creator
+  
+  utter_what_language:
+  - text: utter_what_language
+  
+  utter_tell_tech_details:
+  - text: utter_tell_tech_details
+  
+  utter_load_sdf_file:
+  - text: utter_load_sdf_file
+  
+  utter_load_cddvault:
+  - text: utter_load_cddvault
+  
+  utter_load_mols_postgres:
+  - text: utter_load_mols_postgres
+  
+  utter_load_mols_sqlite:
+  - text: utter_load_mols_sqlite
+  
+  utter_load_smiles:
+  - text: utter_load_smiles
+  
+  utter_load_mols:
+  - text: utter_load_mols
+  
+  utter_load_chembl_by_id:
+  - text: utter_load_chembl_by_id
+  
+  utter_load_api:
+  - text: utter_load_api
+  
+  utter_add_scaffold:
+  - text: utter_add_scaffold
+  
+  utter_load_scaffold:
+  - text: utter_load_scaffold
+  
+  utter_draw_scaffold:
+  - text: utter_draw_scaffold
+  
+  utter_paste_scaffold:
+  - text: utter_paste_scaffold
+  
+  utter_append_csv_columns:
+  - text: utter_append_csv_columns
+  
+  utter_molecule_count:
+  - text: utter_molecule_count
+  
+  utter_list_properties:
+  - text: utter_list_properties
+  
+  utter_list_data:
+  - text: utter_list_data
+  
+  utter_data_minimum:
+  - text: utter_data_minimum
+  
+  utter_data_maximum:
+  - text: utter_data_maximum
+  
+  utter_select_model_column:
+  - text: utter_select_model_column
+  
+  utter_calc_properties:
+  - text: utter_calc_properties
+  
+  utter_calc_explicit_properties:
+  - text: utter_calc_explicit_properties
+  
+  utter_show_scaffold:
+  - text: utter_show_scaffold
+  
+  utter_show_most_active:
+  - text: utter_show_most_active
+  
+  utter_show_least_active:
+  - text: utter_show_least_active
+  
+  utter_reload_data:
+  - text: utter_reload_data
+  
+  utter_bin_data:
+  - text: utter_bin_data
+  
+  utter_scatter_xy:
+  - text: utter_scatter_xy
+  
+  utter_heatmap_column:
+  - text: utter_heatmap_column
+  
+  utter_clear_data:
+  - text: utter_clear_data
+  
+  utter_test_svg:
+  - text: utter_test_svg
+  
+  utter_test_CSV:
+  - text: utter_test_CSV
+  
+  utter_perform_r_analysis:
+  - text: utter_perform_r_analysis
+  
+  utter_show_least_potent_rgroup:
+  - text: utter_show_least_potent_rgroup
+  
+  utter_show_most_potent_rgroup:
+  - text: utter_show_most_potent_rgroup
+  
+  utter_recommend_rgroups:
+  - text: utter_recommend_rgroups
+  
+  utter_recommend_biosteres:
+  - text: utter_recommend_biosteres
+  
+  utter_sar_by_catalog:
+  - text: utter_sar_by_catalog
+  
+  utter_search_sure_chembl:
+  - text: utter_search_sure_chembl
+  
+  utter_search_chemb_mols:
+  - text: utter_search_chemb_mols
+
+  utter_find_scaffolds:
+  - text: utter_find_scaffolds
+
   
 
 entities:
   - sqlstatement
+
+
+
+
+
+ 
+    
+    
+    
 
