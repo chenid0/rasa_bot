@@ -1242,18 +1242,5 @@ nlu:
     - which are in literature
     - which mols are published
 
-- intent: find_scaffolds
-  examples: |
-    - find scaffolds
-    - identify scaffolds
-    - find relevant scaffolds
-    - build relevant scaffold
-    - build scaffolds
-    - create relevant scaffolds
-    - perform mcs
-    - use mcs to find scaffolds
-    - make relevant scaffolds
-    - perform scaffold analysis
-    - build scaffold tree
 
 
