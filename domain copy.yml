@@ -210,9 +210,6 @@ responses:
   utter_search_chemb_mols:
   - text: "utter_search_chemb_mols"
 
-  utter_find_scaffolds:
-  - text: "utter_find_scaffolds"
-
   
 
 entities:
