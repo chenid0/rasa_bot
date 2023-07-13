@@ -207,3 +207,63 @@ rules:
   - intent: heatmap_column
   - action: utter_heatmap_column
 
+- rule: clear_data
+  steps:
+  - intent: clear_data
+  - action: utter_clear_data
+
+- rule: test_svg
+  steps:
+  - intent: test_svg
+  - action: utter_test_svg
+
+- rule: test_CSV
+  steps:
+  - intent: test_CSV
+  - action: utter_test_CSV
+
+- rule: perform_r_analysis
+  steps:
+  - intent: perform_r_analysis
+  - action: utter_perform_r_analysis
+
+- rule: show_least_potent_rgroup
+  steps:
+  - intent: show_least_potent_rgroup
+  - action: utter_show_least_potent_rgroup
+
+- rule: show_most_potent_rgroup
+  steps:
+  - intent: show_most_potent_rgroup
+  - action: utter_show_most_potent_rgroup
+
+- rule: recommend_rgroups
+  steps:
+  - intent: recommend_rgroups
+  - action: utter_recommend_rgroups
+
+- rule: recommend_biosteres
+  steps:
+  - intent: recommend_biosteres
+  - action: utter_recommend_biosteres
+
+- rule: sar_by_catalog
+  steps:
+  - intent: sar_by_catalog
+  - action: utter_sar_by_catalog
+
+- rule: search_sure_chembl
+  steps:
+  - intent: search_sure_chembl
+  - action: utter_search_sure_chembl
+
+- rule: search_chemb_mols
+  steps:
+  - intent: search_chemb_mols
+  - action: utter_search_chemb_mols
+
+- rule: find_scaffolds
+  steps:
+  - intent: find_scaffolds
+  - action: utter_find_scaffolds
+
