@@ -41,6 +41,9 @@ intents:
   - data_minimum
   - data_maximum
   - bin_data
+  - scatter_xy
+  - show_rgroup
+  - load_mols
 
 session_config:
   session_expiration_time: 60

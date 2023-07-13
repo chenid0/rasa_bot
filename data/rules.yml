@@ -74,17 +74,7 @@ rules:
 
 - rule: load_cddvault
   steps:
-  - intent: load_cddvault
-   
-
-- rule: load_mols_postgres
-  steps:
-  - intent: load_mols_postgres
-   
-
-- rule: load_mols_sqlite
-  steps:
-  - intent: load_mols_sqlite   
+  - intent: load_cddvault  
 
 - rule: load_smiles
   steps:
@@ -110,7 +100,6 @@ rules:
   steps:
   - intent: load_scaffold
    
-
 - rule: draw_scaffold
   steps:
   - intent: draw_scaffold
