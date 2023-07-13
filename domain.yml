@@ -91,19 +91,7 @@ responses:
   - text: "utter_help_properties"
   
   utter_help_recommend_rgroups:
-  - text: "utter_help_recommend_rgroups"
-  
-  utter_who_r_u:
-  - text: "utter_who_r_u"
-  
-  utter_who_creator:
-  - text: "utter_who_creator"
-  
-  utter_what_language:
-  - text: "utter_what_language"
-  
-  utter_tell_tech_details:
-  - text: "utter_tell_tech_details"
+  - text: "utter_help_recommend_rgroups"  
   
   utter_load_sdf_file:
   - text: "utter_load_sdf_file"
