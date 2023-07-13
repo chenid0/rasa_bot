@@ -5,4 +5,16 @@ rules:
   steps:
   - intent: who_r_u
   - action: utter_who_r_u
+- rule: who_creator
+  steps:
+  - intent: who_creator
+  - action: utter_who_creator
+- rule: what_language
+  steps:
+  - intent: what_language
+  - action: utter_what_language
+- rule: tell_tech_details
+  steps:
+  - intent: tell_tech_details
+  - action: utter_tell_tech_details
 

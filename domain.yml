@@ -2,6 +2,9 @@ version: "3.1"
 
 intents:
   - who_r_u
+  - who_creator
+  - what_language
+  - tell_tech_details
 
 session_config:
   session_expiration_time: 60

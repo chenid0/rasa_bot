@@ -71,3 +71,140 @@ nlu:
     - you are chatbot
     - you robo
     - you're a bot
+
+- intent: who_creator
+  examples: |
+    - what being made you?
+    - what company designed you?
+    - What company developed you?
+    - what company made you?
+    - What consortium developed you?
+    - What corporation built you?
+    - what created you?
+    - What developed you?
+    - What entity made you?
+    - What generated you?
+    - What group designed you?
+    - What is your builder?
+    - What is your developer?
+    - What is your inventor?
+    - what made you?
+    - What organization made you?
+    - What produced you?
+    - what software company made you?
+    - What spawned you?
+    - What studio crafted you?
+    - What team created you?
+    - which company made you?
+    - Who authored your software code?
+    - Who authored your software framework?
+    - Who built you?
+    - Who constructed you?
+    - Who constructed your software architecture?
+    - Who constructed your software development environment?
+    - Who constructed your software?
+    - Who created this website?
+    - Who created you?
+    - Who created you?
+    - Who created you?
+    - Who created your code?
+    - Who created your computational structure framework?
+    - Who designed and developed you?
+    - Who designed you?
+    - Who developed you?
+    - Who developed your algorithm?
+    - Who developed your computational abilities?
+    - Who developed your software infrastructure?
+    - Who devised this program?
+    - Who do you represent?
+    - Who engineered your computational framework?
+    - Who engineered your software system architecture?
+    - Who engineered your system?
+    - Who established you?
+    - Who invented you?
+    - Who invented your computational system?
+    - Who is the architect of you?
+    - Who is the author of you?
+    - Who is the creator of you?
+    - Who is the creator of your algorithm?
+    - Who is the creator of your software?
+    - Who is the designer of you?
+    - Who is the developer of you?
+    - Who is the engineer of you?
+    - Who is the inventor of you?
+    - Who is the maker of you?
+    - Who is the manufacturer of you?
+    - Who is your creator?
+    - who is your manufacturer?
+    - who is your master?
+    - Who made this program?
+    - Who made you?
+    - Who made you?
+    - Who manufactured you?
+    - Who manufactured your software?
+    - Who produced you?
+    - Who produced your codebase?
+    - Who produced your software framework architecture?
+    - Who produced your virtual existence?
+    - Who programmed you?
+    - Who programmed your personality?
+    - Who put together your computational architecture?
+    - Who put you together?
+
+- intent: what_language
+  examples: |
+    - What languages can you converse in?
+    - What languages can you use?
+    - What languages do you know how to use?
+    - What languages do you know?
+    - What languages do you speak?
+    - Which languages are you familiar with?
+    - Which languages do you speak?
+    - are you bilingual?
+    - are you multilingual?
+    - can you speak Spanish language?
+    - can you speak in italian language?
+    - do you know chinese language
+    - do you speak dutch language?
+    - do you speak german language?
+    - do you speak any other languages?
+    - how many languages are you fluent in?
+    - how many languages do you know?
+    - tell me some languages you know?
+    - what else do you know besides English language?
+    - what foreign languages are you fluent in?
+    - what foreign languages do you know?
+    - what language do you use
+    - what languages are you comfortable speaking at?
+    - what languages are you familiar with?
+    - what languages are you good at speaking?
+    - what languages do you know?
+    - what languages do you speak
+    - what languages you are well versed ?
+    - what languages you can be comfortable speaking?
+    - what languages you can handle well?
+    - what languages you can speak ?
+    - what languages you know?
+    - what languages you prefer more speaking at?
+    - which languages do you understand?
+    - you know French language
+    - you speak french language ?
+    - I want to speak binary with you
+    - ARE YOU SPANISH language
+    - we cant converse in french language?
+    - can we converse in french language?
+    - Do you speak italian language?
+
+- intent: tell_tech_details
+  examples: |
+    - What are the components that make up
+    - How were you made?
+    - what are the components?
+    - tell me about the components
+    - more info on components
+    - what algorithm do you use
+    - what libraries do you use
+    - what libraries are you made of
+    - what software do you use
+    - how were you built
+    - what software libraries
