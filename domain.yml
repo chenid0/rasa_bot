@@ -14,6 +14,12 @@ session_config:
 responses:
   utter_who_r_u:
   - text: "I am SARbot, a Structrure Activity Analysis tool."
+  utter_who_creator:
+  - text: "I was created by Dr. Suresh Panneerselvam, a chemist and data scientist."
+  utter_what_language:
+  - text: "I am written in Python."
+  utter_tell_tech_details:
+  - text: "I am built using Rasa, a Python-based open source conversational AI framework."
 
 
 entities:
