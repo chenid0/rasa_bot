@@ -4,20 +4,5 @@ stories:
 
 - story: story 1
   steps:
-  - intent: clear_data
-  - action: utter_clear_data
-  - intent: load_mols
-  - action: utter_load_mols
-  - intent: select_model_column
-  - action: utter_model_column
-  - intent: show_most_active
-  - action: utter_most_active
-  - intent: data_minimum
-  - action: utter_data_minimum
-  - intent: load_scaffold
-  - action: utter_load_scaffold
-  - intent: show_scaffold
-  - action: utter_show_scaffold
-  - intent: heatmap_column  
-  - action: utter_heatmap_column  
-
+  - intent: who_r_u
+  - action: utter_who_r_u
