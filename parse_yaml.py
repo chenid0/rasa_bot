@@ -15,6 +15,3 @@ def parse_yaml_from_file(file_path) -> Dict[str,str]:
     
     return simplified_responses_dict
 
-file_path = 'your_file_path.yml'  # replace with your file path
-responses = parse_yaml_from_file(file_path)
-print(responses)
