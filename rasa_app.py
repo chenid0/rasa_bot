@@ -23,6 +23,7 @@ from query import (
     create_scatter_from_query,
 )
 from typing import Any, Dict, List, Optional, Set, Text, Tuple
+from parse_yaml import parse_yaml_from_file
 
 
 app = Flask(__name__)
@@ -92,9 +93,13 @@ def send_message():
             return create_response(text, orig_message)
 
 
-def create_response(text, message) -> Response:
+def create_response(orig_text, message) -> Response:
     message_txt = ""
     queries = []
+    reponses_dict = parse_yaml_from_file("domain.yml")
+    text = reponses_dict.get(orig_text)
+    if not text:
+        text = orig_text
     print(f"determining action from text: {text}")
     if query_tag in text:
         query_text = text.replace(query_tag, "")

@@ -1,6 +1,7 @@
 import yaml
+from typing import Dict
 
-def parse_yaml(file_path) -> dict:
+def parse_yaml_from_file(file_path) -> Dict[str,str]:
     with open(file_path, 'r') as stream:
         try:
             yaml_data = yaml.safe_load(stream)
@@ -15,5 +16,5 @@ def parse_yaml(file_path) -> dict:
     return simplified_responses_dict
 
 file_path = 'your_file_path.yml'  # replace with your file path
-responses = parse_yaml(file_path)
+responses = parse_yaml_from_file(file_path)
 print(responses)
