@@ -208,3 +208,637 @@ nlu:
     - what software do you use
     - how were you built
     - what software libraries
+
+- intent: load_sdf_file
+  examples: |
+    - Load molecules from file
+    - open sdf file
+    - open sdf
+    - open mofile
+    - load mol file
+    - load sdf file
+    - load sdf
+    - import sdf
+    - import molecle file
+    - import molfile
+    - read sdf file
+    - read sdf
+
+- intent: load_cddvault
+  examples: |
+    - import from cddvault
+    - load from cddvault
+    - open cddvault
+    - open cdd
+    - load molecules from cdd
+    - load molecules from cddvault
+    - import molecules from cddvault
+    - import data from cdd vault
+    - read from cddvault
+    - read molecules from cdd
+    - read molecules from cddvault
+
+- intent: load_mols_postgres
+  examples: |
+    - read mols from postgres
+    - import postgres mol
+    - molecules from postgres
+    - connect postgres to get mols
+    - search postgres to get mols
+    - find mols in postgres
+    - geet postgres molecules
+    - read molecules from postgres
+    - get postgres molecules
+    - get molecules from postgres
+
+- intent: load_mols_sqlite
+  examples: |
+    - read mols from sqlite
+    - import sqlite mol
+    - molecules from sqlite
+    - connect sqlite to get mols
+    - search sqlite to get mols
+    - find mols in sqlite
+    - geet sqlite molecules
+    - read molecules from sqlite
+    - get sqlite molecules
+    - get molecules from sqlite
+
+- intent: load_smiles
+  examples: |
+    - read smi file
+    - read smiles file
+    - read smiles
+    - load smiles from disk
+    - load smiles file
+    - open smiles file
+    - open smile
+    - import smiles
+
+- intent: load_mols
+  examples: |
+    - import molecules
+    - open file browser
+    - load mols
+    - load molecules
+    - load mols from disk
+    - read mols
+    - read molecules
+    - read mols from disk
+    - read mol file
+
+- intent: load_chembl_by_id
+  examples: |
+    - load chembl id
+    - load assay id
+    - load chembl id =
+    - search chembl id
+    - load molecules for chembl id
+    - load chemblid
+
+- intent: load_api
+  examples: |
+    - open project
+    - project api
+    - project ui
+
+- intent: add_scaffold
+  examples: |
+    - Add scaf
+    - add scaffold
+
+- intent: load_scaffold
+  examples: |
+    - import scaffold
+    - load scaffold
+    - read scaffold
+    - load scaffold from file
+    - import scaffold from file
+    - read scaffold from file
+    - upload scaffold
+    - upload scaffold from file
+    - import scaf
+    - load scaf
+    - read scaf
+    - load scaf from file
+    - import scaf from file
+    - read scaf from file
+    - upload scaf
+    - upload scaf from file
+    - Import scaffold file
+    - Load scaffold file
+    - Read scaffold file
+    - upload scaf from from disk
+    - Import scaffold from disk
+    - Load scaffold from disk
+    - Read scaffold from disk
+    - Retrieve scaffold from disk
+    - Fetch scaffold from disk
+    - Retrieve scaffold file
+    - Fetch scaffold file
+
+- intent: draw_scaffold
+  examples: |
+    - draw scaf
+    - draw scaffold
+    - open scaffold drawer
+    - scaffold drawer
+    - scaf drawer
+    - scaffold dialog
+    - scaffold UI
+    - draw scaffold UI
+    - draw scaffold dialog
+    - open scaffold UI
+    - open scaffold dialog
+    - scaffold interface
+    - open scaffold interface
+    - open drawer for scaffold
+    - open scafUI
+    - open scaf drawer
+    - draw scaf UI
+    - draw scaf dialog
+
+- intent: paste_scaffold
+  examples: |
+    - paste scaffold
+    - paste scaf
+    - paste R scaffold
+    - paste R scaf
+    - paste Rgroup scaffold
+    - paste R-group scaffold
+
+- intent: append_csv_columns
+  examples: |
+    - append csv columns
+    - import csv columns
+    - import data from csv
+    - append data from csv
+    - append columns from file
+    - append columns from csv
+
+- intent: molecule_count
+  examples: |
+    - how many molecules exist in db
+    - how many molecules do you have
+    - molecule count
+    - count molecules
+    - how many molecules
+    - total number of molecules
+    - how many molecules are available
+
+- intent: list_properties
+  examples: |
+    - list properties
+    - what properties
+    - tell properties
+    - which properties are there
+    - what properties are there
+    - what calculated properties
+    - what physicochemical properties
+    - which physico-chemical properties
+    - how many properties
+    - show properties
+    - show calculated properties
+    - describe calcuated properties
+    - display property list
+    - display properties
+    - display available properties
+    - show available properties
+    - display available properties
+    - show prop set
+    - show property set
+    - show molecule property set
+    - display property set
+    - display prop set
+    - what is current prop set
+    - what props are currently calculated
+    - what props are calculated
+
+- intent: list_data
+  examples: |
+    - list data columns
+    - list assay values
+    - list import values
+    - what data is there
+    - what data got loaded
+    - which data got loaded
+    - show data columns
+    - show assay columns
+    - show assay
+    - show imported data
+    - what imported data is ther
+    - available loaded data
+    - available imported columns
+    - describe imported data
+    - show imported columns
+    - what data columns
+    - which data columns
+    - display data fields
+    - display data columns
+    - display imported fields
+    - display imported columns
+    - describe data columns
+    - describe data
+    - describe columns
+
+- intent: data_minimum
+  examples: |
+    - show minimum value
+    - what is minimumm value
+    - display minimum value
+    - show min value
+    - what is minimumm value
+    - show minimum data value
+    - what is minimumm data value
+    - display minimum data value
+    - show minimum data value
+    - what is minimumm data value
+    - minimum
+    - show minimum
+    - display minimum
+    - what is minimum
+    - what is minm value
+    - display min value
+    - show min value
+    - show min data value
+    - what is minm data value
+    - display min data value
+    - show min data value
+    - what is minm data value
+    - min
+    - show min
+    - display min
+    - what is min
+
+- intent: data_maximum
+  examples: |
+    - show maximum value
+    - what is maximumm value
+    - display maximum value
+    - show max value
+    - what is maximumm value
+    - show maximum data value
+    - what is maximumm data value
+    - display maximum data value
+    - show maximum data value
+    - what is maximumm data value
+    - maximum
+    - show maximum
+    - display maximum
+    - what is maximum
+    - show max value
+    - what is maxm value
+    - display max value
+    - show max data value
+    - what is maxm data value
+    - display max data value
+    - show max data value
+    - what is maxm data value
+    - max
+    - show max
+    - display max
+    - what is max
+
+- intent: select_model_column
+  examples: |
+    - select model column
+    - pick focus column
+    - model column
+    - use column
+    - pick model col
+    - pick model column
+    - set model column
+    - set activity column
+    - pick activity column
+    - select activity column
+    - select model field
+    - pick focus field
+    - model field
+    - use field
+    - pick model col
+    - pick model field
+    - set model field
+    - set activity field
+    - pick activity field
+    - select activity field
+    - select model data field
+    - pick focus data field
+    - model data field
+    - use data field
+    - pick model col
+    - pick model data field
+    - set model data field
+    - set activity data field
+    - pick activity data field
+    - select activity data field
+
+- intent: calc_properties
+  examples: |
+    - predict properties
+    - calcualte properties
+    - add properties
+    - calc properties
+    - calc props
+    - show props
+    - predict props
+    - predict physicochemical props
+    - calculate physicochemical props
+    - cacl physicochemical props
+
+- intent: calc_explicit_properties
+  examples: |
+    - calculate logp
+    - caclulate MW
+    - calculate logP, mw
+    - calculate TPSA
+    - calcualte Total Polar Surface area
+    - calculate tpsa, logP, MW
+    - calculate MW, tpsa
+    - calculate logP, tpsa
+    - calculate rotatable bonds
+    - calculate logP, rotatable bonds
+    - calculate HBA, HBD, rotB
+    - calculate HBD, HBA, rotB
+    - calculate mw, hba, rotb
+    - calculate rotb, logP, hba, hbd
+    - calcualte hbd, hba, logp, mw
+    - calc logp
+    - calulate MW
+    - calc logP, mw
+    - calc TPSA
+    - calc Total Polar Surface area
+    - calc tpsa, logP, MW
+    - calc MW, tpsa
+    - calc logP, tpsa
+    - calc rotatable bonds
+    - calc logP, rotatable bonds
+    - calc HBA, HBD, rotB
+    - calc HBD, HBA, rotB
+    - calcualte mw, hba, rotb
+    - calc rotb, logP, hba, hbd
+    - calc hbd, hba, logp, mw
+    - predict logp
+    - predict MW
+    - predict logP, mw
+    - predict TPSA
+    - predictualte Total Polar Surface area
+    - predict tpsa, logP, MW
+    - predict MW, tpsa
+    - predict logP, tpsa
+    - predict rotatable bonds
+    - predict logP, rotatable bonds
+    - predict HBA, HBD, rotB
+    - predictualte HBD, HBA, rotB
+    - predictualte mw, hba, rotb
+    - predict rotb, logP, hba, hbd
+    - predictualte hbd, hba, logp, mw
+
+- intent: show_scaffold
+  examples: |
+    - show scaffold
+    - show current scaffold
+    - display current scaffold
+    - display scaffold
+    - view scaffold
+    - depict current scaffold
+    - which scaffold used?
+
+- intent: show_most_active
+  examples: |
+    - show most active
+    - which is the most active
+    - molecule that is most active
+    - most potent molecule
+    - show most potent
+    - draw most potent
+    - disply most active
+    - Identify most active
+    - Display the molecule with the highest activity
+    - Draw the most active molecule
+    - Visualize the most active molecule
+    - Depict the most active molecule
+    - Show the molecule with the highest activity
+    - most potent compound
+    - Display the compound with the highest activity
+    - Draw the most active compound
+    - Visualize the most active compound
+    - Depict the most active compound
+    - Show the compound with the highest activity
+    - most potent mol
+    - Display the mol with the highest activity
+    - Draw the most active mol
+    - Visualize the most active mol
+    - Depict the most active mol
+    - Show the mol with the highest activity
+    - Display the most active molecule
+    - Display the most active mol
+    - Display the most active compound
+    - display molecule of greatest activity
+    - show molecule of greatest activity
+    - depict molecule of  greatest activity
+    - display mol of greatest activity
+    - show mol of greatest activity
+    - depict mol of  greatest activity
+    - display compound of greatest activity
+    - show compound of greatest activity
+    - depict compound of  greatest activity
+    - show best molecule
+    - display best molecule
+    - show best compound
+    - display best compound
+
+- intent: show_least_active
+  examples: |
+    - show least active
+    - which is the least active
+    - molecule that is least active
+    - least potent molecule
+    - show least potent
+    - draw least potent
+    - disply least active
+    - Identify least active
+    - Display the molecule with the lowest activity
+    - Draw the least active molecule
+    - Visualize the least active molecule
+    - Depict the least active molecule
+    - Show the molecule with the lowest activity
+    - least potent compound
+    - Display the compound with the lowest activity
+    - Draw the least active compound
+    - Visualize the least active compound
+    - Depict the least active compound
+    - Show the compound with the lowest activity
+    - least potent mol
+    - Display the mol with the lowest activity
+    - Draw the least active mol
+    - Visualize the least active mol
+    - Depict the least active mol
+    - Show the mol with the lowest activity
+    - Display the least active molecule
+    - Display the least active mol
+    - Display the least active compound
+    - display molecule of least activity
+    - show molecule of least activity
+    - depict molecule of  least activity
+    - display mol of least activity
+    - show mol of least activity
+    - depict mol of  least activity
+    - display compound of least activity
+    - show compound of least activity
+    - depict compound of  least activity
+
+- intent: reload_data
+  examples: |
+    - reload project
+    - reload data
+    - reload
+
+- intent: bin_data
+  examples: |
+    - group data into bins
+    - build histogram
+    - divide data into bins
+    - categorize into bins
+    - count frequencies
+    - create frequencies
+    - display data frequencies
+    - build data histogram
+    - create histogram
+    - create property histogram
+    - create data histogram
+    - histogram
+    - summarize frequencies
+    - display frequences
+    - display property frequencies
+    - bin data
+    - display data frequency
+    - display property frequency
+    - create frequency plot
+    - build frequency plot
+    - make frequency plot
+    - make histogram
+
+- intent: scatter_xy
+  examples: |
+    - scatterplot xy
+    - scatterplotxy
+    - create scatterplot xy
+    - make scatterplot
+    - calculate R2
+    - calcuate R-squared for
+    - calculate R2 for
+    - make scatterplot for
+    - make scatter plot xy
+    - plot x versus y
+    - plot [x] versus [y]
+    - scatter plot for [x] versus [y]
+    - create scatterplot for [x] and [y]
+    - draw scatterplot [x] [y]
+    - draw scatterplot [x] and [y]
+
+- intent: heatmap_column
+  examples: |
+    - add heatmap
+    - heatmap column
+    - color column
+    - column heatmap
+    - heatmap data field
+    - color data field
+    - data field heatmap
+    - heatmap field
+    - color field
+    - data heatmap
+    - add data heatmap
+    - heatmap data
+    - color data
+    - color column
+
+- intent: clear_data
+  examples: |
+    - clear
+    - clear data
+    - delete data
+    - delete molecules
+    - start over
+    - restart
+
+- intent: test_svg
+  examples: |
+    - test svg
+    - test SVG
+    - Test svg
+    - Test SVG
+    - TEST SVG
+    - testsvg
+
+- intent: test_CSV
+  examples: |
+    - test csv
+    - test CSV
+    - Test csv
+    - Test CSV
+    - TEST CSV
+    - testcsv
+
+- intent: perform_r_analysis
+  examples: |
+    - perform sar analysis
+    - analyze rgroups
+    - create rgroup tables
+    - make sar tables
+    - make r-tables
+    - analyze sar
+    - open sar ui
+    - open sar dialog
+    - do r analysis
+    - do sar analysis
+    - analyze r groups
+    - do r group analysis
+    - do rgp analysis
+
+- intent: show_least_potent_rgroup
+  examples: |
+    - replace_with_example_1
+    - replace_with_example_2
+
+- intent: show_most_potent_rgroup
+  examples: |
+    - replace_with_example_1
+    - replace_with_example_2
+
+- intent: recommend_rgroups
+  examples: |
+    - replace_with_example_1
+    - replace_with_example_2
+
+- intent: recommend_biosteres
+  examples: |
+    - replace_with_example_1
+    - replace_with_example_2
+
+- intent: sar_by_catalog
+  examples: |
+    - replace_with_example_1
+    - replace_with_example_2
+
+- intent: search_sure_chembl
+  examples: |
+    - replace_with_example_1
+    - replace_with_example_2
+
+- intent: search_chemb_mols
+  examples: |
+    - replace_with_example_1
+    - replace_with_example_2
+
+- intent: find_scaffolds
+  examples: |
+    - replace_with_example_1
+    - replace_with_example_2
+
+- intent: exit
+  examples: |
+    - replace_with_example_1
+    - replace_with_example_2
+
+
