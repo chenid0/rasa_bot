@@ -30,8 +30,6 @@ rasa_endpoint = (
     "http://localhost:5005/webhooks/rest/webhook"  # replace with your Rasa endpoint
 )
 
-# Define the URL of the Rasa action server
-rasa_action_endpoint = "http://localhost:5055/webhook"
 chembl_path = "./databases/chembl_33.db"
 
 
