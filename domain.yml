@@ -188,10 +188,10 @@ responses:
   - text: "clear_data"
 
   utter_test_svg:
-  - text: "load svg"
+  - text: "action: load svg"
 
   utter_test_CSV:
-  - text: "load csv"
+  - text: "action: load csv"
 
   utter_perform_r_analysis:
   - text: "perform_r_analysis"

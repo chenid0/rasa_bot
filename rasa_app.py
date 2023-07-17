@@ -99,7 +99,7 @@ def create_response(orig_text, message) -> Response:
     reponses_dict = parse_yaml_from_file("domain.yml")
     text = reponses_dict.get(orig_text)
     if not text:
-        text = orig_text
+        return jsonify({"message": "no action taken"})
     print(f"determining action from text: {text}")
     if query_tag in text:
         query_text = text.replace(query_tag, "")
