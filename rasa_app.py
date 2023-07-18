@@ -82,22 +82,24 @@ def send_message():
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
 
     for obj in rasa_response:
-        text = obj.get("text")
-        print(f"text: {text}")
+        rasa_text = obj.get("text")
+        print(f"text: {rasa_text}")
         element_list = obj.get("elements")
         print(f"elements: {element_list}")
         json_data = obj.get("json_message")
         print(f"json: {json_data}")
         print()
-        if text:
-            return create_response(text, orig_message)
+        if rasa_text:
+            return create_response(rasa_text, orig_message)
 
 
-def create_response(orig_text, message) -> Response:
+def create_response(rasa_text, orig_message) -> Response:
     message_txt = ""
     queries = []
     reponses_dict = parse_yaml_from_file("domain.yml")
-    text = reponses_dict.get(orig_text)
+    print(rasa_text)
+    text = reponses_dict.get(rasa_text)
+    print(text)
     if not text:
         return jsonify({"message": "no action taken"})
     print(f"determining action from text: {text}")
