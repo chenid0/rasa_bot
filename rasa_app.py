@@ -15,6 +15,7 @@ from constants import (
     histogram_tag,
     scatter_tag,
     keyword_replacements,
+    intent_to_action
 )
 from query import (
     async_run_query,
@@ -23,7 +24,6 @@ from query import (
     create_scatter_from_query,
 )
 from typing import Any, Dict, List, Optional, Set, Text, Tuple
-from parse_yaml import parse_yaml_from_file
 
 
 app = Flask(__name__)
@@ -96,15 +96,15 @@ def send_message():
 def create_response(rasa_text, orig_message) -> Response:
     message_txt = ""
     queries = []
-    reponses_dict = parse_yaml_from_file("domain.yml")
+    
     print(rasa_text)
-    text = reponses_dict.get(rasa_text)
-    print(text)
-    if not text:
-        return jsonify({"message": "no action taken"})
-    print(f"determining action from text: {text}")
-    if query_tag in text:
-        query_text = text.replace(query_tag, "")
+    action_text = intent_to_action.get(rasa_text)
+    if not action_text:
+        return jsonify({"message": rasa_text})
+    
+    print(f"determining action from text: {rasa_text}")
+    if query_tag in rasa_text:
+        query_text = rasa_text.replace(query_tag, "")
         queries.append(query_text)
         print(f"running async query \n{query_text}\n")
         async_run_query(query_text)
@@ -117,17 +117,17 @@ def create_response(rasa_text, orig_message) -> Response:
                     f"query: {query} is completed\n<br>{completed.get(query)}\n<br>"
                 )
         return jsonify({"message": message_txt})
-    if histogram_tag in text:
-        query_text = text.replace(histogram_tag, "")
-        keyword = find_keyword(message, keyword_replacements)
+    if histogram_tag in rasa_text:
+        query_text = rasa_text.replace(histogram_tag, "")
+        keyword = find_keyword(orig_message, keyword_replacements)
         query_text = query_text.replace("$TOKEN$", keyword)
         queries.append(query_text)
         print(f"running histogram query \n{query_text}\n")
         hist_svg = create_histogram_from_query(query_text, keyword)
         return jsonify({"message": message_txt, "svg": hist_svg})
-    if scatter_tag in text:
-        query_text = text.replace(scatter_tag, "")
-        keywords = find_keywords(message, keyword_replacements)
+    if scatter_tag in rasa_text:
+        query_text = rasa_text.replace(scatter_tag, "")
+        keywords = find_keywords(orig_message, keyword_replacements)
         xlabel = keywords[0]
         ylabel = keywords[1]
         query_text = query_text.replace("$TOKEN$", xlabel, 1)
@@ -137,11 +137,11 @@ def create_response(rasa_text, orig_message) -> Response:
         print(f"running scatter query \n{query_text}\n")
         hist_svg = create_scatter_from_query(query_text, xlabel, ylabel)
         return jsonify({"message": message_txt, "svg": hist_svg})
-    if action_tag in text:
-        action_text = text.replace(action_tag, "")
-        if svg_tag in action_text:
+    if action_tag in rasa_text:
+        load_text = rasa_text.replace(action_tag, "")
+        if svg_tag in load_text:
             return jsonify({"message": message_txt, "svg": svg_str})
-        elif csv_tag in action_text:
+        elif csv_tag in load_text:
             csv_data = StringIO(csv_str)
             df = pd.read_csv(csv_data, sep=",")
             csv_json = df.to_json(orient="records")
