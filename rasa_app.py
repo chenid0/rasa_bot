@@ -97,7 +97,10 @@ def create_response(rasa_text, orig_message) -> Response:
     message_txt = ""
     queries = []
     
+    print("creating response")
+    print(orig_message)
     print(rasa_text)
+    
     action_text = intent_to_action.get(rasa_text)
     if not action_text:
         return jsonify({"message": rasa_text})
