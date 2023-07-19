@@ -102,9 +102,9 @@ def create_response(rasa_text, orig_message) -> Response:
     if not action_text:
         return jsonify({"message": rasa_text})
     
-    print(f"determining action from text: {rasa_text}")
-    if query_tag in rasa_text:
-        query_text = rasa_text.replace(query_tag, "")
+    print(f"determining action from text: {action_text}")
+    if query_tag in action_text:
+        query_text = action_text.replace(query_tag, "")
         queries.append(query_text)
         print(f"running async query \n{query_text}\n")
         async_run_query(query_text)
@@ -117,16 +117,16 @@ def create_response(rasa_text, orig_message) -> Response:
                     f"query: {query} is completed\n<br>{completed.get(query)}\n<br>"
                 )
         return jsonify({"message": message_txt})
-    if histogram_tag in rasa_text:
-        query_text = rasa_text.replace(histogram_tag, "")
+    if histogram_tag in action_text:
+        query_text = action_text.replace(histogram_tag, "")
         keyword = find_keyword(orig_message, keyword_replacements)
         query_text = query_text.replace("$TOKEN$", keyword)
         queries.append(query_text)
         print(f"running histogram query \n{query_text}\n")
         hist_svg = create_histogram_from_query(query_text, keyword)
         return jsonify({"message": message_txt, "svg": hist_svg})
-    if scatter_tag in rasa_text:
-        query_text = rasa_text.replace(scatter_tag, "")
+    if scatter_tag in action_text:
+        query_text = action_text.replace(scatter_tag, "")
         keywords = find_keywords(orig_message, keyword_replacements)
         xlabel = keywords[0]
         ylabel = keywords[1]
@@ -137,8 +137,8 @@ def create_response(rasa_text, orig_message) -> Response:
         print(f"running scatter query \n{query_text}\n")
         hist_svg = create_scatter_from_query(query_text, xlabel, ylabel)
         return jsonify({"message": message_txt, "svg": hist_svg})
-    if action_tag in rasa_text:
-        load_text = rasa_text.replace(action_tag, "")
+    if action_tag in action_text:
+        load_text = action_text.replace(action_tag, "")
         if svg_tag in load_text:
             return jsonify({"message": message_txt, "svg": svg_str})
         elif csv_tag in load_text:
