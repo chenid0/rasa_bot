@@ -144,12 +144,12 @@ keyword_replacements = {
 
 
 intent_to_action = {
-    "load_svg": f"{action_tag} load_svg",
-    "load_csv": f"{action_tag} load_csv",
-    "bin_data": f"{histogram_tag} select distinct cast($TOKEN$ / 1 as int)  as Bin, count(ID) as Frequency from MOLPROPS GROUP by Bin;",
-    "scatter_xy": f"{scatter_tag} select logp_rdkit, sarea_rdkit from MOLPROPS limit 10000;",
-    "data_minimum": f"{tokenized_query_tag} SELECT MIN($TOKEN$) FROM MOLPROPS;",
-    "data_maximum": f"{tokenized_query_tag} SELECT MAX($TOKEN$) FROM MOLPROPS;",
-    "test_svg": f"{action_tag} {svg_tag}",
-    "test_CSV": f"{action_tag} {csv_tag}",
+    "load_svg".upper(): f"{action_tag} load_svg",
+    "load_csv".upper(): f"{action_tag} load_csv",
+    "bin_data".upper(): f"{histogram_tag} select distinct cast($TOKEN$ / 1 as int)  as Bin, count(ID) as Frequency from MOLPROPS GROUP by Bin;",
+    "scatter_xy".upper(): f"{scatter_tag} select logp_rdkit, sarea_rdkit from MOLPROPS limit 10000;",
+    "data_minimum".upper(): f"{tokenized_query_tag} SELECT MIN($TOKEN$) FROM MOLPROPS;",
+    "data_maximum".upper(): f"{tokenized_query_tag} SELECT MAX($TOKEN$) FROM MOLPROPS;",
+    "test_svg".upper(): f"{action_tag} {svg_tag}",
+    "test_CSV".upper(): f"{action_tag} {csv_tag}",
 }

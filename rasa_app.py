@@ -101,7 +101,7 @@ def create_response(rasa_text, orig_message) -> Response:
     print(orig_message)
     print(rasa_text)
     
-    action_text = intent_to_action.get(rasa_text)
+    action_text = intent_to_action.get(rasa_text.upper())
     if not action_text:
         return jsonify({"message": rasa_text})
     
