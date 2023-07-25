@@ -20,7 +20,7 @@ def execute_command(cmd: str, run_in_background: bool = False, max_time: Optiona
     return stdout, stderr, exit_code
 
 
-def run_sar_bot():
+def run_sarbot_build_r_dash():
     "sarbot BuildRDashBoard -db /path/project.db -is /path/scaffold2.mol -ic Structure_ID -ac '612285_Ki(nM)' "
     db_path = "/path/project.db"
     is_path = "/path/scaffold2.mol"
@@ -28,4 +28,34 @@ def run_sar_bot():
     ac = "'612285_Ki(nM)'"
     build = "BuildRDashBoard"
     cmd = f"./bin/sarbot {build} -db {db_path} -is {is_path} -ic {ic} -ac {ac}"
+    execute_command(cmd, run_in_background=False)
+
+
+def run_sarbot_import_mols():
+    "sarbot BuildRDashBoard -db /path/project.db -is /path/scaffold2.mol -ic Structure_ID -ac '612285_Ki(nM)' "
+    db_path = "/path/project.db"
+    is_path = "/path/scaffold2.mol"
+    ic = "Structure_ID"
+    ac = "'612285_Ki(nM)'"
+    sar_command = "ImportMols"
+    cmd = f"./bin/sarbot {sar_command} -db {db_path} -is {is_path} -ic {ic} -ac {ac}"
+    execute_command(cmd, run_in_background=False)
+
+    
+def run_sarbot_import_mols():    
+    db_path = "/path/project.db"
+    is_path = "/path/scaffold2.mol"
+    ic = "Structure_ID"
+    ac = "'612285_Ki(nM)'"
+    sar_command = "ImportScaffold"
+    cmd = f"./bin/sarbot {sar_command} -db {db_path} -is {is_path} -ic {ic} -ac {ac}"
+    execute_command(cmd, run_in_background=False)
+
+def run_sarbot_import_scaffold():    
+    db_path = "/path/project.db"
+    is_path = "/path/scaffold2.mol"
+    ic = "Structure_ID"
+    ac = "'612285_Ki(nM)'"
+    sar_command = "ImportScaffold"
+    cmd = f"./bin/sarbot {sar_command} -db {db_path} -is {is_path} -ic {ic} -ac {ac}"
     execute_command(cmd, run_in_background=False)
