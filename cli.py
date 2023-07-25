@@ -18,3 +18,14 @@ def execute_command(cmd: str, run_in_background: bool = False, max_time: Optiona
             exit_code = process.poll()
             
     return stdout, stderr, exit_code
+
+
+def run_sar_bot():
+    "sarbot BuildRDashBoard -db /path/project.db -is /path/scaffold2.mol -ic Structure_ID -ac '612285_Ki(nM)' "
+    db_path = "/path/project.db"
+    is_path = "/path/scaffold2.mol"
+    ic = "Structure_ID"
+    ac = "'612285_Ki(nM)'"
+    build = "BuildRDashBoard"
+    cmd = f"./bin/sarbot {build} -db {db_path} -is {is_path} -ic {ic} -ac {ac}"
+    execute_command(cmd, run_in_background=False)
