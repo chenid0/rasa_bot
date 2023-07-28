@@ -188,6 +188,15 @@
   </div>
   <div id="icon-container" class="icon-container"></div> <!-- Icon Container -->
   <script>
+    new WinBox("test window", {
+    mount: document.getElementById("content")
+                   .cloneNode(true)
+    });
+    new WinBox({
+    title: "Custom Color",
+    background: "#ff005d",
+    border: 4
+});
      $(function () {
       function setChatAreaMaxHeight() {
         const windowHeight = $(window).height();  // Get the current window height
@@ -335,10 +344,7 @@
       }
     });
 
-    new WinBox("test window", {
-    mount: document.getElementById("content")
-                   .cloneNode(true)
-    });
+  
   </script>
 </body>
 
