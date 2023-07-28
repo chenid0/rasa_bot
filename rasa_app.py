@@ -68,15 +68,10 @@ def send_message():
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
 
     for obj in rasa_response:
-        rasa_text = obj.get("text")
-        print(f"text: {rasa_text}")
-        element_list = obj.get("elements")
-        print(f"elements: {element_list}")
-        json_data = obj.get("json_message")
-        print(f"json: {json_data}")
-        print()
-        if rasa_text:
-            return create_response(rasa_text, orig_message)
+        rasa_response_text = obj.get("text")
+        print(f"rasa response text: {rasa_response_text}")        
+        if rasa_response_text:
+            return create_response(rasa_response_text, orig_message)
 
 
 def create_response(rasa_text, orig_message) -> Response:
