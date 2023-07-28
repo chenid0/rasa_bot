@@ -261,8 +261,7 @@ def query(assay_id, cursor) -> List[Tuple[str, int, int, str, float, str, str, i
         act.standard_value, act.standard_units, act.standard_type, act.molregno
     FROM Activities AS act
     JOIN compound_structures AS cs ON act.molregno = cs.molregno
-    WHERE act.assay_id = {assay_id}
-    LIMIT 1;
+    WHERE act.assay_id = {assay_id};
     """
     # Made query and received assay id, execute query
     cursor.execute(query)
