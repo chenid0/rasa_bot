@@ -145,8 +145,12 @@
       color: #28a745;
       font-weight: bold;
     }
-  </style>
 
+    .window-container {
+      display: none;
+    }
+  </style>
+  <script src="dist/winbox.bundle.min.js"></script>
 </head>
 
 <body>
@@ -172,6 +176,14 @@
         <button class="btn btn-outline-secondary" type="submit">Send</button>
       </span>
     </form>
+  </div>
+  <div id="window-container" class="window-container">
+    <div id="content">
+      <h1>Lorem Ipsum</h1>
+      <p>Lorem ipsum [...]</p>
+      <p>Duis autem vel [...]</p>
+      <p>Ut wisi enim [...]</p>
+  </div>
   </div>
   <div id="icon-container" class="icon-container"></div> <!-- Icon Container -->
   <script>
@@ -320,7 +332,12 @@
       } else {
         dropdownContent.style.display = 'none';
       }
-    });    
+    });
+
+    new WinBox("test window", {
+    mount: document.getElementById("content")
+                   .cloneNode(true)
+    });
   </script>
 </body>
 

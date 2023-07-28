@@ -1,30 +1,16 @@
 import logging
 from io import StringIO
-import pandas as pd
-import requests
-import sqlite3
-import csv 
-from flask import Flask, jsonify, render_template, request, send_file, Response
-from constants import (
-    action_tag,
-    csv_str,
-    csv_tag,
-    query_tag,
-    svg_str,
-    svg_tag,
-    histogram_tag,
-    scatter_tag,
-    keyword_replacements,
-    intent_to_action
-)
-from query import (
-    async_run_query,
-    check_pending,
-    create_histogram_from_query,
-    create_scatter_from_query,
-)
 from typing import Any, Dict, List, Optional, Set, Text, Tuple
 
+import pandas as pd
+import requests
+from flask import Flask, Response, jsonify, render_template, request, send_file
+
+from constants import (action_tag, csv_str, csv_tag, histogram_tag,
+                       intent_to_action, keyword_replacements, query_tag,
+                       scatter_tag, svg_str, svg_tag)
+from query import (async_run_query, check_pending, create_histogram_from_query,
+                   create_scatter_from_query)
 
 app = Flask(__name__)
 rasa_endpoint = (
@@ -164,64 +150,6 @@ def query_status():
     }
     return jsonify(response)
 
-
-def get_assay_id(assay_id):
-    conn = sqlite3.connect("chembl_33.db")
-    cursor = conn.cursor()
-    if not assay_id.isnumeric():
-        print("Please enter an integer")
-    else:
-        res = query(assay_id, cursor)
-        gen_csv(res)
-        print_results(res)
-    cursor.close()
-    conn.close()
-
-def query(n, cursor) -> List[Tuple[str, int, int, str, float, str, str, int]]:
-    query = f"""
-    SELECT cs.canonical_smiles, act.activity_id, act.assay_id, act.standard_relation,
-        act.standard_value, act.standard_units, act.standard_type, act.molregno
-    FROM Activities AS act
-    JOIN compound_structures AS cs ON act.molregno = cs.molregno
-    WHERE act.assay_id = {n}
-    LIMIT 1;
-    """
-    # Made query and received assay id, execute query
-    cursor.execute(query)
-    r = cursor.fetchall()
-    return r
-def gen_csv(results):
-    output_file = "output.csv"
-    # Generate and fill up CSV file with recently pulled data
-    with open(output_file, 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(['Canonical Smiles', 'Activity ID', 'Assay ID', 'Standard Relation',
-                        'Standard Value', 'Standard Units', 'Standard Type', 'Molregno'])
-        writer.writerows(results)
-
-def print_results(results):
-    # Print the results in command prompt
-    for row in results:
-        canonical_smiles, activity_id, assay_id, standard_relation, \
-        standard_value, standard_units, standard_type, molregno = row
-        
-        print("Canonical Smiles:", canonical_smiles)
-        print("Activity ID:", activity_id)
-        print("Assay ID:", assay_id)
-        print("Standard Relation:", standard_relation)
-        print("Standard Value:", standard_value)
-        print("Standard Units:", standard_units)
-        print("Standard Type:", standard_type)
-        print("Molregno:", molregno)
-
-def get_virus(organism):    
-    conn = sqlite3.connect(chembl_path)
-    cursor = conn.cursor()
-    query = f"""SELECT td.organism, td.pref_name, td.target_type FROM target_dictionary td WHERE td.organism like '%{organism}%' ORDER by td.organism"""
-    # Made query and received assay id, execute query
-    cursor.execute(query)
-    r = cursor.fetchall()
-    print(r)
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
