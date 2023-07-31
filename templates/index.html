@@ -187,7 +187,7 @@
     
     new WinBox({
     title: "Custom Color",
-    background: "#FFFFFF",
+    background: "#FF00FF",
     border: 4,
     html: '<div id="lorem" class="window-container"><div id="content"><h1>Lorem Ipsum</h1><p>Lorem ipsum [...]</p><p>Duis autem vel [...]</p><p>Ut wisi enim [...]</p></div>'
 });
@@ -249,7 +249,7 @@
               var unique_id = generateUniqueDOMId('csv-table');              
               var outer_div = $(`<div id=${unique_id} class="csv-table"></div>`);
               new WinBox("csv test window", {
-                  html: outer_div.html,
+                  html: outer_div.html(),
               });
               var table = $('<table ></table></div>');
               var headers = Object.keys(data[0]);
