@@ -15,8 +15,7 @@
       font-family: 'Roboto', sans-serif;
     }    
 
-    .csv-table {
-      display: none;
+    .csv-table {      
       font-family: 'Roboto', sans-serif;
       overflow-x: scroll;
       width: 1000px;
@@ -181,24 +180,16 @@
       </span>
     </form>
   </div>
-  <div id="window-container" class="window-container">
-    <div id="content">
-      <h1>Lorem Ipsum</h1>
-      <p>Lorem ipsum [...]</p>
-      <p>Duis autem vel [...]</p>
-      <p>Ut wisi enim [...]</p>
-  </div>
+  
   </div>
   <div id="icon-container" class="icon-container"></div> <!-- Icon Container -->
   <script>
-    new WinBox("test window", {
-    mount: document.getElementById("content")
-                   .cloneNode(true)
-    });
+    
     new WinBox({
     title: "Custom Color",
-    background: "#ff005d",
-    border: 4
+    background: rgb(12, 12, 143),
+    border: 4,
+    html: '<div id="lorem" class="window-container"><div id="content"><h1>Lorem Ipsum</h1><p>Lorem ipsum [...]</p><p>Duis autem vel [...]</p><p>Ut wisi enim [...]</p></div>'
 });
      $(function () {
       function setChatAreaMaxHeight() {
@@ -257,6 +248,9 @@
               var data = JSON.parse(response.csv);
               var unique_id = generateUniqueDOMId('csv-table');              
               var outer_div = $(`<div id=${unique_id} class="csv-table"></div>`);
+              new WinBox("csv test window", {
+                  html: outer_div.html,
+              });
               var table = $('<table ></table></div>');
               var headers = Object.keys(data[0]);
               var headerRow = $('<tr></tr>');
@@ -272,11 +266,7 @@
                 table.append(row);
               });
               outer_div.append(table);
-              $chatArea.append(outer_div);
-              new WinBox("csv test window", {
-                  mount: document.getElementById(unique_id)
-                   .cloneNode(true)
-    });
+              //$chatArea.append(outer_div);              
             }
 
           },
