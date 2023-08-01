@@ -251,7 +251,7 @@
               var outer_div = $(outer_str);
               new WinBox({
                   title: "csv test window",
-                  html: outer_str
+                  html: outer_div.html()
               });
               var table = $('<table ></table></div>');
               var headers = Object.keys(data[0]);
