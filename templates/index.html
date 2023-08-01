@@ -249,10 +249,7 @@
               var unique_id = generateUniqueDOMId('csv-table');
               var outer_str = `<div id=${unique_id} class="csv-table"></div>`;
               var outer_div = $(outer_str);
-              new WinBox({
-                  title: "csv test window",
-                  html: outer_div.html()
-              });
+              
               var table = $('<table ></table></div>');
               var headers = Object.keys(data[0]);
               var headerRow = $('<tr></tr>');
@@ -268,6 +265,10 @@
                 table.append(row);
               });
               outer_div.append(table);
+              new WinBox({
+                  title: "csv test window",
+                  html: outer_div.innerHTML()
+              });
               //$chatArea.append(outer_div);              
             }
 
