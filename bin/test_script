@@ -1,0 +1,8 @@
+# start with fresh database
+#rm ./project.db
+# create db (if !exists) and add molecules from file (*.sdf or *.csv)
+./sarbot ImportMols -db ./test_project.db -i ./test_mols.sdf
+# Add a scaffold from file to the database (*.mol file) : could be output from molecule draw widget
+./sarbot ImportScaffold -db ./test_project.db -i ./test_scaffold.mol 
+# Render the last scaffold '1'
+ ./sarbot RenderScaffold -sid 1 -db ./test_project.db -o scaffold1.svg
