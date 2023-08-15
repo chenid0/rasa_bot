@@ -18,7 +18,7 @@ def execute_command(cmd: str, max_time: Optional[int] = None) -> Tuple[str, str,
 
 
 def run_sarbot_build_r_dash():
-    "sarbot BuildRDashBoard -db /path/project.db -is /path/scaffold2.mol -ic Structure_ID -ac '612285_Ki(nM)' "
+    #"sarbot BuildRDashBoard -db /path/project.db -is /path/scaffold2.mol -ic Structure_ID -ac '612285_Ki(nM)' "
     db_path = "/path/project.db"
     is_path = "/path/scaffold2.mol"
     ic = "Structure_ID"
@@ -29,7 +29,7 @@ def run_sarbot_build_r_dash():
 
 
 def run_sarbot_import_mols():
-    "sarbot BuildRDashBoard -db /path/project.db -is /path/scaffold2.mol -ic Structure_ID -ac '612285_Ki(nM)' "
+    #"sarbot BuildRDashBoard -db /path/project.db -is /path/scaffold2.mol -ic Structure_ID -ac '612285_Ki(nM)' "
     db_path = "/path/project.db"
     is_path = "/path/scaffold2.mol"
     ic = "Structure_ID"
@@ -38,16 +38,6 @@ def run_sarbot_import_mols():
     cmd = f"./bin/sarbot {sar_command} -db {db_path} -is {is_path} -ic {ic} -ac {ac}"
     execute_command(cmd, run_in_background=False)
 
-    
-def run_sarbot_import_mols():
-    # SARbot.exe ImportMols -i c:/tmp/Chembl_612285and6.csv -db c:/tmp/Chembl_612285and6.db
-    db_path = "/path/project.db"
-    is_path = "/path/scaffold2.mol"
-    ic = "Structure_ID"
-    ac = "'612285_Ki(nM)'"
-    sar_command = "ImportScaffold"
-    cmd = f"./bin/sarbot {sar_command} -db {db_path} -is {is_path} -ic {ic} -ac {ac}"
-    execute_command(cmd, run_in_background=False)
 
 def run_sarbot_import_scaffold():    
     # SARbot.exe ImportScaffold -i c:/tmp/scaffold2.mol -db c:/tmp/Chembl_612285and6.db

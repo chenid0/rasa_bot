@@ -6,11 +6,26 @@ import pandas as pd
 import requests
 from flask import Flask, Response, jsonify, render_template, request, send_file
 
-from constants import (action_tag, csv_str, csv_tag, histogram_tag,
-                       intent_to_action, keyword_replacements, query_tag,
-                       scatter_tag, svg_str, svg_tag)
-from query import (async_run_query, check_pending, create_histogram_from_query,
-                   create_scatter_from_query)
+from constants import (
+    action_tag,
+    csv_str,
+    csv_tag,
+    histogram_tag,
+    intent_to_action,
+    keyword_replacements,
+    query_tag,
+    scatter_tag,
+    svg_str,
+    svg_tag,
+    search_chembl_tag,
+)
+from query import (
+    async_run_query,
+    check_pending,
+    create_histogram_from_query,
+    create_scatter_from_query,
+    get_assay_id,
+)
 
 app = Flask(__name__)
 rasa_endpoint = (
@@ -53,39 +68,43 @@ def home():
 
 @app.route("/api/messages", methods=["POST"])
 def send_message():
-    orig_message = request.json["message"]    
-    rasa_words = orig_message.split()
-    cleaned_message = []
-    for word in rasa_words:
-        print(f"word: {word}")
-        if word.upper() in keyword_replacements.keys():
-            print(f"keyword found: {word}. not adding to new message")            
-        else:
-            cleaned_message.append(word)
-    cleaned_str = " ".join(cleaned_message)
+    orig_message = request.json["message"]
+    cleaned_str = clean_message(orig_message)
     print(f"rasa_message: {cleaned_str}")
     rasa_payload = {"sender": "user", "message": cleaned_str}
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
 
     for obj in rasa_response:
         rasa_response_text = obj.get("text")
-        print(f"rasa response text: {rasa_response_text}")        
+        print(f"rasa response text: {rasa_response_text}")
         if rasa_response_text:
             return create_response(rasa_response_text, orig_message)
+
+def clean_message(orig_message):
+    rasa_words = orig_message.split()
+    cleaned_message = []
+    for word in rasa_words:
+        print(f"word: {word}")
+        if word.upper() in keyword_replacements.keys():
+            print(f"keyword found: {word}. not adding to new message")
+        else:
+            cleaned_message.append(word)
+    cleaned_str = " ".join(cleaned_message)
+    return cleaned_str
 
 
 def create_response(rasa_text, orig_message) -> Response:
     message_txt = ""
     queries = []
-    
+
     print("creating response")
     print(orig_message)
     print(rasa_text)
-    
+
     action_text = intent_to_action.get(rasa_text.upper())
     if not action_text:
         return jsonify({"message": rasa_text})
-    
+
     print(f"determining action from text: {action_text}")
     if query_tag in action_text:
         query_text = action_text.replace(query_tag, "")
@@ -121,15 +140,17 @@ def create_response(rasa_text, orig_message) -> Response:
         print(f"running scatter query \n{query_text}\n")
         hist_svg = create_scatter_from_query(query_text, xlabel, ylabel)
         return jsonify({"message": message_txt, "svg": hist_svg})
-    if action_tag in action_text:
-        load_text = action_text.replace(action_tag, "")
-        if svg_tag in load_text:
-            return jsonify({"message": message_txt, "svg": svg_str})
-        elif csv_tag in load_text:
-            csv_data = StringIO(csv_str)
-            df = pd.read_csv(csv_data, sep=",")
-            csv_json = df.to_json(orient="records")
-            return jsonify({"message": message_txt, "csv": csv_json})
+    if svg_tag in action_text:
+        return jsonify({"message": message_txt, "svg": svg_str})
+    if csv_tag in action_text:
+        csv_data = StringIO(csv_str)
+        df = pd.read_csv(csv_data, sep=",")
+        csv_json = df.to_json(orient="records")
+        return jsonify({"message": message_txt, "csv": csv_json})
+    if search_chembl_tag in action_text:
+        id = 1
+        get_assay_id(id)
+        return jsonify({"message": message_txt})
     return jsonify({"message": "no action taken"})
 
 

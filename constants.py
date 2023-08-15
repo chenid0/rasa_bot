@@ -98,6 +98,7 @@ svg_tag = "load_svg"
 csv_tag = "load_csv"
 histogram_tag = "histogram:"
 scatter_tag = "scatterplot:"
+search_chembl_tag = "search_chembl"
 
 
 keyword_replacements = {
@@ -142,14 +143,55 @@ keyword_replacements = {
     "MW": "MW",
 }
 
+keywords_for_spellcheck = [
+    "LOGP",    
+    "HYDROGEN",
+    "BOND",
+    "ACCEPTOR",
+    "H-BOND",
+    "HBOND",
+    "ACCEPTORS",
+    "TPSA",    
+    "POLAR",
+    "SURFACE",    
+    "HYDROGEN",    
+    "HBOND",    
+    "H-BOND",
+    "DONOR",        
+    "SURFACE",
+    "AREA",
+    "SAREA",    
+    "FCSP3",
+    "FRACCSP3",
+    "FRACTION",
+    "CSP3",        
+    "CARBONS",    
+    "SPIROATOMS",
+    "SPIRO-ATOMS",
+    "SPIRO-ATOM-COUNT",
+    "BRIDGEHEADATOMS",
+    "NUMBER",
+    "BRIDGEHEADATOMS",
+    "BRIDGEHEAD",
+    "COUNT",
+    "BRIDGEHEAD",
+    "ATOMS",
+    "ROTBOND",
+    "ROTATABLEBOND",
+    "ROTATABLE",
+    "MASS",
+    "MOLECULAR",
+    "WEIGHT",
+    "MOLWEIGHT", 
+]
 
-intent_to_action = {
-    "load_svg".upper(): f"{action_tag} load_svg",
-    "load_csv".upper(): f"{action_tag} load_csv",
+
+intent_to_action = {    
     "bin_data".upper(): f"{histogram_tag} select distinct cast($TOKEN$ / 1 as int)  as Bin, count(ID) as Frequency from MOLPROPS GROUP by Bin;",
     "scatter_xy".upper(): f"{scatter_tag} select logp_rdkit, sarea_rdkit from MOLPROPS limit 10000;",
     "data_minimum".upper(): f"{tokenized_query_tag} SELECT MIN($TOKEN$) FROM MOLPROPS;",
     "data_maximum".upper(): f"{tokenized_query_tag} SELECT MAX($TOKEN$) FROM MOLPROPS;",
-    "test_svg".upper(): f"{action_tag} {svg_tag}",
-    "test_CSV".upper(): f"{action_tag} {csv_tag}",
+    "test_svg".upper(): f"{svg_tag}",
+    "test_CSV".upper(): f"{csv_tag}",
+    "search_chemb_mols".upper(): f"{search_chembl_tag}"
 }

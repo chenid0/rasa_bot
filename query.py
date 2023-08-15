@@ -294,20 +294,26 @@ def print_results(results):
 
 
 def get_assay_id(assay_id):
-    conn = sqlite3.connect("chembl_33.db")
-    cursor = conn.cursor()
-    if not assay_id.isnumeric():
-        print("Please enter an integer")
-    else:
-        res = query(assay_id, cursor)
-        gen_csv(res)
-        print_results(res)
-    cursor.close()
-    conn.close()
+    try:
+        conn = sqlite3.connect("chembl_33.db")
+        cursor = conn.cursor()
+        if not assay_id.isnumeric():
+            print("Please enter an integer")
+        else:
+            res = query(assay_id, cursor)
+            gen_csv(res)
+            print_results(res)
+    except Exception as e:
+        print("error while executing: " + traceback.format_exc())
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 
 def gen_csv(results):
-    output_file = "output.csv"
+    output_file = "./static/output.csv"
     # Generate and fill up CSV file with recently pulled data
     with open(output_file, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
