@@ -1,31 +1,17 @@
 import logging
 from io import StringIO
 from typing import Any, Dict, List, Optional, Set, Text, Tuple
-
+import os
 import pandas as pd
 import requests
 from flask import Flask, Response, jsonify, render_template, request, send_file
 
-from constants import (
-    action_tag,
-    csv_str,
-    csv_tag,
-    histogram_tag,
-    intent_to_action,
-    keyword_replacements,
-    query_tag,
-    scatter_tag,
-    svg_str,
-    svg_tag,
-    search_chembl_tag,
-)
-from query import (
-    async_run_query,
-    check_pending,
-    create_histogram_from_query,
-    create_scatter_from_query,
-    get_assay_id,
-)
+from constants import (action_tag, csv_str, csv_tag, histogram_tag,
+                       intent_to_action, keyword_replacements, query_tag,
+                       scatter_tag, svg_str, svg_tag, scaff_tag, mols_tag)
+from query import (async_run_query, check_pending, create_histogram_from_query,
+                   create_scatter_from_query)
+import traceback
 
 app = Flask(__name__)
 rasa_endpoint = (
@@ -68,43 +54,40 @@ def home():
 
 @app.route("/api/messages", methods=["POST"])
 def send_message():
-    orig_message = request.json["message"]
-    cleaned_str = clean_message(orig_message)
+    orig_message = request.json["message"]    
+    rasa_words = orig_message.split()
+    cleaned_message = []
+    for word in rasa_words:
+        print(f"word: {word}")
+        if word.upper() in keyword_replacements.keys():
+            print(f"keyword found: {word}. not adding to new message")            
+        else:
+            cleaned_message.append(word)
+    cleaned_str = " ".join(cleaned_message)
     print(f"rasa_message: {cleaned_str}")
     rasa_payload = {"sender": "user", "message": cleaned_str}
     rasa_response = requests.post(rasa_endpoint, json=rasa_payload).json()
 
     for obj in rasa_response:
         rasa_response_text = obj.get("text")
-        print(f"rasa response text: {rasa_response_text}")
+        print(f"rasa response text: {rasa_response_text}")        
         if rasa_response_text:
             return create_response(rasa_response_text, orig_message)
-
-def clean_message(orig_message):
-    rasa_words = orig_message.split()
-    cleaned_message = []
-    for word in rasa_words:
-        print(f"word: {word}")
-        if word.upper() in keyword_replacements.keys():
-            print(f"keyword found: {word}. not adding to new message")
-        else:
-            cleaned_message.append(word)
-    cleaned_str = " ".join(cleaned_message)
-    return cleaned_str
 
 
 def create_response(rasa_text, orig_message) -> Response:
     message_txt = ""
     queries = []
-
+    
     print("creating response")
     print(orig_message)
     print(rasa_text)
-
+    
     action_text = intent_to_action.get(rasa_text.upper())
+    print("ACTION",action_text)
     if not action_text:
         return jsonify({"message": rasa_text})
-
+    
     print(f"determining action from text: {action_text}")
     if query_tag in action_text:
         query_text = action_text.replace(query_tag, "")
@@ -147,10 +130,12 @@ def create_response(rasa_text, orig_message) -> Response:
         df = pd.read_csv(csv_data, sep=",")
         csv_json = df.to_json(orient="records")
         return jsonify({"message": message_txt, "csv": csv_json})
-    if search_chembl_tag in action_text:
-        id = 1
-        get_assay_id(id)
-        return jsonify({"message": message_txt})
+    if scaff_tag in action_text:
+        print("Choosing file..")
+        return jsonify({"message": message_txt, "scaffold": True})
+    if mols_tag in action_text:
+        print("Choosing file..")
+        return jsonify({"message": message_txt, "molecule": True})
     return jsonify({"message": "no action taken"})
 
 
@@ -166,6 +151,66 @@ def query_status():
     }
     return jsonify(response)
 
+@app.route("/api/scaffold", methods=["POST"])
+def save_scaffold():
+    print(request.files)    
+    message_txt = None
+    status = False
 
+    try:
+        file = request.files["file"]
+
+        if file.filename == "":
+            return "No selected file"
+
+        # Define the path where you want to save the file
+        save_directory = "scaffolds/files"
+
+        # Create the directory if it doesn't exist
+        os.makedirs(save_directory, exist_ok=True)
+
+        # Construct the full path to save the file
+        save_path = os.path.join(save_directory, file.filename)
+
+        file.save(save_path)
+        message_txt = "completed and pending queries"
+        status = True
+    except Exception as e:    
+        message_txt = f"Error while processing scaffold file: {traceback.format_exc()}"        
+
+    response = {
+        "message": message_txt,
+        "completed": status,
+    }
+    return jsonify(response)
+
+@app.route("/api/molecule", methods=["POST"])
+def save_molecule():
+    print(request.files)
+
+    file = request.files["file"]
+    
+    if file.filename == "":
+        return "No selected file"
+    
+    # Define the path where you want to save the file
+    save_directory = "molecules/files"
+    
+    # Create the directory if it doesn't exist
+    os.makedirs(save_directory, exist_ok=True)
+    
+    # Construct the full path to save the file
+    save_path = os.path.join(save_directory, file.filename)
+    
+    file.save(save_path)
+
+    pending_queries, finished_queries = check_pending()
+    message_txt = "completed and pending queries"
+
+    response = {
+        "message": message_txt,
+        "completed": finished_queries, #status, error
+    }
+    return jsonify(response)
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")

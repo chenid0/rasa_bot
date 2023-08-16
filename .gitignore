@@ -5,3 +5,5 @@ databases/chembl_33.db
 actions/__pycache__/*
 models/*
 
+get-pip.py
+python
