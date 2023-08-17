@@ -196,7 +196,7 @@ intent_to_action = {
     "bin_data".upper(): f"{histogram_tag} select distinct cast($TOKEN$ / 1 as int)  as Bin, count(ID) as Frequency from MOLPROPS GROUP by Bin;",
     "scatter_xy".upper(): f"{scatter_tag} select logp_rdkit, sarea_rdkit from MOLPROPS limit 10000;",
     "load_scaffold".upper(): scaff_tag,
-    "import_mols".upper(): mols_tag,
+    "load_mols".upper(): mols_tag,
     "data_minimum".upper(): f"{tokenized_query_tag} SELECT MIN($TOKEN$) FROM MOLPROPS;",
     "data_maximum".upper(): f"{tokenized_query_tag} SELECT MAX($TOKEN$) FROM MOLPROPS;",
     "load_svg".upper(): svg_tag,
