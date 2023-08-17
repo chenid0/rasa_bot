@@ -183,7 +183,7 @@
     <div
       style="padding: 50px; padding-top: 20px; font-size: 20px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; text-align: center; "
       id="scaffold-content">
-      <h1>Select or Drag Files to Upload</h1>
+      <h1>Select a scaffold (.sd or .sdf) file to upload</h1>
       <form onsubmit="getFileScaffold(event)" id="file-upload-form" class="uploader">
         <input style="height: 250px; width: 100%;" id="scaffold-upload" type="file" name="file" accept=".sd, .sdf" />
         <button type="submit" value="Upload" class="btn btn-primary mb-3">Continue</button>
@@ -308,6 +308,7 @@
         });
 
         function create_table(csv){
+          const $chatArea = $('#chat-area');
           var data = JSON.parse(csv);
           var unique_id = generateUniqueDOMId('csv-table');
           var outer_str = `<div id=${unique_id} class="csv-table"></div>`;
