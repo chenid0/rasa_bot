@@ -4,17 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Chatbot</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
-  <script src="{{url_for('static', filename='winbox.min.js')}}"></script>  
-  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='winbox.min.css') }}"></link>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="{{url_for('static', filename='winbox.min.js')}}"></script>
+  <link rel="stylesheet" href="winbox.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='winbox.min.css') }}">
   <style>
     body {
       margin-left: 100px;
       /* width of the side panel */
       font-family: 'Roboto', sans-serif;
-    }    
+    }
 
-    .csv-table {      
+    .csv-table {
       font-family: 'Roboto', sans-serif;
       overflow-x: scroll;
       width: 1000px;
@@ -152,7 +153,7 @@
       display: none;
     }
   </style>
-  
+
 </head>
 
 <body>
@@ -179,182 +180,304 @@
       </span>
     </form>
   </div>
-  
-  </div>
-  <div id="icon-container" class="icon-container"></div> <!-- Icon Container -->
-  <script>
-    
-    new WinBox({
-    title: "Custom Color",
-    background: "#FF00FF",
-    border: 4,
-    html: '<div id="lorem" class="window-container"><div id="content"><h1>Lorem Ipsum</h1><p>Lorem ipsum [...]</p><p>Duis autem vel [...]</p><p>Ut wisi enim [...]</p></div>'
-});
-     $(function () {
-      function setChatAreaMaxHeight() {
-        const windowHeight = $(window).height();  // Get the current window height
-        const chatFormHeight = $('.chat-form').outerHeight();  // Get the height of the chat form
-        const iconContainerHeight = $('.icon-container').outerHeight();  // Get the height of the icon container
-        const chatAreaMaxHeight = windowHeight - chatFormHeight - 20;  // Calculate the max-height
-        $('.chat-area').css('max-height', chatAreaMaxHeight + 'px');  // Set the max-height of the chat area dynamically
-      }
+  <div id="scaffold-container" class="window-container">
+    <div
+      style="padding: 50px; padding-top: 20px; font-size: 20px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; text-align: center; "
+      id="scaffold-content">
+      <h1>Select or Drag Files to Upload</h1>
+      <form onsubmit="getFileScaffold(event)" id="file-upload-form" class="uploader">
+        <input style="height: 250px; width: 100%;" id="scaffold-upload" type="file" name="file" />
+        <button type="submit" value="Upload" class="btn btn-primary mb-3">Continue</button>
+      </form>
+    </div>
+    <div id="molecule-container" class="window-container">
+      <div
+        style="padding: 50px; padding-top: 20px; font-size: 20px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; text-align: center; "
+        id="molecule-content">
+        <h1>Select or Drag Files to Upload</h1>
+        <form onsubmit="getFileMolecule(event)" id="file-upload-form" class="uploader">
+          <input style="height: 250px; width: 100%;" id="molecule-upload" type="file" name="file" />
+          <button type="submit" value="Upload" class="btn btn-primary mb-3">Continue</button>
+        </form>
+      </div>
 
-      // Call the function initially
-      setChatAreaMaxHeight();
+      <div id="myModal"></div>
 
-      // Call the function whenever the window is resized
-      $(window).resize(function () {
-        setChatAreaMaxHeight();
-      });
-    });
-    $(function () {
-      const $chatArea = $('#chat-area');
-      const $chatForm = $('#chat-form');
-      const $chatInput = $('#chat-input');
-      const $iconContainer = $('#icon-container'); // Icon Container
+      <div id="icon-container" class="icon-container"></div> <!-- Icon Container -->
 
-      $chatForm.submit(function (event) {
-        event.preventDefault();
-        const message = $chatInput.val();
-        $chatInput.val('');
-        $.ajax({
-          type: 'POST',
-          url: '/api/messages',
-          contentType: 'application/json',
-          data: JSON.stringify({ message }),
-          success: function (response, status, xhr) {
-            $chatArea.append(`<p>You: ${message}</p>`);
-
-            $chatArea.append(`<p id="${response.id}">Bot: ${response.message}${response.message.includes('persistent') ? ' <span class="status">Checking status...</span>' : ''}</p>`);  // Add a span element with a class for persistent messages
-            if (response.message.includes('persistent')) {
-              // Add an icon for the query
-              const icon = `<div id="icon-${response.id}" class="query-icon pending">${response.id}</div>`;
-              $iconContainer.append(icon);
-            }
-
-            if (response.svg) {
-              // Create a temporary div to hold the SVG
-              const tempDiv = document.createElement('div');
-              tempDiv.innerHTML = response.svg;
-
-              // Extract the SVG from the div
-              const svgElement = tempDiv.querySelector('svg');
-
-              // Append the SVG element to the chat area
-              $chatArea.append(svgElement);
-            }
-            if (response.csv) {
-              var data = JSON.parse(response.csv);
-              var unique_id = generateUniqueDOMId('csv-table');
-              var outer_str = `<div id=${unique_id} class="csv-table"></div>`;
-              var outer_div = $(outer_str);
-              
-              var table = $('<table ></table></div>');
-              var headers = Object.keys(data[0]);
-              var headerRow = $('<tr></tr>');
-              headers.forEach(function (header) {
-                headerRow.append($('<th></th>').text(header));
-              });
-              table.append(headerRow);
-              data.forEach(function (rowData) {
-                var row = $('<tr></tr>');
-                headers.forEach(function (header) {
-                  row.append($('<td></td>').text(rowData[header]));
-                });
-                table.append(row);
-              });
-              outer_div.append(table);
-              new WinBox({
-                  title: "csv test window",
-                  html: outer_div.html()
-              });              
-            }
-
-          },
-          error: function (error) {
-            console.log(error);
-          }
+      <script>
+        new WinBox({
+          class: "modern",
+          title: "Custom Color",
+          background: "#ff005d",
+          border: 4
         });
-      });
+        $(function () {
+          function setChatAreaMaxHeight() {
+            const windowHeight = $(window).height();  // Get the current window height
+            const chatFormHeight = $('.chat-form').outerHeight();  // Get the height of the chat form
+            const iconContainerHeight = $('.icon-container').outerHeight();  // Get the height of the icon container
+            const chatAreaMaxHeight = windowHeight - chatFormHeight - 20;  // Calculate the max-height
+            $('.chat-area').css('max-height', chatAreaMaxHeight + 'px');  // Set the max-height of the chat area dynamically
+          }
 
-      // Periodically check the endpoint for completed queries
-      setInterval(function () {
-        $.ajax({
-          type: 'GET',
-          url: '/api/query_status',
-          success: function (response) {
-            for (let i in response.pending) {
-              createIcon(response.pending[i])
-            }
-            for (let [query, result] of Object.entries(response.completed)) {
-              if (query) {
-                removeIcon(query);
-                $chatArea.append(`<p>Bot: ${query}</p>`);
-                $chatArea.append(`<p>Bot: ${result}</p>`);
+          // Call the function initially
+          setChatAreaMaxHeight();
+
+          // Call the function whenever the window is resized
+          $(window).resize(function () {
+            setChatAreaMaxHeight();
+          });
+        });
+        var modal = false
+        $(function () {
+          const $chatArea = $('#chat-area');
+          const $chatForm = $('#chat-form');
+          const $chatInput = $('#chat-input');
+          const $iconContainer = $('#icon-container'); // Icon Container
+
+          $chatForm.submit(function (event) {
+            event.preventDefault();
+            const message = $chatInput.val();
+            $chatInput.val('');
+            $.ajax({
+              type: 'POST',
+              url: '/api/messages',
+              contentType: 'application/json',
+              data: JSON.stringify({ message }),
+              success: function (response, status, xhr) {
+                $chatArea.append(`<p>You: ${message}</p>`);
+
+                $chatArea.append(`<p id="${response.id}">Bot: ${response.message}${response.message.includes('persistent') ? ' <span class="status">Checking status...</span>' : ''}</p>`);  // Add a span element with a class for persistent messages
+                if (response.message.includes('persistent')) {
+                  // Add an icon for the query
+                  const icon = `<div id="icon-${response.id}" class="query-icon pending">${response.id}</div>`;
+                  $iconContainer.append(icon);
+                }
+
+                if (response.svg) {
+                  // Create a temporary div to hold the SVG
+                  const tempDiv = document.createElement('div');
+                  tempDiv.innerHTML = response.svg;
+
+                  // Extract the SVG from the div
+                  const svgElement = tempDiv.querySelector('svg');
+
+                  // Append the SVG element to the chat area
+                  $chatArea.append(svgElement);
+                }
+                if (response.csv) {
+                  create_table(response.csv);                  
+                }
+                console.log(response.choose_file)
+                if (response.scaffold) {
+                  choose_file("scaffold-content", "Upload scaffold");
+                }
+                if (response.molecule) {
+                  choose_file("molecule-content", "Upload Molecules");
+                }
+                // do file chooser
+              },
+              error: function (error) {
+                console.log(error);
               }
-            }
-          },
-          error: function (error) {
-            console.log(error);
+            });
+          });
+
+          // Periodically check the endpoint for completed queries
+          setInterval(function () {
+            $.ajax({
+              type: 'GET',
+              url: '/api/query_status',
+              success: function (response) {
+                for (let i in response.pending) {
+                  createIcon(response.pending[i])
+                }
+                for (let [query, result] of Object.entries(response.completed)) {
+                  if (query) {
+                    removeIcon(query);
+                    $chatArea.append(`<p>Bot: ${query}</p>`);
+                    $chatArea.append(`<p>Bot: ${result}</p>`);
+                  }
+                }
+              },
+              error: function (error) {
+                console.log(error);
+              }
+            });
+          }, 10000);  // Check every 10 seconds
+        });
+
+        function create_table(csv){
+          var data = JSON.parse(csv);
+          var unique_id = generateUniqueDOMId('csv-table');
+          var outer_str = `<div id=${unique_id} class="csv-table"></div>`;
+          var outer_div = $(outer_str);
+
+          var table = $('<table ></table></div>');
+          var headers = Object.keys(data[0]);
+          var headerRow = $('<tr></tr>');
+          headers.forEach(function (header) {
+            headerRow.append($('<th></th>').text(header));
+          });
+          table.append(headerRow);
+          data.forEach(function (rowData) {
+            var row = $('<tr></tr>');
+            headers.forEach(function (header) {
+              row.append($('<td></td>').text(rowData[header]));
+            });
+            table.append(row);
+          });
+          outer_div.append(table);
+          $chatArea.append(outer_div);
+          new WinBox({
+            title: "csv test window",
+            html: outer_div.html()
+          });
+        }
+
+        function choose_file(id, title_txt) {
+          if (modal == false) {
+            console.log("Choosing file")
+            modal = true
+            var winbox = new WinBox({
+              mount: document.getElementById(id),
+              title: title_txt,
+              x: "center",
+              y: "center",
+              width: "50%",
+              height: "75%",
+              border: 4,
+              hidden: false,
+              onclose: function (force) {
+                modal = false
+              }
+            });
+          } else {
+            alert("Upload file window already open, please close all upload windows before starting a new one");
+          }
+        }
+
+        function getFileScaffold(event) {
+          const fileInput = document.getElementById("scaffold-upload");
+          const file = fileInput.files[0];
+          console.log(file)
+          const maxSize = 5242880; // 5 MB in bytes
+          if (file.size > maxSize) {
+            alert("File size exceeds the maximum limit of 5 MB.");
+            return;
+          }
+          if (!file.name.toLowerCase().endsWith(".mol") || !file.name.toLowerCase().endsWith(".sd") || !file.name.toLowerCase().endsWith(".sdf")) {
+            alert("Invalid file format. Please upload a .MOL, .SD, or a .SDF file.");
+            return;
+          }
+          // Construct the form data
+          const formData = new FormData();
+          formData.append("file", file);
+
+          // Send the form data using Fetch API
+          fetch("/api/scaffold", {
+            method: "POST",
+            body: formData
+          })
+            .then(response => response.text())
+            .then(result => {
+              console.log(result); // Display the result in the console
+              // Handle any UI updates or notifications here
+            })
+            .catch(error => {
+              console.error("Error:", error);
+              // Handle errors here
+            });
+          modal = false
+        }
+
+        function getFileMolecule(event) {
+          const fileInput = document.getElementById("molecule-upload");
+          const file = fileInput.files[0];
+          const maxSize = 5242880; // 5 MB in bytes
+          if (file.size > maxSize) {
+            alert("File size exceeds the maximum limit of 5 MB.");
+            return;
+          }
+          if (!file.name.toLowerCase().endsWith(".mol") || !file.name.toLowerCase().endsWith(".csv") || !file.name.toLowerCase().endsWith(".sdf")) {
+            alert("Invalid file format. Please upload a .MOL or .CSV or .SDF file.");
+            return;
+          }
+          // Construct the form data
+          const formData = new FormData();
+          formData.append("file", file);
+
+          // Send the form data using Fetch API
+          fetch("/api/molecule", {
+            method: "POST",
+            body: formData
+          })
+            .then(response => response.text())
+            .then(result => {
+              console.log(result); // Display the result in the console
+              // Handle any UI updates or notifications here
+            })
+            .catch(error => {
+              console.error("Error:", error);
+              // Handle errors here
+            });
+          modal = false
+        }
+        function createIcon(query) {
+          // Check if the icon already exists
+          const existingIcon = document.getElementById(`icon-${query}`);
+          if (existingIcon) {
+            // The icon already exists, do nothing
+            return;
+          }
+          // The icon does not exist, create it
+          const icon = document.createElement('div');
+          icon.className = 'query-icon pending';
+          icon.id = `icon-${query}`;
+
+          const img = document.createElement('img');
+          img.src = "{{ url_for('static', filename='icon.png') }}"; // Set the source to your PNG file
+          img.alt = query; // Set the alt text to the query
+          img.style.width = '50px'; // Optional: Set the width
+          img.style.height = '50px'; // Optional: Set the height
+
+          // Add the img to the icon div
+          icon.appendChild(img);
+          document.getElementById('icon-container').appendChild(icon);
+        }
+
+        function removeIcon(query) {
+          // Remove the icon from the icon container
+          document.getElementById('icon-container').removeChild(document.getElementById(`icon-${query}`));
+        }
+
+        // Get the dropdown content and hamburger menu
+        const dropdownContent = document.getElementById('dropdown-content');
+        const hamburgerMenu = document.getElementById('hamburger-menu');
+
+        // Add a click event listener to the hamburger menu
+        hamburgerMenu.addEventListener('click', function () {
+          // Toggle the visibility of the dropdown content
+          if (dropdownContent.style.display === 'none' || dropdownContent.style.display === '') {
+            dropdownContent.style.display = 'block';
+          } else {
+            dropdownContent.style.display = 'none';
           }
         });
-      }, 10000);  // Check every 10 seconds
-    });
 
-    function createIcon(query) {
-      // Check if the icon already exists
-      const existingIcon = document.getElementById(`icon-${query}`);
-      if (existingIcon) {
-        // The icon already exists, do nothing
-        return;
-      }
-      // The icon does not exist, create it
-      const icon = document.createElement('div');
-      icon.className = 'query-icon pending';
-      icon.id = `icon-${query}`;
+        function generateUniqueDOMId(baseString) {
+          // Get the current date and time as a timestamp
+          const timestamp = Date.now();
 
-      const img = document.createElement('img');
-      img.src = "{{ url_for('static', filename='icon.png') }}"; // Set the source to your PNG file
-      img.alt = query; // Set the alt text to the query
-      img.style.width = '50px'; // Optional: Set the width
-      img.style.height = '50px'; // Optional: Set the height
+          // Combine the base string with the timestamp to create the unique ID
+          const uniqueId = `${baseString}_${timestamp}`;
 
-      // Add the img to the icon div
-      icon.appendChild(img);
-      document.getElementById('icon-container').appendChild(icon);
-    }
+          return uniqueId;
+        }
 
-    function removeIcon(query) {
-      // Remove the icon from the icon container
-      document.getElementById('icon-container').removeChild(document.getElementById(`icon-${query}`));
-    }
 
-    // Get the dropdown content and hamburger menu
-    const dropdownContent = document.getElementById('dropdown-content');
-    const hamburgerMenu = document.getElementById('hamburger-menu');
-
-    // Add a click event listener to the hamburger menu
-    hamburgerMenu.addEventListener('click', function () {
-      // Toggle the visibility of the dropdown content
-      if (dropdownContent.style.display === 'none' || dropdownContent.style.display === '') {
-        dropdownContent.style.display = 'block';
-      } else {
-        dropdownContent.style.display = 'none';
-      }
-    });
-
-    function generateUniqueDOMId(baseString) {
-      // Get the current date and time as a timestamp
-      const timestamp = Date.now();
-
-      // Combine the base string with the timestamp to create the unique ID
-      const uniqueId = `${baseString}_${timestamp}`;
-
-      return uniqueId;
-    }
-
-  
-  </script>
+      </script>
 </body>
 
 </html>
