@@ -91,16 +91,19 @@ svg_str = """<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.
 db_path_name = "/home/mark/chatbot/db/Molecules.db"
 db_virus_knowledgebase = "/home/mark/chatbot/db/Viruses.db"
 
+chembl_db_path = "./databases/chembl_33.db"
+
+
+action_tag = "action:"
 query_tag = "query:"
 tokenized_query_tag = "tokenized_query:"
 svg_tag = "load_svg"
+scaff_tag = "import_scaffold"
+mols_tag = "import_mols"
 csv_tag = "load_csv"
 histogram_tag = "histogram:"
 scatter_tag = "scatterplot:"
 search_chembl_tag = "search_chembl"
-scaff_tag = "import_scaffold"
-mols_tag = "import_mols"
-
 
 
 keyword_replacements = {
@@ -188,6 +191,7 @@ keywords_for_spellcheck = [
 ]
 
 
+
 intent_to_action = {    
     "bin_data".upper(): f"{histogram_tag} select distinct cast($TOKEN$ / 1 as int)  as Bin, count(ID) as Frequency from MOLPROPS GROUP by Bin;",
     "scatter_xy".upper(): f"{scatter_tag} select logp_rdkit, sarea_rdkit from MOLPROPS limit 10000;",
@@ -195,7 +199,7 @@ intent_to_action = {
     "import_mols".upper(): mols_tag,
     "data_minimum".upper(): f"{tokenized_query_tag} SELECT MIN($TOKEN$) FROM MOLPROPS;",
     "data_maximum".upper(): f"{tokenized_query_tag} SELECT MAX($TOKEN$) FROM MOLPROPS;",
-    "test_svg".upper(): svg_tag,
-    "test_CSV".upper(): csv_tag,
+    "load_svg".upper(): svg_tag,
+    "load_csv".upper(): csv_tag,
     "search_chemb_mols".upper(): search_chembl_tag,
 }
