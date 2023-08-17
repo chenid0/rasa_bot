@@ -185,7 +185,7 @@
       id="scaffold-content">
       <h1>Select or Drag Files to Upload</h1>
       <form onsubmit="getFileScaffold(event)" id="file-upload-form" class="uploader">
-        <input style="height: 250px; width: 100%;" id="scaffold-upload" type="file" name="file" />
+        <input style="height: 250px; width: 100%;" id="scaffold-upload" type="file" name="file" accept=".sd, .sdf" />
         <button type="submit" value="Upload" class="btn btn-primary mb-3">Continue</button>
       </form>
     </div>
@@ -195,7 +195,7 @@
         id="molecule-content">
         <h1>Select or Drag Files to Upload</h1>
         <form onsubmit="getFileMolecule(event)" id="file-upload-form" class="uploader">
-          <input style="height: 250px; width: 100%;" id="molecule-upload" type="file" name="file" />
+          <input style="height: 250px; width: 100%;" id="molecule-upload" type="file" name="file"  accept=".mol" />
           <button type="submit" value="Upload" class="btn btn-primary mb-3">Continue</button>
         </form>
       </div>
