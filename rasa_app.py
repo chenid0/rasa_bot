@@ -111,6 +111,7 @@ def create_response(rasa_text, orig_message) -> Response:
         queries.append(query_text)
         print(f"running histogram query \n{query_text}\n")
         hist_svg = create_histogram_from_query(query_text, keyword)
+        message_txt = f"creating {keyword} histogram"
         return jsonify({"message": message_txt, "svg": hist_svg})
     if scatter_tag in action_text:
         query_text = action_text.replace(scatter_tag, "")
@@ -123,21 +124,25 @@ def create_response(rasa_text, orig_message) -> Response:
         queries.append(query_text)
         print(f"running scatter query \n{query_text}\n")
         hist_svg = create_scatter_from_query(query_text, xlabel, ylabel)
+        message_txt = f"creating scatter plot {xlabel} vs {ylabel}"
         return jsonify({"message": message_txt, "svg": hist_svg})
     if svg_tag in action_text:
+        message_txt = ""
         return jsonify({"message": message_txt, "svg": svg_str})
     if csv_tag in action_text:
         csv_data = StringIO(csv_str)
         df = pd.read_csv(csv_data, sep=",")
-        csv_json = df.to_json(orient="records")
+        csv_json = df.to_json(orient="records")        
         return jsonify({"message": message_txt, "csv": csv_json})
     if scaff_tag in action_text:
         print("Choosing file..")
+        message_txt = "choose a scaffold file to upload"
         return jsonify({"message": message_txt, "scaffold": True})
     if mols_tag in action_text:
         print("Choosing file..")
+        message_txt = "choose a molecule file to upload"
         return jsonify({"message": message_txt, "molecule": True})
-    return jsonify({"message": "no action taken"})
+    return jsonify({"message": f"unexpced action {action_text} no action taken"})
 
 
 @app.route("/api/query_status", methods=["GET"])
