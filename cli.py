@@ -1,19 +1,21 @@
 import subprocess
 from typing import Optional, Tuple
 
-def execute_command(cmd: str, max_time: Optional[int] = None) -> Tuple[str, str, Optional[int]]:          
+def execute_command(cmd: str, max_time: Optional[int] = None) -> Tuple[str, str, int]:          
     process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
-    stdout, stderr, exit_code = None, None, None
+    stdout, stderr, exit_code = None, None, -999
     
     try:
         stdout, stderr = process.communicate(timeout=max_time)
-        exit_code = process.poll()
-    except subprocess.TimeoutExpired:
+        exit_code = process.poll()    
+    except Exception as e:
         process.kill()
         stdout, stderr = process.communicate()
         exit_code = process.poll()
-            
+        
+    if not exit_code:
+        exit_code = -999            
     return str(stdout), str(stderr), exit_code
 
 
@@ -25,7 +27,7 @@ def run_sarbot_build_r_dash():
     ac = "'612285_Ki(nM)'"
     build = "BuildRDashBoard"
     cmd = f"./bin/sarbot {build} -db {db_path} -is {is_path} -ic {ic} -ac {ac}"
-    execute_command(cmd, run_in_background=False)
+    stdout, stderr, exit_code = execute_command(cmd, run_in_background=False)
 
 
 def run_sarbot_import_mols():
@@ -36,7 +38,7 @@ def run_sarbot_import_mols():
     ac = "'612285_Ki(nM)'"
     sar_command = "ImportMols"
     cmd = f"./bin/sarbot {sar_command} -db {db_path} -is {is_path} -ic {ic} -ac {ac}"
-    execute_command(cmd, run_in_background=False)
+    stdout, stderr, exit_code = execute_command(cmd, run_in_background=False)
 
 
 def run_sarbot_import_scaffold():    
@@ -47,7 +49,7 @@ def run_sarbot_import_scaffold():
     ac = "'612285_Ki(nM)'"
     sar_command = "ImportScaffold"
     cmd = f"./bin/sarbot {sar_command} -db {db_path} -is {is_path} -ic {ic} -ac {ac}"
-    execute_command(cmd, run_in_background=False)
+    stdout, stderr, exit_code = execute_command(cmd, run_in_background=False)
 
     
 def run_sarbot_render_scaffold():
@@ -58,7 +60,7 @@ def run_sarbot_render_scaffold():
     ac = "'612285_Ki(nM)'"
     sar_command = "ImportScaffold"
     cmd = f"./bin/sarbot {sar_command} -db {db_path} -is {is_path} -ic {ic} -ac {ac}"
-    execute_command(cmd, run_in_background=False)
+    stdout, stderr, exit_code = execute_command(cmd, run_in_background=False)
 
     
 def run_sarbot_render_molecule_mkey():
@@ -69,7 +71,7 @@ def run_sarbot_render_molecule_mkey():
     ac = "'612285_Ki(nM)'"
     sar_command = "ImportScaffold"
     cmd = f"./bin/sarbot {sar_command} -db {db_path} -is {is_path} -ic {ic} -ac {ac}"
-    execute_command(cmd, run_in_background=False)
+    stdout, stderr, exit_code = execute_command(cmd, run_in_background=False)
 
 
 def run_sarbot_render_molecule_sid():
@@ -80,4 +82,5 @@ def run_sarbot_render_molecule_sid():
     ac = "'612285_Ki(nM)'"
     sar_command = "ImportScaffold"
     cmd = f"./bin/sarbot {sar_command} -db {db_path} -is {is_path} -ic {ic} -ac {ac}"
-    execute_command(cmd, run_in_background=False)
+    stdout, stderr, exit_code = execute_command(cmd, run_in_background=False)
+    print(stdout,stderr, exit_code)

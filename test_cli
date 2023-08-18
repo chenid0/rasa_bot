@@ -1,0 +1,33 @@
+import unittest
+import subprocess
+from unittest.mock import patch, Mock
+from cli import execute_command
+
+class TestExecuteCommand(unittest.TestCase):
+
+    @patch('subprocess.Popen')
+    def test_execute_command_successful(self, mock_popen):
+        process_mock = Mock()
+        process_mock.communicate.return_value = (b'stdout', b'stderr')
+        process_mock.poll.return_value = 0
+        mock_popen.return_value = process_mock
+
+        stdout, stderr, exit_code = execute_command('echo "hello"')
+
+        self.assertEqual(stdout, 'stdout')
+        self.assertEqual(stderr, 'stderr')
+        self.assertEqual(exit_code, 0)
+
+    @patch('subprocess.Popen')
+    def test_execute_command_timeout(self, mock_popen):
+        process_mock = Mock()
+        process_mock.communicate.side_effect = subprocess.TimeoutExpired(cmd='echo "hello"', timeout=1)
+        process_mock.poll.return_value = -1
+        mock_popen.return_value = process_mock
+
+        stdout, stderr, exit_code = execute_command('echo "hello"', max_time=1)
+
+        self.assertEqual(exit_code, -1)
+
+if __name__ == '__main__':
+    unittest.main()
